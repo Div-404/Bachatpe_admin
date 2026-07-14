@@ -1,0 +1,73 @@
+<div class="add-class-for-show-and-hide amindiv">
+    <div class="card">
+        <div class="card-header"><p class="mb-0 fw600">Pan Details</p></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 d-none">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="plab">Name</p>
+                            <p class="ptxt mb-0">{{userInfoData?.First}} {{userInfoData?.Last}}</p>
+                            <hr style="margin:4px 0px">
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <p class="plab">Fathers Name</p>
+                            <p class="ptxt mb-0">Vijay Kumar</p>
+                            <hr style="margin:4px 0px">
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="plab">DOB</p>
+                            <p class="ptxt mb-0">{{userInfoData?.Addr?.DOB}}</p>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <p class="plab">Gender</p>
+                            <p class="ptxt mb-0">Male</p>
+                        </div> -->
+                        <div class="col-md-12"><hr style="margin:4px 0px"></div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <p class="plab">Pan Number</p>
+                            <p class="ptxt mb-0">xxxx-xxx-325478</p>
+                            <hr style="margin:4px 0px">
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="plab">Address</p>
+                            <p class="ptxt">{{userInfoData?.Addr?.oUserAddr?.Address}}, {{userInfoData?.Addr?.oUserAddr?.City}}, {{userInfoData?.Addr?.oUserAddr?.State}}
+                                , {{userInfoData?.Addr?.oUserAddr?.Zipcode}}, {{userInfoData?.Addr?.oUserAddr?.Country}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="aadharData?.Path">
+                    <div class="shadow-sm" >
+                       <div class="border border-success rounded p-2 text-center">
+                            <img   class="img-fluid" [src]="aadharData?.Path" alt="User Image">
+                            <ng-template #defaultImage>
+                              <!-- <img class="img-fluid" src="assets/images/pan-fake.png" alt="Default Image"> -->
+                              <img style="width: 150px;" src="assets/images/noDoc.png">
+                            </ng-template>
+                          </div>
+                    </div>
+
+                    
+                </div>
+                <div class="col-md-12" *ngIf="aadharData?.Path == null">
+                    <div class="shadow-sm00" >
+                        <div class="border00 border-success00 rounded p-2 text-center">
+                            <img style="width: 150px;" src="assets/images/noDoc.png">
+                             <ng-template #defaultImage>
+                               <!-- <img class="img-fluid" src="assets/images/pan-fake.png" alt="Default Image"> -->
+                             </ng-template>
+                           </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

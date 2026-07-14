@@ -1,0 +1,32 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="tabnavc-ul">
+                <!-- @if (!idRoute) { -->
+                <li [ngClass]="{'active': selectedTab == 'money-summary'  }"  (click)="navigated('money-summary')">
+                    <div class="tabnavc-a ">
+                        <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span class="tabnavc-txt">Summary</span>
+                    </div>
+                </li>
+                <!-- <li [ngClass]="{'active': selectedTab == 'money-statistics' || selectedTab == 'money-summary/money-statistics'}" >
+                    <div class="tabnavc-a">
+                        <span class="tbicon"><i class="fa-solid fa-chart-line"></i></span><span class="tabnavc-txt">Statistics</span>
+                    </div>
+                </li> -->
+            <!-- } -->
+                <li [ngClass]="{'active': selectedTab == 'money-main/money-detail' || selectedTab == 'money-detail'}" (click)="navigated('money-detail')">
+                    <div class="tabnavc-a">
+                        <span class="tbicon"><i class="fa-regular fa-paste"></i></span><span class="tabnavc-txt">Details</span>
+                    </div>
+                </li>
+                
+            </ul>
+            <hr>
+        </div>
+        <div class="row pe-3">
+            <router-outlet></router-outlet>
+            
+            
+        </div>
+    </div>
+</section>

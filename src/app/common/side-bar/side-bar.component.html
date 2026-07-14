@@ -1,0 +1,117 @@
+<div class="sidebar" [ngClass]="{ 'app100': addClass }">
+  <div class="logo-link">
+    <img class="set-logo p-3" src="assets/images/logo.png" />
+  </div>
+
+  <ul class="nav-links navbar-main-ul" id="nav-links">
+    <ng-container *ngFor="let item of menuItems; trackBy: trackByMenuId">
+      <ng-container
+        *ngTemplateOutlet="menuItemTpl; context: { $implicit: item, level: 0 }">
+      </ng-container>
+    </ng-container>
+  </ul>
+</div>
+
+<!-- =========================================================
+     Recursive Menu Renderer
+     level = 0 => top/main level
+     level > 0 => sub levels
+========================================================= -->
+<ng-template #menuItemTpl let-item let-level="level">
+  <ng-container *ngIf="isVisible(item)">
+
+    <!-- -------------------- LINK ITEM -------------------- -->
+    <li
+      *ngIf="item.type === 'link'"
+      [class.active]="level === 0 && isItemActive(item)"
+      [class.menuactive]="level > 0 && isItemActive(item)"
+      [ngClass]="item.cssClass">
+
+      <div class="dropdown-title" (click)="onItemClick(item, $event)">
+        <a>
+          <!-- top-level icon -->
+          <div class="nvicon" *ngIf="level === 0 && item.icon">
+            <i [class]="item.icon"></i>
+          </div>
+
+          <!-- sub-level arrow icon (your old catimg) -->
+          <img
+            *ngIf="level > 0 && item.showCatArrowIcon"
+            class="catimg"
+            src="assets/images/down-right-arrow.png"
+          />
+
+          <span
+            [class.link_name]="level === 0"
+            [class.catline]="item.type === 'toggle-group' && level > 0">
+            {{ item.label }}
+          </span>
+        </a>
+      </div>
+    </li>
+
+    <!-- -------------------- MAIN GROUP (Configuration/Users/...) -------------------- -->
+    <li
+      *ngIf="item.type === 'group'"
+      [class.showMenu]="isMainMenuOpen(item)"
+      [class.closeMenu]="item.mainMenuKey && openMainMenuKey !== item.mainMenuKey && openMainMenuKey !== null">
+
+      <div class="dropdown-title" (click)="onItemClick(item, $event)">
+        <a>
+          <div class="nvicon" *ngIf="item.icon">
+            <i [class]="item.icon"></i>
+          </div>
+          <span class="link_name">{{ item.label }}</span>
+        </a>
+
+        <i class="fa-solid fa-angle-down"></i>
+      </div>
+
+      <ul class="sub-menu ms-3" *ngIf="isMainMenuOpen(item)">
+        <ng-container *ngFor="let child of getChildren(item); trackBy: trackByMenuId">
+          <ng-container
+            *ngTemplateOutlet="menuItemTpl; context: { $implicit: child, level: level + 1 }">
+          </ng-container>
+        </ng-container>
+      </ul>
+    </li>
+
+    <!-- -------------------- TOGGLE GROUP (Money Transfer, Recharge...) -------------------- -->
+    <ng-container *ngIf="item.type === 'toggle-group'">
+
+      <!-- header row -->
+      <li
+        class="mb-2"
+        [class.menuactive]="isItemActive(item)"
+        [ngClass]="item.cssClass">
+
+        <div class="flex-between1" (click)="onItemClick(item, $event)">
+          <span
+            class="catline"
+            [class.text-white]="isItemActive(item)">
+            {{ item.label }}
+          </span>
+
+          <i
+            class="fa-solid"
+            [ngClass]="{
+              'fa-angle-down': !isToggleOpen(item.toggleKey),
+              'fa-angle-up': isToggleOpen(item.toggleKey)
+            }"
+            style="font-size: 0.8rem;">
+          </i>
+        </div>
+      </li>
+
+      <!-- children -->
+      <ul class="sub-menu ms-1" *ngIf="isToggleOpen(item.toggleKey)">
+        <ng-container *ngFor="let child of getChildren(item); trackBy: trackByMenuId">
+          <ng-container
+            *ngTemplateOutlet="menuItemTpl; context: { $implicit: child, level: level + 1 }">
+          </ng-container>
+        </ng-container>
+      </ul>
+    </ng-container>
+
+  </ng-container>
+</ng-template>

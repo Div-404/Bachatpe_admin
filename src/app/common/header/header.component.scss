@@ -1,0 +1,31 @@
+.headertop{
+    width: calc(100% - 260px);
+    height: 54px;
+    background: #fff;
+    position: fixed;
+    box-shadow: 0 .25rem 1rem #0000001a;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    padding:1px 15px;
+   
+}
+
+.topprofile-dd{
+    width:40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    background: #1B3E40;
+    border-radius: 50%;
+    p{
+        font-size: 11px;
+        font-weight: 600;
+        color:#fff;
+    }
+}
+
+.dropdown-toggle::after{
+    display: none;
+}

@@ -1,0 +1,468 @@
+<div class="row">
+    <div class="col-md-12 mb-2">
+
+                <button class="btn ropset" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+
+     </div>
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row  align-items-center">
+
+
+
+                            <div class="col-md-2">
+                                <div class="cc-search mt-1">
+                                    <select class="form-select" (change)="selectDate($event)" [(ngModel)]="dateclear">
+                                        <option value="0" selected disabled class="fs12">Select</option>
+                                        <option value="7">Last 1 Week</option>
+                                        <option value="31">Last 1 Month</option>
+                                        <option value="93">Last 3 Months</option>
+                                        <option value="367">Last 1 Year</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                    <label>Date</label>
+                                </div>
+
+                            </div>
+                            @if (customDate == 'custom' || customDate == '') {
+                            <div class="col-md-2">
+                                <div class="pt-1">
+                                    <div class="form-group cc-search mb-0">
+                                        <input type="date" class="pad-b form-control" [(ngModel)]="lastDaysDate"
+                                            (change)="dateSelectFromTO($event, 'from')">
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="pt-1">
+                                    <div class="form-group cc-search mb-0">
+                                        <input type="date" class="pad-b form-control" [(ngModel)]="updatedDate"
+                                            (change)="dateSelectFromTO($event,'to')">
+                                        <label for="dtStart">To</label>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="justify-content-end d-flex">
+                            <button class="btn btn-sm btn-success " (click)="openLg(content)"><i
+                                    class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Make
+                                Deposit</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="tblone table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>User details</th>
+                                        <th>Reference</th>
+                                        <th>Source</th>
+                                        <th>Amount</th>
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+
+                                @for (data of dwList; track $index){
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">{{data.oTimestamp.Tm_Str | date:'yyyy-MM-dd hh:mm' }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{data.oUser.Name}}</p>
+                                            <p class="mb-0"><span>{{data.oUser.Phone}}</span> <span
+                                                    class="mx-2">|</span>
+                                                <span>{{data.oUser.Code}}</span>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <div class="mng-copy">
+                                           <b> <p class="mb-0">{{data.Reference}}</p> </b><button class="btn btn-soft-warning btn-sm ms-2"
+                                                            (click)="copyToClipboard(data.Reference)"><i
+                                                                class="fa-regular fa-copy"></i></button>
+                                                                </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0"><span>{{data.oBank.Bank}}</span>
+                                                <span class="mx-2">|</span>
+                                                <span>{{data.oBank.Account}}</span>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0"><b>{{data.Amount | number:'1.2-2'}}</b></p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 cursor-pointer text-primary" (click)="chatAdmin(data)">View
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                                }@empty{
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+
+                                <!-- <tbody>
+                                  
+                                </tbody> -->
+
+                            </table>
+
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                @if (Count > 0) {
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a class="page-link" (click)="setPage(1)">First</a>
+
+                                </li>
+
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                </li>
+
+                                <li *ngFor="let page of pager.pages" class="page-item"
+                                    [ngClass]="{active:pager.currentPage === page}">
+                                    <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                    <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                </li>
+
+                                }
+                            
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<section class="page d-none">
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <p class="mb-0 fw600">Balance Deposit / Withdraw</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="tabnavc-ul">
+                    <li [ngClass]="{'active': libuysellTab == 'tab1'}" (click)="libuysell ('tab1')">
+                        <div class="tabnavc-a ">
+                            <div><span class="tabnavc-txt">Deposit</span></div>
+                        </div>
+                    </li>
+                    <li [ngClass]="{'active': libuysellTab == 'tab2'}" (click)="libuysell ('tab2')">
+                        <div class="tabnavc-a">
+                            <div><span class="tabnavc-txt">Withdraw</span></div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-6   ">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-success" (click)="openLg(content)">
+                        <i class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Make Deposit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="libuysellTab == 'tab2'">
+
+        </div>
+    </div>
+</section>
+
+
+<!-- <div class="col-md-4" *ngIf="libuysellTab == 'tab1'">
+    <div style="text-align: end;">
+        <button class="btn btn-sm btn-success" (click)="openLg(content)"><i style="color:#F8E000" class="fa-solid fa-circle-plus me-2"></i>Make Deposit</button>
+        <button class="btn btn-sm btn-success" (click)="openLg(content)"><i style="color:#F8E000" class="fa-solid fa-circle-plus me-2"></i>Make Withdraw</button>
+       </div>
+  </div> -->
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #content let-modal>
+    <form [formGroup]="depositForm">
+        <div class="modal-header">
+            <h4 class="modal-title">Balance Deposit</h4>
+            <div class="d-flex">
+                <div class="me-1 text-white">Balance: </div>
+                <div class="text-warning"><b>{{balance | number:'1.2-2'}}</b></div>
+            </div>
+            <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+        </div>
+        <div class="modal-body ">
+            <div class="row mb-4">
+                <div class="modaltop-user-details">
+                    <div class="col-md-12 ddcor">
+                        <div class="d-flex mb-1">
+                            <div class="divone">
+                                <p>Name:</p>
+                            </div>
+                            <div class="divone-val">
+                                <p>{{First}} {{Last}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-1">
+                            <div class="divone">
+                                <p>Code:</p>
+                            </div>
+                            <div class="divone-val">
+                                <p>{{Code}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-1">
+                            <div class="divone">
+                                <p>Phone:</p>
+                            </div>
+                            <div class="divone-val">
+                                <p>{{Phone}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Source</label></div>
+                <div class="col-md-9">
+                    <select class="form-select form-select-sm" (change)="selectSource($event)" formControlName="Source">
+                        <option value="">Select</option>
+                        <option value="1">Bank</option>
+                        <option value="2">Crypto</option>
+                        <option value="3">Wallet</option>
+                        <option value="4">Scan</option>
+                        <option value="54">Cash</option>
+                    </select>
+                </div>
+            </div> -->
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Bank</label></div>
+                <div class="col-md-9">
+                    <select class="form-select form-select-sm" (change)="selectBank($event)" formControlName="BankID">
+                        <option value=''>Select</option>
+                        @for (data of bankList; track $index){
+                        <option [value]="data.BankInfo.BankID">{{data.BankInfo.Bank}} - {{data.BankInfo.Account_Number}} - {{data.BankInfo.Account_IFSC}}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">UTR</label></div>
+                <div class="col-md-9"><input type="email" class="form-control form-control-sm" id="email" (keypress)="blockSpecialChars($event)" name="email"
+                        placeholder="Enter UTR" formControlName="UTR">
+                </div>
+            </div>
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Amount</label></div>
+                <div class="col-md-9"><input type="email" class="form-control form-control-sm" id="email" name="email"
+                        formControlName="Amount" placeholder="Enter Amount" (keypress)="numberOnly($event)">
+                </div>
+            </div>
+            <!-- <div class="row align-items-center mb-3">
+            <div class="col-md-3"><label for="email" class="form-label">Remark</label></div>
+            <div class="col-md-9">  <textarea class="form-control" rows="2" id="comment" name="text"></textarea></div>
+        </div> -->
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Receipt</label></div>
+
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <!-- Hidden native input -->
+                        <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput hidden />
+
+                        <!-- Custom input and button -->
+                        <input type="text" class="form-control" [value]="imageVal" placeholder="Choose file..."
+                            readonly />
+                        <button type="button" class="btn btn-outline-secondary" (click)="fileInput.click()">
+                            Browse
+                        </button>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-9"><input type="file" class="form-control form-control-sm" id="email" name="email"
+                        formControlName="Receipt">
+                </div> -->
+            </div>
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Reason</label></div>
+                <div class="col-md-9">
+                    <!-- <div class="col-md-9"><input type="email" class="form-control form-control-sm" id="email"
+                            name="email" formControlName="Remarks" placeholder="Remark">
+                    </div> -->
+                    <select class="form-select form-select-sm" (change)="selectReason($event)">
+                        <option value="" selected disabled>Select Reason</option>
+                        <option value="Correction">Correction</option>
+                        <option value="Direct Deposit">Direct Deposit</option>
+                        <option value="Reward & Cashback">Reward & Cashback</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+    <div class="modal-footer">
+        <div class="row w-100">
+            <div class="col-md-10">
+                <button class="btn btn-success w-100 btn-shadow" [disabled]="depositForm.invalid"
+                    (click)="makeDeposit()">Deposit</button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)=closeMd()>Close</button>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<div class="chat-box mb-0" *ngIf="showChat">
+    <div class="chat-box-header">
+        <h3>Remarks # {{referenceID}}</h3>
+        <p>
+            <i class="fa fa-times" (click)="closeChat()"></i>
+        </p>
+    </div>
+    <form [formGroup]="chatForm">
+        <div class="chat-box-body" #chatBoxBody>
+            <div class="loader-container" *ngIf="isLoadingMessages">
+                <span class="loader"></span>
+                <p class="loader-msg">Loading messages...</p>
+            </div>
+            <!-- <div *ngIf="isLoadingMessages" class="loader-container">
+                  <div class="ab-loader">Loading</div>
+                  <p class="loader-msg">Loading messages...</p>
+                </div> -->
+            <div *ngIf="!isLoadingMessages">
+                <div *ngIf="chatHistory != ''">
+                    <div *ngFor="let message of chatHistory">
+                        <div *ngIf="message.CreatedBy === 1" class="chat-box-body-send float-start">
+                            <div class="message-content">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="badge"
+                                        [ngClass]="{'badge-soft-primary': message.ReadFlag === 0, 'badge-soft-warning': message.ReadFlag === 1}">
+                                        User
+                                    </div>
+                                    <span>{{message.CreatedOn}}</span>
+                                </div>
+                                <p class="mt-2">{{ message.Message }}</p>
+                                <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment"
+                                    class="chequeImage-1 img-fluid">
+                            </div>
+                        </div>
+
+                        <div *ngIf="message.CreatedBy === 0" class="chat-box-body-receive float-end">
+                            <div class="message-content">
+                                <div class="d-flex align-items-center justify-content-between"
+                                    *ngIf="message.ReadFlag === 0">
+                                    <div class="badge"
+                                        [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
+                                        Admin
+                                    </div>
+                                    <span>{{message.CreatedOn}}</span>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between"
+                                    *ngIf="message.ReadFlag === 1">
+                                    <div class="badge"
+                                        [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
+                                        Admin <i class="fa-regular fa-bookmark"></i>
+                                    </div>
+                                    <span>{{message.CreatedOn}}</span>
+                                </div>
+
+                                <!-- <div *ngIf="message.ReadFlag === 1" class="badge" [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
+                                Admin  <i class="fa-regular fa-bookmark"></i>
+                                <div>
+                                    <span>{{message.CreatedOn}}</span>
+                                </div>
+                              </div> -->
+
+                                <p class="mt-2">{{ message.Message }}</p>
+                                <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment"
+                                    class="chequeImage-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center" *ngIf="chatHistory == ''">
+                    <div class="text-center">
+                        <img src="assets/images/no-chat.png" class=" img-fluid">
+                        <p class="mt-2 badge rounded-pill badge-soft-warning"> No Remarks added yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-2 d-flex align-items-center justify-content-center0 ">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember" formControlName="showAdmin"
+                    (change)="onCheckboxChange2($event)"> Show Admin Only
+            </label>
+
+        </div>
+        <div class="chat-box-footer">
+            <input placeholder="Enter Your Message" type="text" formControlName="message">
+            <button class='send bx bx-paper-plane' [disabled]="chatForm.invalid" (click)="ADD_USER_REMARKS()"></button>
+        </div>
+    </form>
+</div>

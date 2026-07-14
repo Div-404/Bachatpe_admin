@@ -1,0 +1,276 @@
+<section class="page">
+    <div class="container-fluid ">
+        <div class="row align-items-center mb-3">
+            <div class="col-md-6">
+                <p class="mb-0 fw-bold ">Message Center</p>
+            </div>
+             @if (userProfile != 0){
+          <div class="col-md-6">
+               
+                    <button class="btn" style="margin-left: 600px;" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                   
+            </div>
+        }
+            <div class="col-md-6">
+                @if (!userProfile){
+                <div class="d-flex align-items-end justify-content-end  ">
+                    <button class="btn btn-success" (click)="startMsg()">Create</button>
+                </div>
+            }
+            </div>
+
+              
+            
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if (showRadio){
+                <div class="card shadow border-0 rounded-2 bg-white bg-opacity-75 p-4">
+                    <form [formGroup]="msgForm">
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <div class="mb-4 d-flex align-items-center gap-4">
+ @if (!userProfile){
+                                    <div class="form-check form-switch">
+                                       
+
+                                        <input class="form-check-input" type="radio" name="msgMode" id="broadcast"
+                                            [disabled]="editValue" (change)="setRadio($event)" [value]="0"
+                                            [checked]="editValue?.Profile == 0">
+
+                                        <label class="form-check-label fw-semibold" for="broadcast">Broadcast</label>
+                                       
+                                    </div>
+                                     }
+                                    <div class="form-check form-switch">
+
+                                        <input class="form-check-input" type="radio" name="msgMode" id="individual"
+                                            [disabled]="editValue" (change)="setRadio($event)" [value]="-1"
+                                            [checked]="editValue?.Profile > 0 || userProfile">
+
+                                        <label class="form-check-label fw-semibold" for="individual">Individual</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- @if (radioVal != 'null' && radioVal != undefined && radioVal != '' || radioVal == 0){ -->
+                            @if (radioChecked){
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <!-- Radio Options -->
+
+
+                                    <!-- Form Inputs -->
+
+                                    <div class="row">
+                                        @if (radioVal != 0){
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="userPhone" class="form-label">📧 User Phone</label>
+
+                                            <input
+  type="text"
+  class="form-control rounded"
+  [disabled]="editValue || userProfile != 0"
+  placeholder="Enter user Phone"
+  [(ngModel)]="Phone"
+  (blur)="getUserId()"
+  [ngModelOptions]="{standalone: true}"
+/>
+
+
+                                        </div>
+                                        
+                                        }
+
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="expiryDate" class="form-label">⏳ Set Expiry</label>
+                                            <fieldset [disabled]="editValue">
+                                            <input type="date" class="form-control rounded" id="expiryDate"
+                                                [value]="Displaydate"  formControlName="Tm_Str"  [min]="today"
+                                                (change)="selectDate($event)">
+                                                </fieldset>
+                                        </div>
+
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="messageType" class="form-label">📋 Message
+                                                Type</label>
+                                            <fieldset [disabled]="editValue">
+                                                <select class="form-select rounded" id="messageType"
+                                                    formControlName="oMsg" (change)="selectMsgType($event)">
+                                                    <option value="" selected hidden>Select type</option>
+                                                    <option value="0">Information</option>
+                                                    <option value="1">Warning</option>
+                                                    <option value="2">Message</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="broadcastType" class="form-label">📢 Broadcast
+                                                Type</label>
+                                            <fieldset [disabled]="editValue">
+                                                <select class="form-select rounded" id="broadcastType"
+                                                    formControlName="oDisplayType" (change)="selectDisplay($event)">
+                                                    <option value="" selected hidden>Select type</option>
+                                                    <option value="0">POP</option>
+                                                    <option value="1">Both</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+
+
+
+                                        <!-- <div class="col-md-12">
+                                            <label for="banner" class="form-label">🖼️ Upload Banner</label>
+                                            <input class="form-control rounded-3" type="file" id="banner"
+                                                accept="image/*" formControlName="MessageImage" [value]="imageVal"
+                                                (change)="onFileSelected($event)" #fileInput>
+                                            <div class="form-text">Recommended: 900x300 • JPG, PNG, GIF
+                                            </div>
+                                            @if (imageVal){
+                                             <div  class="mt-2 text-muted">Selected File: {{ imageVal }}</div>
+                                            }
+                                        </div> -->
+
+
+                                        <div class="col-md-12">
+                                            <label class="form-label">🖼️ Upload Banner</label>
+
+                                            <div class="input-group">
+                                                <!-- Hidden native input -->
+                                                <input type="file" accept="image/*" (change)="onFileSelected($event)"
+                                                    #fileInput hidden />
+
+                                                <!-- Custom input and button -->
+                                                <input type="text" class="form-control" [value]="imageVal"
+                                                    placeholder="Choose file..." readonly />
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    (click)="fileInput.click()">
+                                                    Browse
+                                                </button>
+                                            </div>
+
+                                            <div class="form-text">Recommended: 900x300 • JPG, PNG, GIF</div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div class="d-flex justify-content-end mt-4">
+                                        <button type="button"
+                                            class="btn btn-outline-secondary rounded me-3 px-4" (click)="startMsg()">Cancel</button>
+                                        @if (!editValue){
+                                        <button type="submit" class="btn btn-gradient-primary rounded px-4"
+                                          [disabled]="msgForm.invalid || radioVal == null"  (click)="createMsg()">Submit</button>
+                                        }
+                                        @if (editValue){
+                                        <button type="submit" class="btn btn-gradient-primary rounded px-4"
+                                            [disabled]="msgForm.invalid || radioVal == null" (click)="createMsg()">Update</button>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-12">
+                                    <label for="message" class="form-label">📝 Your Message</label>
+                                    <textarea class="form-control rounded-4" id="MessageText" rows="6"
+                                        placeholder="Type your message..." formControlName="MessageText"></textarea>
+                                </div>
+                            </div>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+                }
+            </div>
+
+        </div>
+        <div class="row">
+            @for (data of allMsgList; track $index) {
+            <div class="col-md-3 mt-3">
+
+                <div class="card">
+                    <div class="card-header greencard">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <p class="fw600 mb-0 text-white me-3">#{{data.MsgId}}</p>
+                                @if (data.oMsg == 0){
+                                  <span class="badge bg-info">INFO</span>
+                                }
+                                 @if (data.oMsg == 1){
+                                    <span class="badge bg-warning">WARNING</span>
+                                 }
+                                  @if (data.oMsg == 2){
+                                      <span class="badge bg-success">MESSAGE</span>
+                                  }
+                            </div>
+                            <div>
+                                <div ngbDropdown container="body">
+                                    <button type="button" class="btn btn-outline-success btn-sm" ngbDropdownToggle><i
+                                            class="fa-solid fa-ellipsis-vertical text-white"></i></button>
+                                            @if (userProfile != 0 && data.Profile > 0){
+                                    <div ngbDropdownMenu>
+                                        <button ngbDropdownItem class="fs13" (click)="editMsg(data)">Edit</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button ngbDropdownItem class="fs13" (click)="deleteMsg(data)">Delete</button>
+                                    </div>
+                                }
+                                   @if (userProfile == 0 ){
+                                    <div ngbDropdownMenu>
+                                        <button ngbDropdownItem class="fs13" (click)="editMsg(data)">Edit</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button ngbDropdownItem class="fs13" (click)="deleteMsg(data)">Delete</button>
+                                    </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                        @if (today < data.Expiry.Tm_Str ){
+                        <p class="fs10 mb-0 text-white">Exp Date: {{data.Expiry.Tm_Str | date:'yyyy-MM-dd'}}</p>
+                        }
+                        @if (today > data.Expiry.Tm_Str ){
+                        <p class="fs10 mb-0 text-white"><b>EXPIRED</b></p>
+                        }
+                    </div>
+                    <div class="card-body mc-scroll">
+                        <img class="img-fluid mb-2" src="{{data.MessageImage}}">
+                        <div>
+                            <p>{{data.MessageText}}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-end">
+                            @if (data.Profile == 0){
+                            <p class="text-success mb-0 fs13">Broadcast</p>
+                            }
+                            @if (data.Profile != 0){
+                            <p class="text-success mb-0 fs13">Individual</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            } @empty{
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center mt-5">
+                        <img src="assets/images/nodata1.png" class="img-fluid mb-3" alt="No Messages"
+                            style="max-width: 150px;">
+                        <h5 class="text-muted">No messages found yet.</h5>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+    </div>
+</section>

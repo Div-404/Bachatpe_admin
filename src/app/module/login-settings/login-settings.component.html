@@ -1,0 +1,138 @@
+<section class="page pt-4" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+  <div class="container-fluid">
+    <div class="row pe-3">
+      <div class="col-md-12 pb-4">
+        <div class="card-header flex-center-between">
+          <p class="mb-0 fw600">Login Settings</p>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="card pt-4" style="background: #F6F9FC; min-height: 70vh; margin-bottom: 50px;">
+          <div class="card-body">
+            <div class="row mngcard">
+              <div class="col-md-5 m-auto">
+                <div class="card p-4">
+                  <div class="card-body">
+
+                    <form [formGroup]="form" (ngSubmit)="onSave()">
+                      <!-- Email Authentication -->
+                      <div class="auth-box">
+                        <div class="box-title">Email Authentication</div>
+
+                        <div class="row g-2">
+                          <div class="col-md-6">
+                            <label class="form-check d-flex align-items-center gap-2">
+                              <input class="form-check-input" type="checkbox" formControlName="emailPwd" />
+                              <span class="form-check-label">Password</span>
+                            </label>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-check d-flex align-items-center gap-2">
+                              <input class="form-check-input" type="checkbox" formControlName="emailOtp" />
+                              <span class="form-check-label">OTP</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Phone Authentication -->
+                      <div class="auth-box">
+                        <div class="box-title">Phone Authentication</div>
+
+                        <div class="row g-2">
+                          <div class="col-md-6">
+                            <label class="form-check d-flex align-items-center gap-2">
+                              <input class="form-check-input" type="checkbox" formControlName="phonePwd" />
+                              <span class="form-check-label">Password</span>
+                            </label>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-check d-flex align-items-center gap-2">
+                              <input class="form-check-input" type="checkbox" formControlName="phoneOtp" />
+                              <span class="form-check-label">OTP</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- PIN Authentication -->
+                      <div class="auth-box">
+                        <div class="box-title">PIN Authentication</div>
+
+                        <div class="row align-items-center g-2">
+                          <div class="col-md-6">
+                            <label class="form-check d-flex align-items-center gap-2 mb-0">
+                              <input class="form-check-input" type="checkbox" formControlName="loginPin" />
+                              <span class="form-check-label">Active Login</span>
+                            </label>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="d-flex align-items-center gap-2 justify-content-md-end justify-content-start">
+                              <span class="idle-label">Auto Lock Time</span>
+
+                              <input
+  class="form-control idle-input"
+  type="text"
+  inputmode="numeric"
+  maxlength="3"
+  formControlName="idleTmMin"
+  (keydown)="numberOnlyKeydown($event)"
+  (input)="sanitizeIdleInput()"
+  (blur)="normalizeIdleOnBlur()"
+  [readonly]="!form.get('loginPin')?.value"
+  [class.readonly-look]="!form.get('loginPin')?.value"
+  placeholder=""
+/>
+                              <span class="idle-label">mins</span>
+                            </div>
+
+                            <div class="small text-muted mt-1" *ngIf="form.get('loginPin')?.value">
+                              Enter auto Lock time in minutes.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3">
+                          <div class="col-md-12">
+                            <label class="form-check d-flex align-items-center gap-2 mb-0">
+                              <input class="form-check-input" type="checkbox" formControlName="transPin" />
+                              <span class="form-check-label">Active Transaction</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Actions -->
+                      <div class="row mt-4">
+                        <div class="col-md-3">
+                          <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="onCancel()" [disabled]="loading">
+                            Cancel
+                          </button>
+                        </div>
+                        <div class="col-md-9">
+                          <button type="submit" class="btn btn-success w-100 btn-sm0" [disabled]="loading">
+                            <span *ngIf="!loading">Save</span>
+                            <span *ngIf="loading">Saving...</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="text-center mt-3" *ngIf="loadError">
+                        <small class="text-danger">{{ loadError }}</small>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div><!-- /row -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

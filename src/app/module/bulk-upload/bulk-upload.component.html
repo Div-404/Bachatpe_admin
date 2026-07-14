@@ -1,0 +1,144 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Bulk Payment</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card mb-3">
+                    <div class="card-body pb-0">
+                        <div class="upload-file mb-3 p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h5>You can upload bulk payment excel here</h5>
+                                            <p class="mb-3">Enter the required details in the <span>sample-download</span> template and upload (.xls, .xlsx, .csv)</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sample-download" (click)="downloadSampleFileBank()">
+                                    <i class='bx bx-file icon'></i> Sample Download
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="upload-excel w-50 p-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="icon me-3"><i class='bx bx-file'></i></div>
+                                                <div>
+                                                    <h5>{{ fileData ? fileName : 'No file selected' }}</h5>
+                                                    <p class="mb-0">Uploading data from the file</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="uploadProgress !== undefined">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" [style.width.%]="uploadProgress" [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div class="ms-2">{{ uploadProgress }}%</div>
+                                                <div class="ms-4">
+                                                    <button class="btn btn-secondary upload-button d-flex align-items-center" (click)="cancelUpload()">
+                                                        <i class='bx bx-x icon'></i> Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="uploadInput" class="btn btn-secondary upload-button ps-5 pe-5">
+                                        <i class='bx bx-upload icon'></i> Upload File
+                                    </label>
+                                    <input id="uploadInput" type="file" style="display: none;" (change)="onFileChange($event, 'bank')" #fileInput>
+                                </div>
+                            </div>
+
+                            <div *ngIf="headerMismatchMsg" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                <p class="mb-0" style="color: #2E3346;">
+                                    <i class='bx bx-message-rounded-error' style="font-size: 16px;"></i> Your Uploaded excel sheet <span class="alert-link">Headers does not match</span>. Please try again.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div   *ngIf="fileData != null" class="d-flex align-items-center justify-content-between">
+                            <h6 class="page-title-1">Current Ledger</h6>
+                        </div>
+
+                        <div class="table-responsive" *ngIf="fileData != null">
+                            <hr class="mt-2">
+                            <table class="table table-bordered text-nowrap border-bottom no-footer table-hover table-striped">
+                                <thead *ngIf="fileData != null">
+                                    <tr>
+                                        <!-- <th>Timestamp</th> -->
+                                        <th>Code</th>
+                                        <th>Type</th>
+                                        <th>Phone</th>
+                                        <th>Amount</th>
+                                        <th>Comment</th>
+                                        <!-- <th>Admin Remarks</th> -->
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of fileData; let i = index">
+                                      <!-- <td><p class="mb-0">{{ row.Timestamp }}</p></td> -->
+                                      <td><p class="mb-0">{{ row.Code }}</p></td>
+                                      <td><p class="mb-0">{{ row.Type }}</p></td>
+                                      <td><p class="mb-0">{{ row.Phone }}</p></td>
+                                      <td><p class="mb-0">{{ row.Amount }}</p></td>
+                                      <td><p class="mb-0">{{ row.Comment }}</p></td>
+                                      <!-- <td><p class="mb-0">{{ row.AdmRemarks }}</p></td> -->
+                                      <td>
+                                        <button class="btn btn-danger btn-sm" (click)="removeRow(i)">
+                                          <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                <tbody *ngIf="fileData == null">
+                                    <tr class="statment-bg">
+                                        <td colspan="12">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div>
+                                                            <img src="assets/images/no-data.png" class="img-fluid" width="180px">
+                                                        </div>
+                                                        <h2 class="no-data-text">No Data Found</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+
+                        <div class="text-end mb-3 d-flex" *ngIf="fileData?.length">
+                            <button class="btn btn-secondary me-2" (click)="processFile()"><i class='bx bx-check-circle icon' style="vertical-align: middle;"></i> Process</button>
+                            <!-- <input style="width:200px" type="email" class="form-control" id="email" name="email">
+                            <button class="btn btn-secondary">Save</button> -->
+                            <button class="btn btn-secondary" style="background: red !important; border-color: red !important" (click)="cancelUpload()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

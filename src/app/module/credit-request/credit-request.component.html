@@ -1,0 +1,307 @@
+
+<section class="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <p class="mb-0 fw600" >Credit Requests</p>
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-md-12">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <!-- <input type="radio" class="btn-check" name="options-outlined" id="success-outlined1" autocomplete="off" checked (click)="updateReserve1('BALANCE')">
+                            <label class="btn btn-outline-secondary btn-sm me-2" for="success-outlined1">
+                                <i class="fa-solid fa-hand-holding-dollar me-1"></i> Balance
+                            </label>
+                
+                            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined2" autocomplete="off" (click)="updateReserve1('CREDIT')">
+                            <label class="btn btn-outline-secondary btn-sm me-2" for="danger-outlined2">
+                                <i class="fa-solid fa-comment-dollar me-1"></i> Credit
+                            </label>
+                
+                            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined3" autocomplete="off" (click)="updateReserve1('AEPS')">
+                            <label class="btn btn-outline-secondary btn-sm" for="danger-outlined3">
+                                <i class="fa-solid fa-fingerprint me-1"></i> AEPS
+                            </label> -->
+                        </div>
+                
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-center">
+                                    <div class="cc-search me-3">
+
+                                        <!-- <select class="form-select form-select-sm" (change)="selectSatus($event)"
+                                            [(ngModel)]="statusValFil">
+                                            <option value="0">All</option>
+                                            <option value="5">Success</option>
+                                            <option value="1">Pending</option>
+                                            <option value="3">Reject</option>
+                                            <option value="2">Suspend</option>
+                                        </select>
+                                        <label>Status</label> -->
+                                    </div>
+                                    <!-- <div class="me-3">
+                                        <p class="mb-0 fw600">All Users</p>
+                                    </div> -->
+                                    <div>
+                                        
+                                        <div class="cc-search me-3">
+
+                                            <select class="form-select form-select-sm" (change)="selectUser($event)"
+                                                [(ngModel)]="searchId">
+                                                <option value="0" selected >All</option>
+                                                <option value="1">Name</option>
+                                                <option value="7">Phone</option>
+                                                <option value="8">User Code</option>
+                                            </select>
+                                            <label>Filter By</label>
+                                        </div>
+                                    </div>
+                                    <div class="cc-search me-3">
+                                        <div class="input-group input-group-sm">
+                                            <!-- <fieldset></fieldset> -->
+                                            <input type="text" class="form-control" placeholder="Search"
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                                [(ngModel)]="searchVal" [disabled]="searchId == '0'">
+                                            @if (!crossIcon) {
+                                            <button class="input-group-text" id="basic-addon2" [disabled]="!searchVal" (click)="search()"><i
+                                                    class="fa-solid fa-magnifying-glass" ></i>
+                                            </button>
+                                            }
+                                            @if (crossIcon){
+                                            <span class="input-group-text" id="basic-addon2"><i
+                                                    class="fa-solid fa-xmark text-danger" (click)="clear()"></i>
+                                            </span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="cc-search me-3">
+
+                                        <select class="form-select form-select-sm" (change)="selectSatus($event)"
+                                            [(ngModel)]="statusVal">
+                                            <option value="0">All</option>
+                                            <option value="5">Success</option>
+                                            <option value="1">Pending</option>
+                                            <option value="3">Reject</option>
+                                            <option value="2">Suspend</option>
+                                        </select>
+                                        <label>Status</label>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>User details</th>
+                                            <th>Amount</th>
+                                            
+                                            <th>Status</th>
+                                            <th>Settlement</th>
+                                            <th>Auto Debit</th>
+                                            <th>Remarks</th>
+                                           
+                                            
+                                        </tr>
+                                    </thead>
+                                    @for (data of creditList; track $index) {
+                                    <tbody>
+                                        <tr>
+                                            <td><p class="mb-0">{{ data.Tm.Tm_Str | date: 'yyyy-MM-dd h:mm a' }}</p></td>
+                                              <td >
+                                                <div  class="d-flex0 align-items-center">
+                                                    <p  class="tbl-user-name mb-0">{{data.oUser.Name}}</p>
+                                                    <p class="tbl-user-name mb-0">{{data.oUser.Phone}} /{{data.oUser.Code}}</p></div>
+                                              </td>
+                                            <td class=""><p class="mb-0"><b>{{ data.oTrans.Amount | number:'1.2-2' }}</b></p></td>
+                                            <td class="">
+                                                @if (data.Status == 1) {
+                                                    <div style="cursor: pointer;" class="status-pending" (click)="openLg(content, data)">
+                                                      <div><i class="fa-solid fa-circle-minus"></i></div>
+                                                      <span>PENDING</span>
+                                                    </div>
+                                                    }
+                                                    <!-- @if (data.Status == 3) {
+                                                    <div class="status-cancel">
+                                                      <div><i class="fa-solid fa-circle-xmark"></i></div>
+                                                      <span>Rejected</span>
+                                                    </div>
+                                                    }
+                                                    @if (data.Status == 5) {
+                                                    <div class="status-success">
+                                                      <div><i class="fa-solid fa-circle-check"></i></div>
+                                                      <span>Success</span>
+                                                    </div>
+                                                    } -->
+                                            </td>
+                                            <td class=""><p class="mb-0">{{ data.oTrans.ValidTill | date:'yyyy-MM-dd' }}</p></td>
+                                            <td class="">
+                                                @if (data.oTrans.Auto_Debit === 1) {
+                                                    <div><i  class="fa-solid fa-circle-check text-success"></i></div>
+                                                }
+                                                @if (data.oTrans.Auto_Debit === 2) {
+                                                    <div><i  class="fa-solid fa-circle-xmark text-danger"></i></div>
+                                                }
+                                            </td>
+                                            <td class=""><p class="mb-0">{{ data.oTrans.Remarks }}</p></td>
+                                        </tr>
+                                    </tbody>
+                                } @empty {
+                                    
+                                        <!-- <ng-template #noDataTemplate> -->
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="7">
+                                                    <div class="no-data-container text-center">
+                                                        <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                        <h5 class="no-data-text">No Data Found.</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                   
+                                        <!-- </ng-template> -->
+                                    }
+                                   
+                                </table>
+
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                    @if (Count > 0 && creditList.length != 0) {
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                      <a class="page-link" (click)="setPage(1)">First</a>
+                
+                                    </li>
+                
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                      <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+                
+                                    </li>
+                
+                                    <li *ngFor="let page of pager.pages" class="page-item"
+                                      [ngClass]="{active:pager.currentPage === page}">
+                                      <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                      <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+                
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                      <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                    </li>
+                
+                                    }
+                                  
+                                </ul>
+                            </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">Update Request</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+         
+         <div class="row mb-3">
+            <div class="col-md-5">Amount</div>
+            <div class="col-md-7">
+                <div>
+                    <input type="" class="form-control" id="email"  name="email" [value]="modalVal.oTrans.Amount" readonly>
+                </div>
+            </div>
+         </div>
+         <div class="row mb-4">
+            <div class="col-md-5">Settlement</div>
+            <div class="col-md-7"><div>
+                <input type="date" class="form-control" id="email"  name="email"  [value]="modalVal.oTrans.ValidTill | date:'yyyy-MM-dd'" readonly>
+            </div></div>
+         </div>
+         <div class="row mb-3">
+            <div class="col-md-5">Auto Debit</div>
+            <div class="col-md-7">
+               <div class="d-flex">
+                <div class="form-check me-4">
+                    <input type="radio" class="form-check-input" id="radio1" name="optradio1" value="1" (change)="radioChange(1)" 
+                    [checked]="modalVal.oTrans.Auto_Debit === 1">Enable
+                    <label class="form-check-label" for="radio1"></label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio1" name="optradio1" value="2" (change)="radioChange(2)"
+                    [checked]="modalVal.oTrans.Auto_Debit === 2">Disable
+                    <label class="form-check-label" for="radio1"></label>
+                  </div>
+               </div>
+                <!-- <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                  </div> -->
+            </div>
+         </div>
+         <div class="row mb-3">
+            <div class="col-md-5">Status</div>
+            <div class="col-md-7">
+                <div class="d-flex">
+                    <div class="form-check me-4">
+                        <input type="radio" class="form-check-input" id="radio2" name="optradio2" value="2" (change)="statusChange(2)"
+                        [checked]="modalVal.Status === 2">Success
+                        <label class="form-check-label" for="radio2"></label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2" name="optradio2" (change)="statusChange(3)" value="3"
+                        [checked]="modalVal.Status === 3">Reject
+                        <label class="form-check-label" for="radio2"></label>
+                      </div>
+                   </div>
+                <!-- <select class="form-select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select> -->
+            </div>
+         </div>
+        
+        </div>
+        <div  class="modal-footer"><button  type="button" class="btn btn-success btn-sm px-5" [disabled]="!statsuSub" (click)="updateModal()">Submit</button></div>
+      </ng-template>
+  
+  
+
+ 
+
+
+
+</section>

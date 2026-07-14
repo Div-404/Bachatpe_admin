@@ -1,0 +1,66 @@
+.form-label {
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-outline-success {
+  background: #fff;
+}
+
+.mngcard {
+  .card {
+    transition: all 0.2s;
+    &:hover {
+      box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+      transform: scale(1.01);
+    }
+  }
+}
+
+.card-body {
+  min-height: 268px;
+  padding: 8px;
+}
+
+.auth-box {
+  position: relative;
+  background: #fff;
+  border: 1.5px solid #e2e3e5; // close to black look like your sample
+  border-radius: 8px;
+  padding: 18px 16px 14px;
+  margin-bottom: 18px;
+}
+
+.box-title {
+  position: absolute;
+  top: -12px;
+  left: 14px;
+  background: #fff;
+  padding: 0 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #111827;
+}
+
+.form-check-input {
+  margin-top: 0;
+}
+
+.idle-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+}
+
+.idle-input {
+  width: 90px;
+  height: 34px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.readonly-look {
+  background: #f3f4f6 !important;
+  cursor: not-allowed;
+}

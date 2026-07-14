@@ -1,0 +1,518 @@
+<section class="page">
+  <div class="container">
+
+    <div class="row pt-1">
+
+      <div class="col-md-12 mb-3">
+        <div class="btn btn-outline-success btn-sm fs12 goback" (click)="goBack()">
+          <i class="fa-solid fa-circle-arrow-left me-1"></i> Go to back
+        </div>
+      </div>
+
+      <!-- Left Column – user details -->
+      <div class="col-md-7">
+        <div class="card h-100">
+          <div class="card-body">
+            <ul class="userdetails-ul mb-0">
+
+              <li>
+                <div class="lbl">Name</div>
+                <div class="val">{{ userFirst }} {{ userLast }}</div>
+              </li>
+
+              <li>
+                <div class="lbl">Code</div>
+                <div class="val">{{ userCode }}</div>
+              </li>
+
+              <li>
+                <div class="lbl">Type</div>
+                <div class="val utypes">{{ userType == '3' ? 'Retailer' : userType }}</div>
+              </li>
+
+              <li>
+                <div class="lbl">Active Package</div>
+                <div class="val upack">
+                  {{ activePackageLabel }}
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column – assign package -->
+      <div class="col-md-5">
+        <div class="card p-3 h-100">
+
+          <div class="mb-3">
+            <label class="form-label mb-2">Select Package</label>
+            <select
+              class="form-select"
+              [(ngModel)]="selectedPkgId"
+              (change)="onPackageChange()"
+              [disabled]="hasAssignedPackage"
+            >
+              <option [ngValue]="null" selected hidden>Select</option>
+              <option *ngFor="let p of allPackages" [ngValue]="p.PkgID">
+                {{ p.Pkg }} {{ p.DefPkg === 1 ? '(Default)' : '' }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mt-5">
+            <button
+              class="btn btn-success w-100"
+              (click)="onAssignPackage()"
+              [disabled]="hasAssignedPackage || !selectedPkgId || assigning"
+            >
+              Update package
+            </button>
+          </div>
+
+          <div *ngIf="hasAssignedPackage" class="mt-2 text-success fs12">
+            Package already assigned. You can modify limits below.
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Limits editor – only when a package is assigned -->
+    <div class="row mt-4" *ngIf="hasAssignedPackage">
+      <div class="col-md-12">
+
+        <div class="card">
+          <div class="card-header flex-center-between">
+            <p class="mb-0 fw600">
+              Package Limits – {{ activePackageLabel }}
+            </p>
+          </div>
+
+          <div class="card-body p-3" style="min-height: 450px;">
+
+            <!-- Tabs -->
+            <ul class="tabnavc-ul ps-0 mb-5">
+              <li [ngClass]="{ 'active': libuysellTab === 'money' }"
+                  (click)="libuysellTab = 'money'">
+                <div class="tabnavc-a">
+                  <div><span class="tabnavc-txt">Money Transfer</span></div>
+                </div>
+              </li>
+              <li [ngClass]="{ 'active': libuysellTab === 'recharge' }"
+                  (click)="libuysellTab = 'recharge'">
+                <div class="tabnavc-a">
+                  <div><span class="tabnavc-txt">Recharge</span></div>
+                </div>
+              </li>
+              <li [ngClass]="{ 'active': libuysellTab === 'booking' }"
+                  (click)="libuysellTab = 'booking'">
+                <div class="tabnavc-a">
+                  <div><span class="tabnavc-txt">Booking</span></div>
+                </div>
+              </li>
+              <li [ngClass]="{ 'active': libuysellTab === 'billing' }"
+                  (click)="libuysellTab = 'billing'">
+                <div class="tabnavc-a">
+                  <div><span class="tabnavc-txt">Utility Bill</span></div>
+                </div>
+              </li>
+              <li [ngClass]="{ 'active': libuysellTab === 'misc' }"
+                  (click)="libuysellTab = 'misc'">
+                <div class="tabnavc-a">
+                  <div><span class="tabnavc-txt">Misc Service</span></div>
+                </div>
+              </li>
+            </ul>
+
+            <!-- TAB: Money Transfer (lstMT) -->
+            <div *ngIf="libuysellTab === 'money'">
+              <div *ngIf="mtList.length; else noMoney">
+                <div class="mb-4" *ngFor="let mt of mtList; let i = index">
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [id]="'mt_' + i"
+                      [checked]="mt.oConfig === 1"
+                      (change)="onMtCheckboxChange(mt, $event)"
+                    />
+                    <label class="form-check-label fw-semibold" [for]="'mt_' + i">
+                      {{ mt.Serv }}
+                    </label>
+                  </div>
+
+                  <div class="row mb-2 align-items-center">
+                    <div class="col-md-3">Retailer to Sender</div>
+                    <div class="col-md-3">
+                      <!-- <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="mt.oLimit.Lmt_RL_Sender"
+                      /> -->
+                      <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="mt.oLimit.Lmt_RL_Sender | number:'1.2-2'"
+  (ngModelChange)="mt.oLimit.Lmt_RL_Sender = $event"
+  [disabled]="mt.oConfig !== 1"
+/> -->
+<!-- <input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(mt.oLimit.Lmt_RL_Sender )"
+  (input)="onStrictAmountInput(mt, $event)"
+  (blur)="onStrictAmountBlurLimit(mt,'Lmt_RL_Sender')"
+  (focus)="onStrictAmountFocus(mt, $event)"
+  [disabled]="mt.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(mt.oLimit, 'Lmt_RL_Sender')"
+  (input)="onLimitInput(mt.oLimit, 'Lmt_RL_Sender', $event)"
+  (blur)="onLimitBlur(mt.oLimit, 'Lmt_RL_Sender')"
+  (focus)="onLimitFocus(mt.oLimit, 'Lmt_RL_Sender', $event)"
+  [disabled]="mt.oConfig !== 1"
+/>
+
+                    </div>
+                  </div>
+
+                  <div class="row mb-2 align-items-center">
+                    <div class="col-md-3">Retailer to Account</div>
+                    <div class="col-md-3">
+                      <!-- <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="mt.oLimit.Lmt_RL_Account"
+                      /> -->
+                      <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="mt.oLimit.Lmt_RL_Account | number:'1.2-2'"
+  (ngModelChange)="mt.oLimit.Lmt_RL_Account = $event"
+  [disabled]="mt.oConfig !== 1"
+/> -->
+<!-- <input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(mt.oLimit.Lmt_RL_Account )"
+  (input)="onStrictAmountInput(mt, $event)"
+  (blur)="onStrictAmountBlurLimit(mt,'Lmt_RL_Account')"
+  (focus)="onStrictAmountFocus(mt, $event)"
+  [disabled]="mt.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(mt.oLimit, 'Lmt_RL_Account')"
+  (input)="onLimitInput(mt.oLimit, 'Lmt_RL_Account', $event)"
+  (blur)="onLimitBlur(mt.oLimit, 'Lmt_RL_Account')"
+  (focus)="onLimitFocus(mt.oLimit, 'Lmt_RL_Account', $event)"
+  [disabled]="mt.oConfig !== 1"
+/>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3 align-items-center">
+                    <div class="col-md-3">Sender to Account</div>
+                    <div class="col-md-3">
+                      <!-- <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="mt.oLimit.Lmt_Account_SenderID"
+                      /> -->
+                      <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="mt.oLimit.Lmt_Account_SenderID | number:'1.2-2'"
+  (ngModelChange)="mt.oLimit.Lmt_Account_SenderID = $event"
+  [disabled]="mt.oConfig !== 1"
+/> -->
+<!-- <input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(mt.oLimit.Lmt_Account_SenderID)"
+  (input)="onStrictAmountInput(mt, $event)"
+  (blur)="onStrictAmountBlurLimit(mt,'Lmt_Account_SenderID')"
+  (focus)="onStrictAmountFocus(mt, $event)"
+  [disabled]="mt.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(mt.oLimit, 'Lmt_Account_SenderID')"
+  (input)="onLimitInput(mt.oLimit, 'Lmt_Account_SenderID', $event)"
+  (blur)="onLimitBlur(mt.oLimit, 'Lmt_Account_SenderID')"
+  (focus)="onLimitFocus(mt.oLimit, 'Lmt_Account_SenderID', $event)"
+  [disabled]="mt.oConfig !== 1"
+/>
+                    </div>
+                  </div>
+
+                  <hr *ngIf="i < mtList.length - 1" />
+                </div>
+              </div>
+
+              <ng-template #noMoney>
+                <p class="text-muted mb-0">No money transfer limits for this package.</p>
+              </ng-template>
+            </div>
+
+            <!-- TAB: Recharge (oType = 2) -->
+            <div *ngIf="libuysellTab === 'recharge'">
+              <ng-container *ngIf="getRbuGroup(2) as grp; else noRecharge">
+                <div
+                  class="row align-items-center mb-3"
+                  *ngFor="let s of grp.lstSrvice; let i = index"
+                >
+                  <div class="col-md-3 d-flex align-items-center">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      [id]="'rech_' + i"
+                      [checked]="s.oConfig === 1"
+                      (change)="onServiceCheckboxChange(s, $event)"
+                    />
+                    <label class="form-check-label fw-semibold" [for]="'rech_' + i">
+                      {{ s.Serv }}
+                    </label>
+                  </div>
+                  <div class="col-md-3">
+                    <!-- <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="s.Limit"
+                    /> -->
+                    <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="s.Limit | number:'1.2-2'"
+  (ngModelChange)="s.Limit = $event"
+  [disabled]="s.oConfig !== 1"
+/> -->
+<!-- <input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(s.Limit)"
+  (input)="onStrictAmountInput(s, $event)"
+  (blur)="onStrictAmountBlur(s)"
+  (focus)="onStrictAmountFocus(s, $event)"
+  [disabled]="s.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(s, 'Limit')"
+  (input)="onLimitInput(s, 'Limit', $event)"
+  (blur)="onLimitBlur(s, 'Limit')"
+  (focus)="onLimitFocus(s, 'Limit', $event)"
+  [disabled]="s.oConfig !== 1"
+/>
+
+
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-template #noRecharge>
+                <p class="text-muted mb-0">No recharge services for this package.</p>
+              </ng-template>
+            </div>
+
+            <!-- TAB: Booking (oType = 3) -->
+            <div *ngIf="libuysellTab === 'booking'">
+              <ng-container *ngIf="getRbuGroup(3) as grp; else noBooking">
+                <div
+                  class="row align-items-center mb-3"
+                  *ngFor="let s of grp.lstSrvice; let i = index"
+                >
+                  <div class="col-md-3 d-flex align-items-center">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      [id]="'book_' + i"
+                      [checked]="s.oConfig === 1"
+                      (change)="onServiceCheckboxChange(s, $event)"
+                    />
+                    <label class="form-check-label fw-semibold" [for]="'book_' + i">
+                      {{ s.Serv }}
+                    </label>
+                  </div>
+                  <div class="col-md-3">
+                    <!-- <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="s.Limit"
+                    /> -->
+                    <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="s.Limit | number:'1.2-2'"
+  (ngModelChange)="s.Limit = $event"
+  [disabled]="s.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(s, 'Limit')"
+  (input)="onLimitInput(s, 'Limit', $event)"
+  (blur)="onLimitBlur(s, 'Limit')"
+  (focus)="onLimitFocus(s, 'Limit', $event)"
+  [disabled]="s.oConfig !== 1"
+/>
+
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-template #noBooking>
+                <p class="text-muted mb-0">No booking services for this package.</p>
+              </ng-template>
+            </div>
+
+            <!-- TAB: Utility Bill (oType = 4) -->
+            <div *ngIf="libuysellTab === 'billing'">
+              <ng-container *ngIf="getRbuGroup(4) as grp; else noBilling">
+                <div
+                  class="row align-items-center mb-3"
+                  *ngFor="let s of grp.lstSrvice; let i = index"
+                >
+                  <div class="col-md-3 d-flex align-items-center">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      [id]="'bill_' + i"
+                      [checked]="s.oConfig === 1"
+                      (change)="onServiceCheckboxChange(s, $event)"
+                    />
+                    <label class="form-check-label fw-semibold" [for]="'bill_' + i">
+                      {{ s.Serv }}
+                    </label>
+                  </div>
+                  <div class="col-md-3">
+                    <!-- <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="s.Limit"
+                    /> -->
+                    <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="s.Limit | number:'1.2-2'"
+  (ngModelChange)="s.Limit = $event"
+  [disabled]="s.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(s, 'Limit')"
+  (input)="onLimitInput(s, 'Limit', $event)"
+  (blur)="onLimitBlur(s, 'Limit')"
+  (focus)="onLimitFocus(s, 'Limit', $event)"
+  [disabled]="s.oConfig !== 1"
+/>
+
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-template #noBilling>
+                <p class="text-muted mb-0">No utility bill services for this package.</p>
+              </ng-template>
+            </div>
+
+            <!-- TAB: Misc Service (oType = 5) -->
+            <div *ngIf="libuysellTab === 'misc'">
+              <ng-container *ngIf="getRbuGroup(5) as grp; else noMisc">
+                <div
+                  class="row align-items-center mb-3"
+                  *ngFor="let s of grp.lstSrvice; let i = index"
+                >
+                  <div class="col-md-3 d-flex align-items-center">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      [id]="'misc_' + i"
+                      [checked]="s.oConfig === 1"
+                      (change)="onServiceCheckboxChange(s, $event)"
+                    />
+                    <label class="form-check-label fw-semibold" [for]="'misc_' + i">
+                      {{ s.Serv }}
+                    </label>
+                  </div>
+                  <div class="col-md-3">
+                    <!-- <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="s.Limit"
+                    /> -->
+                    <!-- <input
+  type="number"
+  class="form-control"
+  [ngModel]="s.Limit | number:'1.2-2'"
+  (ngModelChange)="s.Limit = $event"
+  [disabled]="s.oConfig !== 1"
+/> -->
+<input
+  type="text"
+  class="form-control"
+  placeholder="0.00"
+  [value]="displayLimit(s, 'Limit')"
+  (input)="onLimitInput(s, 'Limit', $event)"
+  (blur)="onLimitBlur(s, 'Limit')"
+  (focus)="onLimitFocus(s, 'Limit', $event)"
+  [disabled]="s.oConfig !== 1"
+/>
+
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-template #noMisc>
+                <p class="text-muted mb-0">No misc services for this package.</p>
+              </ng-template>
+            </div>
+
+          </div>
+
+          <!-- <div class="card-footer">
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <button
+                  class="btn btn-success w-100"
+                  type="button"
+                  (click)="onSaveLimits()"
+                  [disabled]="savingLimits"
+                >
+                  Update Limits
+                </button>
+              </div>
+            </div>
+          </div> -->
+          <div class="card-footer d-flex justify-content-end">
+   <button class="btn btn-success" (click)="onSaveLimits()">Update Limits</button>
+</div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

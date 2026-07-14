@@ -1,0 +1,333 @@
+.signup {
+    height: 100vh;
+    display: flex;
+
+}
+
+.bg-signup-img {
+    position: absolute;
+    height: 100vh;
+    background-image: url(/assets/images/bgSvg.svg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.05;
+    z-index: -1;
+    inset: 0 0 0 0;
+
+}
+
+.tabnavc-ul li {
+    cursor: pointer;
+    position: relative;
+}
+
+
+.signup_form .already p {
+    font-size: 13px;
+}
+
+.signup_form .already a {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.overlay {
+    position: absolute;
+    background: #0A6850;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    inset: 0 0 0 0;
+
+}
+
+
+
+.signup_form .form-label,
+.signup_form .form-check {
+    font-size: 13.5px;
+    margin-bottom: .25rem;
+}
+
+.form-control {
+    font-size: 13px;
+    padding: 12px 16px;
+   
+    background: #f7f7f7;
+
+}
+
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: none;
+}
+.form-control:focus {
+    border-color: #81B800;
+}
+input::placeholder {
+    color: #aaaaaa;
+}
+
+.noaccount p {
+    font-size: 14px;
+    text-align: center;
+    color: #aaaaaa;
+}
+
+//Animations 
+
+.mob-img {
+    background-image: url(/assets/images/rightimg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 350px;
+    position: relative;
+}
+
+.mob-img .img1-animation {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    top: auto;
+    bottom: 85%;
+    left: 15%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.mob-img .img1-animation.img1 {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    animation: scaleAnimation 3s infinite alternate;
+}
+
+@keyframes scaleAnimation {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.mob-img .img1-animation.img2 {
+    position: absolute;
+    top: auto;
+    bottom: 85%;
+    left: 20%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    animation: scaleAnimation1 3s infinite alternate;
+}
+
+@keyframes scaleAnimation1 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.mob-img .img1-animation.img3 {
+    position: absolute;
+    top: auto;
+    left: 43%;
+    bottom: 100%;
+    animation: scaleAnimation2 3s infinite alternate;
+}
+
+
+
+@keyframes scaleAnimation2 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.mob-img .img1-animation.img4 {
+    position: absolute;
+    top: 30%;
+    left: 80%;
+    animation: scaleAnimation3 3s infinite alternate;
+}
+
+@keyframes scaleAnimation3 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1.25);
+    }
+}
+
+.mob-img .img1-animation.img5 {
+    position: absolute;
+    top: 68%;
+    left: 70%;
+    animation: scaleAnimation4 3s infinite alternate;
+}
+
+
+
+@keyframes scaleAnimation4 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.mob-img .img1-animation.img6 {
+
+    position: absolute;
+    top: 68%;
+    left: 20%;
+    animation: scaleAnimation5 3s infinite alternate;
+}
+
+
+@keyframes scaleAnimation5 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.mob-img .img1-animation.img7 {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    animation: scaleAnimation6 3s infinite alternate;
+}
+
+@keyframes scaleAnimation6 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.mob-img .img1-animation.img8 {
+    position: absolute;
+    top: auto;
+    left: 68%;
+    bottom: 85%;
+    animation: scaleAnimation7 3s infinite alternate;
+}
+
+@keyframes scaleAnimation7 {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.login-card {
+    background: #fff;
+    padding: 15px 60px;
+    border-radius: 8px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cssbuttons-io-button {
+    background: #37af4a;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #37af4a;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .cssbuttons-io-button .icon {
+    background: #ffe228;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 8px;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #37af4a;
+    right: 0.3em;
+    transition: all 0.3s;
+  }
+  
+  .cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+  }
+  
+  .cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #7b52b9;
+  }
+  
+  .cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+  }
+  
+  .cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+  }
+  
+  .signback {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 12px;
+    .backcircle{
+        width:26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:#e3e3e3;
+        border-radius: 50px;
+        color:#000;
+    }
+}

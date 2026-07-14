@@ -1,0 +1,611 @@
+<section class="page pt-4" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+
+  <div class="container-fluid">
+    <div class="row pe-3">
+      <div class="col-md-12 pb-4">
+        <div class="card-header flex-center-between">
+          <p class="mb-0 fw600">Services</p>
+          <!-- <button class="btn btn-sm btn-success">Add</button> -->
+          <button class="btn btn-sm btn-success" (click)="openLg(content, 'add', 'data', 'type')"><i
+              class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Configure</button>
+
+        </div>
+      </div>
+      <div class="col-md-12 service-accordion">
+        <div ngbAccordion #accordion="ngbAccordion">
+          <div ngbAccordionItem="first" [collapsed]="false">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>Money Transfer</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                         <th>Service Type</th>
+                          <th>Execution Type</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (data of Money; track data) {
+                        <tr>
+                          <!-- Tooltip Template -->
+                          <ng-template #tooltip let-tags="tags">
+                            <div style="text-align: left;">
+                              <div><b>Included Tags</b></div>
+                              @for (tag of tags; track $index) {
+                              <div>{{ tag }}</div>
+                              }
+                            </div>
+                          </ng-template>
+
+                          <!-- Source + Tooltip -->
+                          <td>
+                            <div [ngbTooltip]="tooltip" [tooltipContext]="{ tags: data.lstTag }"
+                              [tooltipClass]="'custom-tooltip'" placement="top" container="body" class="d-inline-block"
+                              style="cursor: pointer;">
+                              <p class="mb-0 fs14">{{ data.Source }}
+                                <sup class="text-ex">
+                                  <i class="fa-solid fa-circle-exclamation"></i>
+                                </sup>
+                              </p>
+                            </div>
+                          </td>
+
+                          <!-- Vendor Name -->
+                          <td style="font-size: 14px;">
+                            {{ data.VendorName ?? 'Automatic' }}
+                          </td>
+
+                          <!-- Status -->
+                          <td>
+                            <div class="d-flex">
+                              <div class="me-3">
+                                @if(data.Status == 1) {
+                                <span class="text-success fs14">Active</span>
+                                }
+                                @if(data.Status == 0) {
+                                <span class="text-danger fs14">Inactive</span>
+                                }
+                              </div>
+                              <div>
+                                <div class="form-check form-switch">
+                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                    [checked]="data.Status == 1" (change)="statusChange(data, 1)">
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+
+                          <!-- Toggle Switch -->
+
+
+                          <!-- Actions Dropdown -->
+                          <td>
+                            <button class="btn btn-sm btn-outline-warning me-3 fs13"
+                              (click)="openLg(content, 'edit', data, 1)">
+                              <i class="fa-solid fa-pen-to-square"></i> Edit
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger fs13" (click)="deleteSource(data)">
+                              <i class="fa-regular fa-trash-can"></i> Delete
+                            </button>
+                          </td>
+                        </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+         <div ngbAccordionItem="second">
+		<h2 ngbAccordionHeader>
+			<button ngbAccordionButton>Recharge</button>
+		</h2>
+		<div ngbAccordionCollapse>
+			<div ngbAccordionBody>
+				<ng-template>
+					<div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                         <th>Service Type</th>
+                          <th>Execution Type</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (data of Recharge; track data;) {
+      <tr>
+        <!-- Tooltip Template -->
+        <ng-template #tooltip let-tags="tags">
+          <div style="text-align: left;">
+            <div><b>Included Tags</b></div>
+            @for (tag of tags; track $index) {
+              <div>{{ tag }}</div>
+            }
+          </div>
+        </ng-template>
+
+        <!-- Source with Tooltip -->
+        <td>
+          <div 
+            [ngbTooltip]="tooltip"
+            [tooltipContext]="{ tags: data.lstTag }"
+            [tooltipClass]="'custom-tooltip'"
+            placement="top"
+            container="body"
+            class="d-inline-block"
+            style="cursor: pointer;">
+            <p class="mb-0 fs14">{{ data.Source }}
+              <sup class="text-ex">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </sup>
+            </p>
+          </div>
+        </td>
+
+        <!-- Vendor Name -->
+        <td style="font-size: 14px;">
+          {{ data.VendorName ?? 'Automatic' }}
+        </td>
+
+        <!-- Status Display -->
+        <td>
+         <div class="d-flex">
+          <div class="me-3">
+             @if (data.Status == 1) {
+            <span class="text-success fs14">Active</span>
+          }
+          @if (data.Status == 0) {
+            <span class="text-danger fs14">Inactive</span>
+          }
+          </div>
+          <div>
+             <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox"
+              id="flexSwitchCheckChecked"
+              [checked]="data.Status == 1"
+              (change)="statusChange(data, 2)">
+          </div>
+          </div>
+         </div>
+        </td>
+
+        <!-- Actions Dropdown -->
+        <td>
+           <button class="btn btn-sm btn-outline-warning me-3 fs13"  (click)="openLg(content, 'edit', data, 2)">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+              
+              <button class="btn btn-sm btn-outline-danger fs13" (click)="deleteSource(data)">
+                <i class="fa-regular fa-trash-can"></i> Delete
+              </button>
+        </td>
+      </tr>
+    }
+                      </tbody>
+                    </table>
+                  </div>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+    <div ngbAccordionItem="third">
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>Booking</button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          	<div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                         <th>Service Type</th>
+                          <th>Execution Type</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       @for (data of Booking; track data;) {
+      <tr>
+        <!-- Tooltip Template -->
+        <ng-template #tooltip let-tags="tags">
+          <div style="text-align: left;">
+            <div><b>Included Tags</b></div>
+            @for (tag of tags; track $index) {
+              <div>{{ tag }}</div>
+            }
+          </div>
+        </ng-template>
+
+        <!-- Source with Tooltip -->
+        <td>
+          <div 
+            [ngbTooltip]="tooltip"
+            [tooltipContext]="{ tags: data.lstTag }"
+            [tooltipClass]="'custom-tooltip'"
+            placement="top"
+            container="body"
+            class="d-inline-block"
+            style="cursor: pointer;">
+            <p class="mb-0 fs14">{{ data.Source }}
+              <sup class="text-ex">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </sup>
+            </p>
+          </div>
+        </td>
+
+        <!-- Vendor Name -->
+        <td style="font-size: 14px;">
+          {{ data.VendorName ?? 'Automatic' }}
+        </td>
+
+        <!-- Status Label -->
+        <td>
+         <div class="d-flex">
+          <div class="me-3">
+             @if (data.Status == 1) {
+            <span class="text-success fs14">Active</span>
+          }
+          @if (data.Status == 0) {
+            <span class="text-danger fs14">Inactive</span>
+          }
+          </div>
+          <div>
+<div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              id="flexSwitchCheckChecked"
+              [checked]="data.Status == 1"
+              (change)="statusChange(data, 3)">
+          </div>
+          </div>
+         </div>
+        </td>
+
+       
+        <td>
+         <button  class="btn btn-sm btn-outline-warning me-3 fs13" (click)="openLg(content, 'edit', data, 3)">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+             
+              <button class="btn btn-sm btn-outline-danger fs13" (click)="deleteSource(data)">
+                <i class="fa-regular fa-trash-can"></i> Delete
+              </button>
+        </td>
+      </tr>
+    }
+                      </tbody>
+                    </table>
+                  </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 4 -->
+  <div ngbAccordionItem="fourth">
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>Utility</button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          	<div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                         <th>Service Type</th>
+                          <th>Execution Type</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       @for (data of Utility; track data;) {
+      <tr>
+        <!-- Tooltip Template -->
+        <ng-template #tooltip let-tags="tags">
+          <div style="text-align: left;">
+            <div><b>Included Tags</b></div>
+            @for (tag of tags; track $index) {
+              <div>{{ tag }}</div>
+            }
+          </div>
+        </ng-template>
+
+        <!-- Source + Tooltip -->
+        <td>
+          <div 
+            [ngbTooltip]="tooltip"
+            [tooltipContext]="{ tags: data.lstTag }"
+            [tooltipClass]="'custom-tooltip'"
+            placement="top"
+            container="body"
+            class="d-inline-block"
+            style="cursor: pointer;">
+            <p class="mb-0 fs14">
+              {{ data.Source }}
+              <sup class="text-ex">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </sup>
+            </p>
+          </div>
+        </td>
+
+        <!-- Vendor Name -->
+        <td style="font-size: 14px;">
+          {{ data.VendorName ?? 'Automatic' }}
+        </td>
+
+        <!-- Status Text -->
+        <td>
+         <div class="d-flex">
+          <div class="me-3">
+             @if (data.Status == 1) {
+            <span class="text-success fs14">Active</span>
+          }
+          @if (data.Status == 0) {
+            <span class="text-danger fs14">Inactive</span>
+          }
+          </div>
+          <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              id="flexSwitchCheckChecked"
+              [checked]="data.Status == 1"
+              (change)="statusChange(data, 4)">
+          </div>
+         </div>
+        </td>
+
+      
+        <td>
+           <button class="btn btn-sm btn-outline-warning me-3 fs13" (click)="openLg(content, 'edit', data, 4)">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+              
+              <button class="btn btn-sm btn-outline-danger fs13"  (click)="deleteSource(data)">
+                <i class="fa-regular fa-trash-can"></i> Delete
+              </button>
+        </td>
+      </tr>
+    }
+                      </tbody>
+                    </table>
+                  </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 5 -->
+  <div ngbAccordionItem="fifth">
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>Miscellaneous</button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+         <div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Service Type</th>
+                          <th>Execution Type</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      @for (data of Miscellaneous; track data;) {
+      <tr>
+        <!-- Tooltip Template -->
+        <ng-template #tooltip let-tags="tags">
+          <div style="text-align: left;">
+            <div><b>Included Tags</b></div>
+            @for (tag of tags; track $index) {
+              <div>{{ tag }}</div>
+            }
+          </div>
+        </ng-template>
+
+        <!-- Source with Tooltip -->
+        <td>
+          <div 
+            [ngbTooltip]="tooltip"
+            [tooltipContext]="{ tags: data.lstTag }"
+            [tooltipClass]="'custom-tooltip'"
+            placement="top"
+            container="body"
+            class="d-inline-block"
+            style="cursor: pointer;">
+            <p class="mb-0 fs14">
+              {{ data.Source }}
+              <sup class="text-ex">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </sup>
+            </p>
+          </div>
+        </td>
+
+        <!-- Vendor Name -->
+        <td style="font-size: 14px;">
+          {{ data.VendorName ?? 'Automatic' }}
+        </td>
+
+        <!-- Status -->
+        <td>
+          <div class="d-flex">
+            <div class="me-3">
+                @if(data.Status == 1) {
+            <span class="text-success fs14">Active</span>
+          }
+          @if(data.Status == 0) {
+            <span class="text-danger fs14">Inactive</span>
+          }
+            </div>
+            <div>
+              <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox"
+              id="flexSwitchCheckChecked"
+              [checked]="data.Status == 1"
+              (change)="statusChange(data, 5)">
+          </div>
+            </div>
+          </div>
+        </td>
+
+      
+        <td>
+          <button class="btn btn-sm btn-outline-warning me-3 fs13" (click)="openLg(content, 'edit', data, 5)">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+             
+              <button class="btn btn-sm btn-outline-danger fs13" (click)="deleteSource(data)">
+                <i class="fa-regular fa-trash-can"></i> Delete
+              </button>
+        </td>
+      </tr>
+    }
+                      </tbody>
+                    </table>
+                  </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+          
+        </div>
+
+
+      </div>
+     
+    </div>
+  </div>
+  
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Service Configuration </h4>
+      <button type="button" class="btn-close2 btn" aria-label="Close" (click)="closeModel(content)"><i
+          class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="sourceForm">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="pwd" class="form-label">Service Type</label>
+            <select class="form-select" (change)="selectServices($event)" formControlName="Type"
+              [(ngModel)]="serviceType" [ngClass]="{ 'is-invalid': submitted && f['Type'].errors }">
+              <option disabled selected value="">Service type</option>
+              <option value=1>Money Transfer</option>
+              <option value=2>Recharge</option>
+              <option value=3>Booking</option>
+              <option value=4>Utility Bill</option>
+              <option value=5>Miscellaneous</option>
+            </select>
+            @if (submitted && f['Type'].errors) {
+            <div class="invalid-feedback">
+              @if (f['Type'].errors['required']) {
+              <div>Service type is required</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <div class="">
+              <label for="pwd" class="form-label">Service Name</label>
+              <input type="email" class="form-control" name="email" formControlName="Source"
+                [ngClass]="{ 'is-invalid': submitted && f['Source'].errors }" placeholder="Enter service name">
+              @if (submitted && f['Source'].errors) {
+              <div class="invalid-feedback">
+                @if (f['Source'].errors['required']) {
+                <div>Service name is required</div>
+                }
+                @if (f['Source'].errors['pattern']) {
+                <div>Enter correct service Name</div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label for="pwd" class="form-label">Execution</label>
+            <div class="d-flex">
+              <div class="form-check me-3">
+                <input type="radio" class="form-check-input" name="oType" [value]="1" formControlName="oType" id="1"
+                  (change)="chnangeRadio($event)">Automatic
+                <label class="form-check-label" for="1"></label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" name="oType" [value]="2" formControlName="oType" id="2"
+                  (change)="chnangeRadio($event)">Manual
+                <label class="form-check-label" for="2"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mt-3">
+            @if (sourceForm.get('oType')?.value == 2){
+            <label for="pwd" class="form-label">API / Vendor</label>
+            <select class="form-select" (change)="selectVendor($event)" formControlName="APIId"
+              [ngClass]="{ 'is-invalid': submitted && f['APIId'].errors }">
+              <option value="0" disabled selected hidden>Select vendor</option>
+              @for (data of vendorList; track $index){
+              <option [value]="data.VendorID">{{data.Vendor}}</option>
+              }
+            </select>
+            @if (submitted && f['APIId'].errors) {
+            <div class="invalid-feedback">
+              @if (f['APIId'].errors['required']) {
+              <div>Service APIId is required</div>
+              }
+            </div>
+            }
+            }
+          </div>
+
+          <div class="col-md-12 mt-2 ngselect-badge">
+            <!-- <textarea class="form-control" rows="5" id="comment" name="text" ></textarea> -->
+            <label for="pwd" class="form-label">Tags</label>
+            <!-- <ng-select [items]="cities" [multiple]="true"> </ng-select> -->
+            <div class="d-flex align-items-center">
+              <input type="email" class="form-control me-3" formControlName="lstTag" placeholder="Enter Tag Name">
+              <button class="btn btn-success btn-sm" [disabled]="!sourceForm.get('lstTag')?.value"
+                (click)=addTages()>Add</button>
+            </div>
+          </div>
+          <div>
+            @for (tag of tagsList; track $index) {
+            <span class="badge bg-success me-1" (click)="removeTag($index)">{{tag}} <i
+                class="fa-solid fa-xmark"></i></span>
+            }
+            <!-- <span class="badge bg-success me-1">one <i class="fa-solid fa-xmark"></i></span> -->
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm px-5" (click)="addSource()">Submit</button>
+    </div>
+  </ng-template>
+</section>

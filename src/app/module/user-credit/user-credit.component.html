@@ -1,0 +1,119 @@
+
+ <div class="row">
+                    <div class="col-md-4 m-auto">
+                        <div class="row ">
+                            <div class="col-md-12">
+                               <div class="btncard" (click)="openLg3(content3)">
+                                <div class="icondiv"><i  class="fa-solid fa-circle-plus me-2"></i></div>
+                                <div class="txdiv">
+                                   Withdraw Request
+                                </div>
+                               </div> 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+<ng-template #content3 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Balance Withdraw</h4>
+        <div class="d-flex">
+            <div class="me-1 text-white">Credit: </div>
+            <div class="text-warning"><b>5000.00</b></div>
+        </div>
+        <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+    </div>
+    <div class="modal-body ">
+       <div class="row mb-4">
+        <div class="modaltop-user-details">
+            <div class="col-md-12 ddcor">
+                <div class="d-flex mb-1">
+                    <div class="divone"><p>Name:</p></div>
+                    <div class="divone-val"><p>Ashwani Khan</p></div>
+                </div>
+                <div class="d-flex mb-1">
+                    <div class="divone"><p>Code:</p></div>
+                    <div class="divone-val"><p>786</p></div>
+                </div>
+                <div class="d-flex mb-1">
+                    <div class="divone"><p>Phone:</p></div>
+                    <div class="divone-val"><p>786786786</p></div>
+                </div>
+            </div>
+        </div>
+       </div>
+       <div class="row align-items-center mb-3">
+            <div class="col-md-3"><label for="email" class="form-label">Amount</label></div>
+            <div class="col-md-9"><input type="email" class="form-control form-control-sm" id="email"  name="email"></div>
+       </div>
+       <div class="row align-items-center mb-3">
+            <div class="col-md-3"><label for="email" class="form-label">Remark</label></div>
+            <div class="col-md-9">  <textarea class="form-control" rows="2" id="comment" name="text"></textarea></div>
+        </div>
+       
+        
+    </div>
+    <div class="modal-footer">
+       <div class="row w-100">
+        <div class="col-md-10">
+            <button class="btn btn-success w-100 btn-shadow">Withdraw</button>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+        </div>
+       </div>
+    </div>
+   
+</ng-template>
+
+<!-- <ng-template #content2 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Withdraw Request</h4>
+        <div class="d-flex">
+            <div class="me-1 text-white">commission: </div>
+            <div class="text-warning"><b>5000.00</b></div>
+        </div>
+        
+    </div>
+    <div class="modal-body py-5">
+       
+       <div class="row">
+        
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Amount</label>
+                    <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Remark</label>
+                    <textarea class="form-control" rows="2" id="comment" name="text"></textarea>
+                </div>
+            </div>
+           
+       </div>
+      
+    </div>
+    <div class="modal-footer">
+       <div class="row w-100">
+        <div class="col-md-10">
+            <button class="btn btn-success w-100 btn-shadow">Request</button>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+        </div>
+       </div>
+    </div>
+   
+</ng-template> -->
+

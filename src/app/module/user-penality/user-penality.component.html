@@ -1,0 +1,180 @@
+<div class="col-md-12" >
+    <div class="col-md-12 mb-2">
+        @if (profileId != ''){
+            <button class="btn" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            }
+    </div>
+    <div class="card" style="min-height: 50vh;">
+        <div class="card-header align-items-center ">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center">
+                        <div class="overshow">
+                            <p class="mb-0"><span class="me-2 fs13">Overall Penalty</span> <span class="fw600">{{headDetail?.Ovl_Penality | number:'1.2-2'}}</span></p>
+                        </div>
+                        <div class="mx-2">
+                            <p class="mb-0"><span class="me-1">|</span></p>
+                        </div>
+                        <div class="overshow">
+                            <p class="mb-0"><span class="me-2 fs13">Total Penalty:</span> <span class="fw600">{{headDetail?.Ttl_Penality | number:'1.2-2'}}</span></p>
+                        </div>
+                    </div>
+                </div>
+                @if(profileId != ''){
+                    <div class="col-md-2">
+                        <p class="mb-0">Name: <span class="fw600"><b>  {{First}} {{Last}}</b></span></p>
+                    <p class="mb-0">Phone: <span class="fw600"><b> {{Phone}}</b></span></p>
+                    <p class="mb-0">Code: <span class="fw600"><b>  {{Code}}</b></span></p>
+                    </div>
+                <div class="col-md-7">
+                    <div class="row justify-content-end align-items-center">
+                        
+                       
+                        <div class="col-md-3">
+                            <!-- <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk" >
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div>
+                                    <p class="mb-0 mx-3">24-04-2025</p>
+                                </div>
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cc-search mt-1">
+                                <select class="form-select" (change)="selectDate($event)"
+                                [(ngModel)]="dateclear">
+                                <option value="0" selected disabled class="fs12">Select</option>
+                                <option value="7">Last 1 Week</option>
+                                <option value="31">Last 1 Month</option>
+                                <option value="93">Last 3 Months</option>
+                                <option value="367">Last 1 Year</option>
+                                <option value="custom">Custom</option>
+                                </select>
+                                <label>Date</label>
+                            </div>
+                          
+                        </div>
+                        @if (customDate == 'custom' || customDate == '') {
+                        <div class="col-md-2">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="date"  class="pad-b form-control" [(ngModel)]="lastDaysDate" (change)="dateSelectFromTO($event, 'from')" >
+                                    <label for="dtStart">From</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="date"  class="pad-b form-control"  [(ngModel)]="updatedDate" (change)="dateSelectFromTO($event,'to')">
+                                    <label for="dtStart">To</label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                </div>
+            }
+            </div>
+           
+            <!-- Filter Type Dropdown -->
+            
+        </div>
+        <div class="card-body">
+           <div class="row ">
+            <div class="col-md-12">
+                <div class="tblone table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th>Timestamp</th>
+                            @if (profileId == '') {
+                            <th>User Details</th>
+                            }
+                            <th>Penalty</th>
+                            @if (profileId == '') {
+                            <th>Action</th>
+                            }
+                           
+                         </tr>
+                         </thead>
+                         @for (data of userWiseList; track $index) {
+                        <tbody>
+                            <tr>
+                                <td><p class="mb-0 ">{{data.oInfo.oTime.Tm_Str | date: 'yyyy-MM-dd HH:mm'}}</p></td>
+                                @if (profileId == '') {
+                                <td>
+                                    <p class="tbl-user-name mb-0">{{data.oSnap.Name}}</p>
+                                    <p class="tbl-user-name mb-0">{{data.oSnap.Phone}} /{{data.oSnap.Code}}</p>
+                                </td>
+                            }
+                                <td><p class="mb-0 "><b>{{data.oInfo.Penality | number:'1.2-2'}}</b></p></td>
+                                @if (profileId == '') {
+                               <td><button class="btn btn-sm"  (click)="goToRoute(data)"> View Details</button></td>
+                                }
+                            </tr>
+                           
+                        </tbody>
+                    }@empty{
+                        <tbody>
+                            <tr>
+                              <td colspan="7">
+                                <div class="no-data-container">
+                                  <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                  <h5 class="no-data-text">No Data Found.</h5>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        }
+                      </table>
+                      <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                        @if (Count > 0) {
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a class="page-link" (click)="setPage(1)">First</a>
+
+                        </li>
+
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                        </li>
+
+                        <li *ngFor="let page of pager.pages" class="page-item"
+                            [ngClass]="{active:pager.currentPage === page}">
+                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+
+                        }
+                    
+                                </ul>
+                            </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+   </div>

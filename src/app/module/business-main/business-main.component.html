@@ -1,0 +1,44 @@
+
+<section class="page">
+    <div class="container-fluid">
+        @if (!headerHide){
+        <div class="row ">
+           <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between pb-3">
+
+              
+                
+                <div>
+                      
+                    <ul class="tabnavc-ul ps-0 mb-0">
+                        <li [ngClass]="{'active': selectedTab == 'business-main/business-overall'  || selectedTab === 'business-main'}" (click)="navigated('business-overall')">
+                            <div class="tabnavc-a ">
+                                <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span class="tabnavc-txt">Overall</span>
+                            </div>
+                        </li>
+                        <li [ngClass]="{'active': selectedTab == 'business-timestamp' || selectedTab == 'business-main/business-timestamp'}" (click)="navigated('business-timestamp')" >
+                            <div class="tabnavc-a" >
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">Timestamp</span>
+                            </div>
+                        </li>
+                        <li [ngClass]="{'active': selectedTab == 'business-user' || selectedTab == 'business-main/business-user'}" (click)="navigated('business-user')" >
+                            <div class="tabnavc-a" >
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">User</span>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+               
+            </div>
+           </div>
+           
+            <hr>
+        </div>
+    }
+       <div class="row">
+           
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,20 @@
+
+.btn-gradient-primary {
+  background: linear-gradient(135deg, #1b3e40, #029215);
+  color: #fff;
+  border: none;
+}
+
+.btn-gradient-primary:hover {
+   background: linear-gradient(135deg, #029215, #029215);
+}
+
+.greencard {
+    background-color: #2D684E;
+}
+.mc-scroll{
+  height: 200px;
+    overflow: auto;
+}
+.dropdown-toggle::after {
+    display: none;}

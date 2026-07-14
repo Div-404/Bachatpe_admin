@@ -1,0 +1,210 @@
+<div class="add-class-for-show-and-hide amindiv">
+    <div class="card" style="height: 100%;">
+        <div class="card-header d-flex justify-content-between ">
+            <p class="mb-0 fw600">Bank Details</p>
+            <!-- <button  class="btn btn-sm btn-success"><i  class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Add More</button> -->
+        </div>
+        <div class="card-body">
+            <form >
+                <div class="row align-items-end">
+                    <div class="col-md-12">
+                        <div ngbAccordion>
+                            @for (data of bankdetailList; track $index) {
+                            <div ngbAccordionItem [collapsed]="true">
+                                <h2 ngbAccordionHeader>
+                                    <button ngbAccordionButton>Account No: {{data.Account}}</button>
+                                </h2>
+                                <div ngbAccordionCollapse>
+                                    <div ngbAccordionBody>
+                                        <ng-template>
+                                            <fieldset [disabled]="data">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Account Number</label>
+                                                                <input type="email" class="form-control" id="email"  name="email" value="{{data.Account}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">IFSC Code</label>
+                                                                <input type="email" class="form-control" id="email"  name="email" value="{{data.IFSC}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Account Holder Name</label>
+                                                                <input type="email" class="form-control" id="email"  name="email" value="{{data.Account_Name}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Bank Address</label>
+                                                                <input type="email" class="form-control" id="email"  name="email" value="{{data.Bank_Addr}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Contact Number</label>
+                                                                <input type="email" class="form-control" id="email"  name="email" value="{{data.Phone}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email ID</label>
+                                                                <input type="email" class="form-control" id="email"  name="email" value="{{data.Email}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        }@empty{
+                            <tr>
+                                <td class="d-flex align-items-center justify-content-center"
+                                    style="height: 400px; margin-left: 350px" colspan="1">
+                                    <div class="text-center">
+                                        <img style="height: 170px; " class="bg-img  mb-3"
+                                            src="assets/images/noDoc.png" alt="">
+                                        <!-- <p class="p-img">No data found</p> -->
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                            <!-- <div ngbAccordionItem>
+                                <h2 ngbAccordionHeader>
+                                    <button ngbAccordionButton>
+                                        Account No: 457*****8457
+                                    </button>
+                                </h2>
+                                <div ngbAccordionCollapse>
+                                    <div ngbAccordionBody>
+                                        <ng-template>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Account Number</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">IFSC Code</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Account Holder Namer</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Bank Address</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Contact Number</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email I'd</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ngbAccordionItem >
+                                <h2 ngbAccordionHeader>
+                                    <button ngbAccordionButton>
+                                        Account No: 457*****8457
+                                    </button>
+                                </h2>
+                                <div ngbAccordionCollapse>
+                                    <div ngbAccordionBody>
+                                        <ng-template>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Account Number</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">IFSC Code</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Account Holder Namer</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Bank Address</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Contact Number</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email I'd</label>
+                                                                <input type="email" class="form-control" id="email"  name="email">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+
+         
+            
+            <!-- <div class="row ">
+                <div class="col-md-2">
+                    
+                </div>
+                <div class="col-md-2">
+                    <div>
+                        <button class="btn w-100 btn-success btn-sm">Submit</button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

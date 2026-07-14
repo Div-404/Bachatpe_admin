@@ -1,0 +1,340 @@
+<!-- <div class="modal-header">
+
+<h4>Upload KYC</h4>
+
+<button class="btn-close" (click)="modal.dismiss()"></button>
+
+</div>
+
+<div class="modal-body">
+
+<div class="user-info">
+
+<p class="name">{{user.First}} {{user.Last}}</p>
+
+<p class="code">{{user.Code}}</p>
+
+<p class="phone">{{user.Phone}}</p>
+
+</div>
+
+
+<div *ngIf="!userTag">
+
+<h6>Select Business Type</h6>
+
+<div class="tag-grid">
+
+<div
+class="tag-card"
+*ngFor="let tag of tags"
+(click)="selectTag(tag.oPkg.oInfo.Tag)"
+[class.active]="selectedTag===tag.oPkg.oInfo.Tag"
+>
+
+<i class="fa fa-briefcase"></i>
+<span>{{tag.oPkg.oInfo.Tag}}</span>
+
+</div>
+
+</div>
+
+<button
+class="btn btn-success mt-3"
+(click)="updateUserTag()"
+[disabled]="!selectedTag"
+>
+
+Continue
+
+</button>
+
+</div>
+
+
+<div *ngIf="userTag && steps.length">
+
+<div class="kyc-steps">
+
+<div
+class="step"
+*ngFor="let step of steps; let i=index"
+[class.completed]="i < currentIndex"
+[class.active]="i === currentIndex"
+>
+
+<div class="step-icon">
+<i class="fa" [ngClass]="step.icon"></i>
+</div>
+
+<div class="step-title">
+{{step.title}}
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+
+<div class="upload-box">
+
+<input
+#fileInput
+type="file"
+(change)="onFileSelected($event)"
+>
+
+<div *ngIf="kycImg">
+
+<img [src]="kycImg">
+
+</div>
+
+</div>
+
+<button
+class="btn btn-success float-end mt-3"
+(click)="uploadKyc()"
+[disabled]="!kycImg"
+>
+
+Next
+
+</button>
+
+</div>
+
+</div> -->
+
+<div class="modal-header">
+  <h4 class="modal-title">Upload KYC</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <!-- User Info -->
+  <div class="user-info-card">
+    <p class="user-name">{{user.First}} {{user.Last}}</p>
+    <p class="user-code">{{user.Code}}</p>
+    <p class="user-phone">{{user.Phone}}</p>
+  </div>
+
+  <!-- TAG SELECT -->
+  <div *ngIf="!userTag" class="tag-selection">
+    <h6>Select Business Type</h6>
+    <div class="tag-grid">
+      <div
+        class="tag-card"
+        *ngFor="let tag of tags"
+        (click)="selectTag(tag.oPkg.oInfo.Tag)"
+        [class.active]="selectedTag === tag.oPkg.oInfo.Tag"
+      >
+        <i class="fa fa-briefcase"></i>
+        <span>{{tag.oPkg.oInfo.Tag}}</span>
+      </div>
+    </div>
+    <button
+      class="btn btn-success w-100 mt-3"
+      (click)="updateUserTag()"
+      [disabled]="!selectedTag"
+    >
+      Continue
+    </button>
+  </div>
+
+  <!-- STEPPER & UPLOAD -->
+  <div *ngIf="userTag && steps.length" class="kyc-flow">
+    <!-- Horizontal Stepper -->
+    <div class="kyc-steps">
+      <div
+        class="step"
+        *ngFor="let step of steps; let i = index"
+        [class.completed]="currentIndex > i"
+        [class.active]="currentIndex === i"
+      >
+        <div class="step-connector" *ngIf="i > 0"></div>
+        <div class="step-icon">
+          <i class="fa" [class]="step.icon"></i>
+        </div>
+        <div class="step-title">{{step.title}}</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Current Step Info -->
+    <div class="current-step-info">
+      <h6>{{steps[currentIndex]?.title}}</h6>
+    </div>
+    <!-- AGREEMENT STEP -->
+<div *ngIf="isAgreementStep()" class="agreement-container">
+
+  <!-- TEMPLATE USED TO GENERATE PDF -->
+  <div #agreementTemplate>
+
+    <div class="okok">
+      <div class="media-p15">
+        <div class="row">
+          <div class="col-md-12 m-auto">
+            <div class="row">
+              <div class="col-md-12 pt-2">
+
+                <div class="agreement-title mt-3 mb-3">
+                  <h3 class="text-center">Agreement</h3>
+                </div>
+
+                <div class="card-agreement">
+
+                  <p>
+                    Dear Sir/Madam,<br>
+                    I, <b>{{user.First}} {{user.Last}}</b>, as a Merchant/Agent hereby undertake and explicitly agree to indemnify 
+                    <b>FIINCO PRIVATE LIMITED</b> towards the following points:
+                  </p>
+
+                  <ul>
+                    <li>FIINCO PRIVATE LIMITED is providing us with a platform as an enabler through which we can transfer/receive/top up the money through various methods like UPI/IMPS/RTGS/Payment Gateway etc.</li>
+
+                    <li>I am wholly and solely responsible for the collection of KYC/meeting the statutory requirements and other mandatory documents.</li>
+
+                    <li>I am responsible and abide to provide the KYC and other mandatory documents and reasons of each and every transaction with end customers.</li>
+
+                    <li>I am wholly and solely responsible for those transactions which were wrongly debited or credited by me.</li>
+
+                    <li>I give my consent to use this platform with all the terms and conditions as provided by FIINCO PRIVATE LIMITED.</li>
+
+                    <li>After accepting the terms & conditions, I have no claims whatsoever on the transferred amount.</li>
+
+                    <li>I have read the company privacy policy & terms & conditions in detail.</li>
+
+                    <li>In the event of breach by the agent/merchant/client/retailer, he/she shall be wholly and solely liable.</li>
+
+                    <li>The retailer shall be liable for payments made through Cash/Cheque/IMPS/NEFT/RTGS.</li>
+
+                    <li>This Indemnity Bond will override any complaints under PMLA, FERA, FEMA.</li>
+
+                    <li>After performing the transaction, I shall in no way file any complaint before law enforcement agencies.</li>
+                  </ul>
+
+                  <p>
+                    Thanking you,<br>
+
+                    <b>{{user.First}} {{user.Last}}</b><br>
+                    (Merchant's/Agent's Name)<br>
+                    Seal and Signature<br>
+
+                    <b>Timestamp:</b> {{ formatted | date:'yyyy-MM-dd HH:mm:ss' }}
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DOWNLOAD PDF BUTTON -->
+  <div class="text-center mt-3">
+    <button class="btn btn-primary" (click)="downloadAgreementPdf()">
+      Download Agreement PDF
+    </button>
+  </div>
+<div class="mt-3">
+
+<input
+  #fileInput
+  type="file"
+  class="form-control"
+  accept="image/png,image/jpeg,application/pdf"
+  (change)="onFileSelected($event)"
+>
+
+<div *ngIf="kycImg" class="mt-2 text-success">
+  Signed agreement uploaded
+</div>
+
+</div>
+</div>
+<!-- GST STEP -->
+<div *ngIf="isGstStep()" class="gst-step">
+
+  <div class="mb-3">
+    <label class="form-label">Enter GST Number</label>
+
+    <input
+  type="text"
+  class="form-control"
+  [(ngModel)]="gstNumber"
+  (input)="gstNumber = gstNumber.toUpperCase()"
+  placeholder="Enter GSTIN"
+/>
+  </div>
+
+  <button
+    class="btn btn-primary"
+    (click)="verifyGST()"
+  >
+    Verify GST
+  </button>
+
+  <div *ngIf="gstData" class="mt-3 border p-3 rounded">
+
+    <p><b>GSTIN:</b> {{gstData.gstin}}</p>
+    <p><b>Status:</b> {{gstData.gstnDetailed?.gstinStatus}}</p>
+    <p><b>Business Name:</b> {{gstData.gstnDetailed?.legalNameOfBusiness}}</p>
+
+  </div>
+
+</div>
+    <!-- Upload Box -->
+    <div class="upload-box" *ngIf="!isGstStep() && !isAgreementStep()">
+      <input
+        #fileInput
+        type="file"
+        class="d-none"
+        (change)="onFileSelected($event)"
+        accept="image/jpeg,image/png,image/jpg"
+      >
+      
+      <!-- Empty State -->
+      <div
+        *ngIf="!kycImg"
+        class="upload-placeholder"
+        (click)="fileInput.click()"
+      >
+        <i class="fa fa-cloud-upload"></i>
+        <p>Click to upload {{steps[currentIndex]?.title}}</p>
+      </div>
+
+      <!-- Preview State -->
+      <div *ngIf="kycImg" class="upload-preview">
+        <img [src]="kycImg" alt="KYC Document">
+        <button class="btn-remove" (click)="resetUpload()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="d-flex justify-content-end mt-3">
+      <button
+        class="btn btn-success"
+        (click)="uploadKyc()"
+        [disabled]="
+  (isGstStep() && !buttonEnable) ||
+  (!isGstStep() && !isAgreementStep() && !kycImg) ||
+  (isAgreementStep() && !kycImg)
+"
+      >
+        <span *ngIf="currentIndex < steps.length - 1">Next</span>
+        <span *ngIf="currentIndex === steps.length - 1">Complete</span>
+        <i class="fa fa-arrow-right ms-2"></i>
+      </button>
+    </div>
+  </div>
+</div>

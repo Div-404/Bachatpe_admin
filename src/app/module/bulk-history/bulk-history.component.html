@@ -1,0 +1,145 @@
+
+<section class="page">
+    <div class="container">
+        <!-- <div class="row">
+            <div class="col-md-12 mb-4">
+                <p class="mb-0 fw600">Deposit Transaction</p>
+            </div>
+        </div> -->
+       <div class="row">
+           <div class="col-md-12">
+            <div class="card">
+                <div class="card-header flex-center-between">
+                    <p class="mb-0 fw600">Bulk Balance History</p>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>File Name</th>
+                                            <th>Agent Details</th>
+                                            <!-- <th>Agent Email</th> -->
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="bulkUploadData.length > 0; else noDataTemplate">
+                                      <tr *ngFor="let data of pageOfItems">
+                                        <td><p class="mb-0">{{data?.oTm?.Tm_Str}}</p></td>
+                                        <td><p class="mb-0 filenameshow">{{data?.Bulk}}</p></td>
+                                        <td><p class="usernameshow mb-0">{{data?.oExec?.Exec}}</p>
+                                            <p class="usernameshow mb-0">{{data?.oExec?.Email}}</p>
+                                        </td>
+                                        <!-- <td><p class="usernameshow mb-0">{{data?.oExec?.Email}}</p></td> -->
+                                        <td><button class="btn btn-outline-success btn-smn fs12 me-2" (click)="openLg(content,data)"><i class="fa-regular fa-eye"></i> View Detail</button>
+                                            <button class="btn btn-outline-primary btn-smn px-2 py-1  me-2" (click)="downloadPDF(data.BulkID)"><i class="fa-solid fa-file-pdf"></i> </button>
+                                            <button class="btn btn-outline-success btn-smn px-2 py-1 " (click)="downloadExcel(data.BulkID)"><i class="fa-solid fa-file-csv"></i> </button>
+                                        </td>
+                                     </tr>
+                                    </tbody>
+                                    <ng-template #noDataTemplate>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="no-data-container">
+                                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                    <h5 class="no-data-text">No Data Found.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                  </table>
+                                  
+                                  @if (bulkUploadData.length != 0) {
+                                    <div class="col-md-12 d-flex justify-content-end " >
+                                        <app-pagination [items]="bulkUploadData" (changePage)="onChangePage($event)"></app-pagination>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+
+  
+  
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Bulk Transactions</h4>
+            <button type="button" class="btn btn-close2" aria-label="Close" (click)="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="row ">
+                <div class="col-md-12 mb-2">
+                    <p class="showfilename mb-0">File Name: <span class="filenameshow">{{bulkFileName}}</span></p>
+                    <!-- <p class="filedate fs12">{{bulkFileTime}}</p> -->
+                </div>
+                <div class="col-md-12">
+                    <div class="tblone table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User Code</th>
+                                    <th>Account Type</th>
+                                    <th>Phone</th>
+                                    <th>Amount</th>
+                                    <th>Comment</th>
+                                    <!-- <th>Admin Remarks</th> -->
+                                    <th>Status</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="selectedFileData.length > 0; else noModalDataTemplate">
+                              <tr *ngFor="let data of selectedFileData">
+                                <td><p class="mb-0">{{data?.oUpload?.CreatedOn}}</p></td>
+                                <td><p class="mb-0">{{data?.oUpload?.Code}}</p></td>
+                                <td><p class="mb-0">{{data?.oUpload?.Type}}</p></td>
+                                <td><p class="usernameshow mb-0">{{data?.oUpload?.Phone}}</p></td>
+                                <td><p class="usernameshow mb-0">{{data?.oUpload?.Amount}}</p></td>
+                                <td><p class="usernameshow mb-0">{{data?.oUpload?.Comment}}</p></td>
+                                <!-- <td><p class="usernameshow mb-0">{{data?.oUpload?.AdmRemarks}}</p></td> -->
+                                <td> <div [ngClass]="{
+                                    'status-success': data?.Status === 5,
+                                    'status-pending': data?.Status === 1,
+                                    'status-reject': data?.Status === 3,
+                                    'status-inprogress': data?.Status === 4
+                                  }">
+                                <i *ngIf="data?.Status === 5" class="fa-solid fa-circle-check"></i>
+                                <i *ngIf="data?.Status === 1" class="fa-solid fa-circle-minus"></i>
+                                <i *ngIf="data?.Status === 3" class="fa-solid fa-circle-xmark"></i>
+                                <i *ngIf="data?.Status === 4" class="fa-regular fa-hourglass-half"></i>
+                                {{ getStatusText(data?.Status) }}
+                              </div></td>
+                                <!-- <td>
+                                    
+                                </td> -->
+                             </tr>
+                            </tbody>
+                            <ng-template #noModalDataTemplate>
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </ng-template>
+ 
+
+
+
+</section>

@@ -1,0 +1,293 @@
+
+<section class="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <p class="mb-0 fw600">Credit Ledger</p>
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-md-12">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <!-- <input type="radio" class="btn-check" name="options-outlined" id="success-outlined1" autocomplete="off" checked (click)="updateReserve1('BALANCE')">
+                            <label class="btn btn-outline-secondary btn-sm me-2" for="success-outlined1">
+                                <i class="fa-solid fa-hand-holding-dollar me-1"></i> Balance
+                            </label>
+                
+                            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined2" autocomplete="off" (click)="updateReserve1('CREDIT')">
+                            <label class="btn btn-outline-secondary btn-sm me-2" for="danger-outlined2">
+                                <i class="fa-solid fa-comment-dollar me-1"></i> Credit
+                            </label>
+                
+                            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined3" autocomplete="off" (click)="updateReserve1('AEPS')">
+                            <label class="btn btn-outline-secondary btn-sm" for="danger-outlined3">
+                                <i class="fa-solid fa-fingerprint me-1"></i> AEPS
+                            </label> -->
+                        </div>
+                
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="date" *ngIf="activeClass == 1">
+                                    <form [formGroup]="ledgerForm">
+                                        <div class="d-flex">
+                                            <div class="wid-20 me-2">
+                                                <div class="login-right">
+                                                    <div class="form">
+                                                        <div class="form-group pos-res mb-0">
+                                                            <input type="date" id="dtFrom" formControlName="dtFrom" class="pad-b form-control">
+                                                            <label for="dtStart">From</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wid-20">
+                                                <div class="login-right">
+                                                    <div class="form">
+                                                        <div class="form-group pos-res mb-0">
+                                                            <input type="date" id="dtTo" formControlName="dtTo" class="pad-b form-control">
+                                                            <label for="dtEnd">To</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="ms-2 me-2" *ngIf="activeClass == 1">
+                                    <button type="submit" class="btn btn-success align-items-right fw-500" [disabled]="ledgerForm.invalid" (click)="GET_ADM_LEDGER_BY_TAG(1,10,true)">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                                <div class="custom-select selected">
+                                    <ng-select class="wid-20" [(ngModel)]="oFilter" [clearOnBackspace]="false" (change)="showDateRange($event)">
+                                        <ng-option [value]="1">Last 1 Week</ng-option>
+                                        <ng-option [value]="2">Last 1 Month</ng-option>
+                                        <ng-option [value]="3">Last 3 Months</ng-option>
+                                        <ng-option [value]="4">Last 1 Year</ng-option>
+                                        <ng-option [value]="5">Custom</ng-option>
+                                    </ng-select>
+                                    <label [class.selected]="oFilter">Date</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>Remark</th>
+                                            <th>Name</th>
+                                            <th>Ref. No</th>
+                                            <th>Debit</th>
+                                            <th>Credit</th>
+                                            <!-- <th>Fee</th>
+                                            <th>Status</th> -->
+                                           
+                                            <th>Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="ledgerData.length > 0; else noDataTemplate">
+                                        <tr *ngFor="let item of ledgerData">
+  <!-- Opening / Closing special rows -->
+  <ng-container *ngIf="item?.isOpeningRow || item?.isClosingRow; else normalLedgerRow">
+    <td>
+      <p class="mb-0">
+        {{ item?.oTrans?.CreatedOn | date: 'yyyy-MM-dd h:mm a' }}
+      </p>
+    </td>
+
+    <td colspan="1">
+      <p class="mb-0 fw700">
+        {{ item?.isOpeningRow ? 'Opening Balance' : 'Closing Balance' }}
+      </p>
+    </td>
+    <td colspan="4">
+      <p class="mb-0 fw700">
+        <!-- {{ item?.isOpeningRow ? 'Opening Balance' : 'Closing Balance' }} -->
+      </p>
+    </td>
+
+    <td class="text-orange-bold">
+      <p class="mb-0 fw700">{{ item?.Balance | number:'1.2-2' }}</p>
+    </td>
+  </ng-container>
+
+  <!-- Normal row -->
+  <ng-template #normalLedgerRow>
+    <td><p class="mb-0">{{item?.oTrans?.CreatedOn | date: 'yyyy-MM-dd h:mm a'}}</p></td>
+    <td><p class="mb-0">{{item?.oTrans?.Remarks_Trans || '-'}}</p></td>
+
+    <td>
+      <div class="d-flex align-items-center">
+        <div class="tbl-user-circle pending-color"> {{ getInitials(item.Name) }}</div>
+        <div>
+          <p class="tbl-user-name mb-0"> {{item.Name}}</p>
+          <p class="mb-0 fs12 mymailid">{{item.Phone}}</p>
+        </div>
+      </div>
+    </td>
+
+    <td>
+      <div class="mng-copy">
+        <p class="mb-0">{{item?.oTrans?.Reference}}</p>
+        <button
+          class="btn btn-soft-warning btn-sm ms-2"
+          (click)="copyDetails(item?.oTrans?.Reference)"
+          *ngIf="item?.oTrans?.Reference"
+        >
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+    </td>
+
+    <!-- Debit -->
+    <td>
+      <div *ngIf="item?.oTrans?.Trans_Source === 1; else noDebit">
+        <div class="d-flex align-items-center">
+          <img src="assets/images/arrow-up-right.svg" class="me-2" alt="Debit Arrow" />
+          <p class="mb-0">{{item?.oTrans?.Amount | number:'1.2-2'}}</p>
+        </div>
+      </div>
+      <ng-template #noDebit>--</ng-template>
+    </td>
+
+    <!-- Credit -->
+    <td>
+      <div *ngIf="item?.oTrans?.Trans_Source === 2; else noCredit">
+        <div class="d-flex align-items-center">
+          <img src="assets/images/arrow-down-left-1.svg" class="me-2" alt="Credit Arrow" />
+          <p class="mb-0">{{item?.oTrans?.Amount | number:'1.2-2'}}</p>
+        </div>
+      </div>
+      <ng-template #noCredit>--</ng-template>
+    </td>
+
+    <td class="text-orange-bold">
+      <p class="mb-0">{{item?.Balance | number:'1.2-2'}}</p>
+    </td>
+  </ng-template>
+</tr>
+<tr *ngIf="ledgerData?.length > 0" style="background: #e2fff1 !important;">
+  <td colspan="4">
+    <!-- <p class="mb-0 fw600">
+      Opening: {{ OpenBalance | number:'1.2-2' }}
+      <span class="mx-2">|</span>
+      Closing: {{ CloseBalance | number:'1.2-2' }}
+    </p> -->
+  </td>
+
+  <td>
+    <p class="mb-0 fw600 d-flex align-items-center gap-2">
+      <span>Debit:</span>
+      <span *ngIf="!isLedgerTotalsLoading; else debitSpinner">
+        {{ totalDebit | number:'1.2-2' }}
+      </span>
+      <ng-template #debitSpinner>
+        <span class="spinner-border spinner-border-sm text-success" role="status" aria-hidden="true"></span>
+      </ng-template>
+    </p>
+  </td>
+
+  <td>
+    <p class="mb-0 fw600 d-flex align-items-center gap-2">
+      <span>Credit:</span>
+      <span *ngIf="!isLedgerTotalsLoading; else creditSpinner">
+        {{ totalCredit | number:'1.2-2' }}
+      </span>
+      <ng-template #creditSpinner>
+        <span class="spinner-border spinner-border-sm text-success" role="status" aria-hidden="true"></span>
+      </ng-template>
+    </p>
+  </td>
+
+  <td>
+    <!-- <p class="mb-0 fw600 text-end">
+      Net: {{ (totalCredit - totalDebit) | number:'1.2-2' }}
+    </p> -->
+  </td>
+</tr>
+                                    </tbody>
+                                    
+                                        <ng-template #noDataTemplate>
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="7">
+                                                    <div class="no-data-container text-center">
+                                                        <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                        <h5 class="no-data-text">No Data Found.</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                   
+                                        </ng-template>
+                                   
+                                </table>
+
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                    @if (Count > 0) {
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(1)">First</a>
+
+                                    </li>
+
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                    </li>
+
+                                    <li *ngFor="let page of pager.pages" class="page-item"
+                                        [ngClass]="{active:pager.currentPage === page}">
+                                        <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                        <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                    </li>
+
+                                    }
+                                
+                                </ul>
+                            </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+
+  
+  
+
+ 
+
+
+
+</section>

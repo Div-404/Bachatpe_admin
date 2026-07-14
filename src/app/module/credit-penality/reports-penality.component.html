@@ -1,0 +1,232 @@
+<section class="page pt-4" style="margin-top:52px;background:#fff;min-height:94vh">
+    <div class="container-fluid">
+       <div class="row pe-3">
+          <div class="col-md-12 pb-4">
+             <div class="card-header flex-center-between">
+                <p class="mb-0 fw600">Packages</p>
+                <button class="btn btn-sm btn-success" (click)="openLg2(content2, 'add', '')"><i class="fa-solid fa-circle-plus me-2" style="color:#f8e000"></i>Create</button>
+               
+             </div>
+          </div>
+          <div class="col-md-12">
+             <div class="card" style="background:#f6f9fc;min-height:70vh;margin-bottom:50px">
+                <div class="card-body">
+                   <div class="row mngcard">
+                     @for (data of panaltyList; track $index) {
+                      <div class="col-md-3 mb-3">
+                       
+                         <div class="card">
+                            <div class="card-header greencard flex-center-between">
+                               <p class="mb-0 fw600">{{data.oPenality.Pkg}}</p>
+                               <div class="d-flex align-items-center">
+                                @if (data.oPenality.Default === 1) {
+                                 <div class="d-flex align-items-center">
+                                    <p class="fs12 text-secondory mb-0 me-2">Default</p>
+                                    <div class="form-check form-switch me-2 mb-0">
+                                       <fieldset [disabled]="data.oPenality.Default == 1">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked></fieldset>
+                                    </div>
+                                 </div>
+                                }
+                                @if (data.oPenality.Default === 2) {
+                                  <div class="d-flex align-items-center">
+                                     <p class="fs12 text-secondory mb-0 me-2"></p>
+                                     <div class="form-check form-switch me-2 mb-0">
+                                        <fieldset>
+                                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                         (change)="packageDefault(data.oPenality)"></fieldset>
+                                     </div>
+                                  </div>
+                                 }
+                                 <button class="btn btn-sm "  (click)="openLg2(content2, 'edit', data)"><i class="fa-solid fa-pen-to-square text-white"></i></button>
+                               </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center flex-center-between mb-2 bgset1">
+                                    <p class="mb-0 fw500">Status</p>
+                                    <div>
+                                        <select class="form-select smallselect" (change)="changeStatus($event, data.oPenality)">
+                                            <option value="1" [selected]="data.oPenality.Status == 1">Active</option>
+                                            <option value="2" [selected]="data.oPenality.Status == 2">Deactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                      <tr>
+                                        <th>Min</th>
+                                        <th>Max</th>
+                                        <th></th>
+                                        <th>Penalty</th>
+                                      </tr>
+                                    </thead>
+                                    @for (list of data.lstPenality; track $index){
+                                    <tbody>
+                                      <tr>
+                                        <td>{{list.Min | number: '1.2-2'}}</td>
+                                        <td>{{list.Max | number: '1.2-2'}}</td>
+                                        @if (list.Perc_Fiat == 1) {
+                                        <td>%</td>
+                                        }
+                                        @if (list.Perc_Fiat == 2) {
+                                        <td>INR</td>
+                                        }
+                                        <td>{{list.Value | number: '1.2-2' }}</td>
+                                      </tr>
+                                      <!-- <tr>
+                                        <td>1000</td>
+                                        <td>10000</td>
+                                        <td>INR</td>
+                                        <td>110000</td>
+                                      </tr>
+                                      <tr>
+                                        <td>1000</td>
+                                        <td>10000</td>
+                                        <td>INR</td>
+                                        <td>110000</td>
+                                      </tr>
+                                      <tr>
+                                        <td>1000</td>
+                                        <td>10000</td>
+                                        <td>%</td>
+                                        <td>110000</td>
+                                      </tr>
+                                      <tr>
+                                        <td>1000</td>
+                                        <td>10000</td>
+                                        <td>INR</td>
+                                        <td>110000</td>
+                                      </tr>
+                                      <tr>
+                                        <td>1000</td>
+                                        <td>10000</td>
+                                        <td>%</td>
+                                        <td>110000</td>
+                                      </tr> -->
+                                    </tbody>
+                                }
+                                  </table>
+                               </div>
+                               <!-- <ol class="ol-list">
+                                  <li>
+                                     <div>
+                                        <p>dataname</p>
+                                     </div>
+                                     <div class="d-flex"><i class="fa-regular fa-eye"></i></div>
+                                  </li>
+                               </ol> -->
+                            </div>
+                         </div>
+                         
+                      </div>
+                    } @empty{
+                      <tr>
+                         <td class="d-flex align-items-center justify-content-center" style="height:400px" colspan="11">
+                            <div class="text-center">
+                               <img style="height:170px;opacity:.5" class="bg-img mb-3" src="assets/images/nodata1.png" alt="">
+                               <p class="p-img">No data found</p>
+                            </div>
+                         </td>
+                      </tr>
+                    }
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <ng-template #content2 let-modal>
+       <div class="modal-header">
+        @if (!editData){
+          <h4 class="modal-title">Create Package</h4>
+        }
+        @if (editData){
+          <h4 class="modal-title">Update Package</h4>
+        }
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+       </div>
+       <div class="modal-body" style="background:#fff">
+          <div class="row">
+             <div class="col-md-12">
+                <div class="mod-decor">
+                    <form [formGroup]="penaltyForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Package Name</label>
+                                <fieldset [disabled]="editData">
+                                <input type="text" class="form-control" id="email" placeholder="Enter package name" name="email" formControlName="Pkg"
+                                (keypress)="inpputForEveryone($event)">
+                              </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                        <div formArrayName="packages">
+                          <div class="row" *ngFor="let pkg of packages.controls; let i = index" [formGroupName]="i">
+                            <div class="col-md-3">
+                              <div class="mb-3">
+                                <label class="form-label">Min.</label>
+                                <input type="" class="form-control" placeholder="min" formControlName="Min" (keypress)="numberOnly($event)">
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="mb-3">
+                                <label class="form-label">Max</label>
+                                <input type="" class="form-control" placeholder="max" formControlName="Max" (keypress)="numberOnly($event)">
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="mb-3">
+                                <label class="form-label" style="visibility: hidden;">Type</label>
+                                <select class="form-select" placeholder="Select" formControlName="Perc_Fiat">
+                                  <option value="" disabled selected hidden>Penalty Type</option>
+                                  <option value="2">INR</option>
+                                  <option value="1">Percentage</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="mb-3">
+                               
+                                <div class="d-flex align-items-center justify-content-between">
+                                  <label class="form-label">Penalty</label>
+                                  <div placement="top" ngbTooltip="Remove" (click)="removePackage(i)"  *ngIf="packages.length > 1"><i class="fa-solid fa-circle-xmark text-danger"></i></div>
+                                </div>
+                                <input type="" class="form-control" placeholder="penalty" formControlName="Value" (keypress)="oneDotAfterTwoDigit($event)">
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      
+                        <div class="row">
+                          <div class="col-md-12 d-flex justify-content-end">
+                            <button class="btn btn-sm " type="button" (click)="addPackage()"><i class="fa-solid fa-square-plus text-success"></i> Add row</button>
+                          </div>
+                        </div>
+                </form>
+
+                
+
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="modal-footer" style="display: block;">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeMd()">Close</button>
+            </div>
+            <div class="col-md-9">
+              @if (!editData){
+                <button type="button" class="btn btn-success w-100 btn-sm0" [disabled]="penaltyForm.invalid || packages.length === 0" (click)="addEditPanalty()" >Submit</button>
+              }
+              @if (editData){
+                <button type="button" class="btn btn-success w-100 btn-sm0" [disabled]="penaltyForm.invalid || isPackageArrayInvalid()" (click)="addEditPanalty()" >Update</button>
+              }
+            </div>
+        </div>
+    </div>
+    </ng-template>
+ </section>

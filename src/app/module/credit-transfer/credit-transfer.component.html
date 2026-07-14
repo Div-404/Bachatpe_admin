@@ -1,0 +1,146 @@
+
+<section class="page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <p class="mb-0 fw600">Transaction</p>
+            </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-sm btn-success me-3" (click)="openDeposit(content)">Deposit</button>
+          <button class="btn btn-sm btn-warning" (click)="openTransfer(content2)">Transfer</button>
+        </div>
+    </div>
+
+  
+    <ng-template #content let-modal>
+        <form [formGroup]="depositForm" >
+          <div class="modal-header">
+            <h4 class="modal-title">Deposit</h4>
+            <button type="button" class="btn btn-close2" aria-label="Close" (click)="closeDeposit()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="amount" class="form-label">Amount</label>
+                  <input type="text" class="form-control form-control-sm" id="amount" formControlName="amount" placeholder="Enter Amount" (keypress)="allowNumbersOnly($event)"/>
+                </div>
+              </div>
+      
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="remarks" class="form-label">Note</label>
+                  <textarea class="form-control" rows="5" id="remarks" formControlName="remarks" placeholder="Enter a Note"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="display: block;">
+            <div class="row">
+              <div class="col-md-3">
+                <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeDeposit()">Close</button>
+              </div>
+              <div class="col-md-9">
+                <button type="submit" class="btn btn-success w-100 btn-sm0" [disabled]="!depositForm.valid" (click)="MAKE_CREDIT_TRANS_DEPT()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+
+      <ng-template #content2 let-modal>
+        <form [formGroup]="transferForm" >
+          <div class="modal-header">
+            <h4 class="modal-title">Transfer</h4>
+            <span *ngIf="balance !== null" class="balance-info">
+              Balance: {{ balance | number: '1.2-2' }}
+            </span>
+            <button type="button" class="btn btn-close2" aria-label="Close" (click)="closeTransfer()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="transferAmount" class="form-label">Amount</label>
+                  <input type="text" class="form-control form-control-sm" id="transferAmount" formControlName="amount"  placeholder="Enter Amount" (keypress)="allowNumbersOnly($event)" />
+                </div>
+              </div>
+              <div class="col-md-12 mb-2">
+                <label for="searchType">Search Type</label>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                 
+                  <select class="form-select" formControlName="searchType" (change)="onSearchTypeChange($event)">
+                    <option [value]="0" disabled selected class="fs12" > Search Type</option>
+                    <option [value]="7">By Phone</option>
+                    <option [value]="8">By User Code</option>
+                  </select>
+                </div>
+               
+              </div>
+              <div class="col-md-8">
+                <div >
+                  <input
+                    type="text"
+                    [(ngModel)]="searchValue"
+                    [ngModelOptions]="{standalone: true}"
+                    placeholder="Enter search value"
+                    class="form-control form-control-sm fs12"
+                    (input)="onSearchInput($event)"
+                    [disabled]="transferForm.get('searchType').value <= 0"  
+                  />
+                  <div *ngIf="filteredUsers.length > 0" class="dropdown-menu show">
+                    <button
+                      class="dropdown-item fs12"
+                      *ngFor="let user of filteredUsers"
+                      (click)="onUserSelect(user)"
+                    >
+                      {{ user.Code }} - {{ user.Name }} - {{ user.Phone }}
+                    </button>
+                  </div>
+                  <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+                </div>
+              </div>
+      
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="transferRemarks" class="form-label">Note</label>
+                  <textarea class="form-control" rows="3" id="transferRemarks" formControlName="remarks" placeholder="Enter a Note"></textarea>
+                </div>
+              </div>
+      
+              <div class="col-md-12">
+                <div class="form-check mb-3">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" formControlName="autoDebit" /> Auto debit from balance
+                    wallet
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="display: block;">
+            <div class="row">
+              <div class="col-md-3">
+                <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeTransfer()">Close</button>
+              </div>
+              <div class="col-md-9">
+                <button type="submit" class="btn btn-success w-100 btn-sm0"  [disabled]="!isTransferFormValid"  (click)="MAKE_CREDIT_TRANS_TRANSFER()">Make Transfer</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+      
+
+ 
+
+
+
+</section>

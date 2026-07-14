@@ -1,0 +1,250 @@
+<div class="row">
+     <div class="col-md-12 mb-2">
+
+                <button class="btn ropset" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+
+            </div>
+    <div class="col-md-12">
+        <div class="card">
+           
+            <div class="card-header">
+                <!-- <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-success" (click)="openLg(content)">
+                    <i class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Make Deposit
+                </button>
+                </div> -->
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row  align-items-center">
+
+
+
+                            <div class="col-md-2">
+                                <div class="cc-search mt-1">
+                                    <select class="form-select" (change)="selectDate($event)" [(ngModel)]="dateclear">
+                                        <option value="0" selected disabled class="fs12">Select</option>
+                                        <option value="7">Last 1 Week</option>
+                                        <option value="31">Last 1 Month</option>
+                                        <option value="93">Last 3 Months</option>
+                                        <option value="367">Last 1 Year</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                    <label>Date</label>
+                                </div>
+
+                            </div>
+                            @if (customDate == 'custom' || customDate == '') {
+                            <div class="col-md-2">
+                                <div class="pt-1">
+                                    <div class="form-group cc-search mb-0">
+                                        <input type="date" class="pad-b form-control" [(ngModel)]="lastDaysDate"
+                                            (change)="dateSelectFromTO($event, 'from')">
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="pt-1">
+                                    <div class="form-group cc-search mb-0">
+                                        <input type="date" class="pad-b form-control" [(ngModel)]="updatedDate"
+                                            (change)="dateSelectFromTO($event,'to')">
+                                        <label for="dtStart">To</label>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="justify-content-end d-flex">
+                            <button class="btn btn-sm btn-success " (click)="openLg(content)"><i
+                                    class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Make
+                                Deposit</button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card-body">
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="tblone table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>User details</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+
+                                @for (data of depositList; track $index){
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">{{data.oTimestamp.Tm_Str | date:'yyyy-MM-dd hh:mm' }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{data.oUser.Name}}</p>
+                                            <p class="mb-0"><span>{{data.oUser.Phone}}</span> <span
+                                                    class="mx-2">|</span> <span>{{data.oUser.Code}}</span></p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0"><b>{{data.Amount | number:'1.2-2'}}</b></p>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                                }@empty{
+
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+
+                            </table>
+
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                @if (Count > 0) {
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a class="page-link" (click)="setPage(1)">First</a>
+
+                                </li>
+
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                </li>
+
+                                <li *ngFor="let page of pager.pages" class="page-item"
+                                    [ngClass]="{active:pager.currentPage === page}">
+                                    <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                    <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                </li>
+
+                                }
+                            
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <form [formGroup]="depositForm">
+        <div class="modal-header">
+            <h4 class="modal-title">Credit Deposit</h4>
+            <div class="d-flex">
+                <div class="me-1 text-white">Credit: </div>
+                <div class="text-warning"><b>{{balance | number:'1.2-2'}}</b></div>
+            </div>
+            <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+        </div>
+        <div class="modal-body ">
+            <div class="row mb-4">
+                <div class="modaltop-user-details">
+                    <div class="col-md-12 ddcor">
+                        <div class="d-flex mb-1">
+                            <div class="divone">
+                                <p>Name:</p>
+                            </div>
+                            <div class="divone-val">
+                                <p>{{First}} {{Last}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-1">
+                            <div class="divone">
+                                <p>Code:</p>
+                            </div>
+                            <div class="divone-val">
+                                <p>{{Code}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-1">
+                            <div class="divone">
+                                <p>Phone:</p>
+                            </div>
+                            <div class="divone-val">
+                                <p>{{Phone}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Amount</label></div>
+                <div class="col-md-9"><input type="email" class="form-control form-control-sm" id="email"
+                        placeholder="Enter Amount" name="email" formControlName="Amount" (keypress)="numberOnly($event)">
+                </div>
+            </div>
+          
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Settlement</label></div>
+                <div class="col-md-9"><input type="date" class="form-control form-control-sm" id="email"
+                        [value]="Displaydate" name="email" formControlName="ValidTill"
+                        (change)="selectValidTill($event)" [min]="today" ></div>
+            </div>
+
+              <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label">Remark</label></div>
+                <div class="col-md-9"> <textarea class="form-control" rows="2" id="comment" name="text"
+                        placeholder="Enter Remark" formControlName="Remarks"></textarea></div>
+            </div>
+
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3"><label for="email" class="form-label mb-0">Auto Debit</label></div>
+                <div class="col-md-9"> <input class="form-check-input" type="checkbox" name="remember"
+                     [checked]="autoDebit == 1"   formControlName="Auto_Debit" (change)="selectDebit($event)"></div>
+            </div>
+
+
+        </div>
+    </form>
+    <div class="modal-footer">
+        <div class="row w-100">
+            <div class="col-md-10">
+                <button class="btn btn-success w-100 btn-shadow" [disabled]="depositForm.invalid"
+                    (click)="makeDeposit()">Credit</button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger" aria-label="Close"
+                    (click)="modal.dismiss('Cross click')">Close</button>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

@@ -1,0 +1,106 @@
+<section class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="card">
+
+          <!-- Header -->
+          <div class="card-header flex-center-between">
+            <p class="mb-0 fw600">Package – Workspace & Limit </p>
+            <button class="btn btn-sm btn-success" (click)="addPackage()">
+              <i class="fa-solid fa-circle-plus me-2" style="color:#F8E000;"></i>Add Package
+            </button>
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+            <div class="table-responsive tblone">
+
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Default</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <!-- Loading -->
+                  <tr *ngIf="loading">
+                    <td colspan="3" class="text-center">Loading packages...</td>
+                  </tr>
+
+                  <!-- Error -->
+                  <tr *ngIf="!loading && errorMsg">
+                    <td colspan="3" class="text-center text-danger">
+                      {{ errorMsg }}
+                    </td>
+                  </tr>
+
+                  <!-- Data rows -->
+                <tr *ngFor="let row of packages">
+  <td>{{ row.Pkg }}</td>
+  <td>
+                      <div class="d-flex align-items-center">
+                        <p class="fs12 text-secondory mb-0 me-2">
+                          {{ row.DefPkg === 1 ? 'Default' : 'Set Default' }}
+                        </p>
+                        <div class="form-check form-switch me-2 mb-0">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="row.DefPkg === 1"
+                            [disabled]="row.DefPkg === 1"
+                           (click)="onDefaultClick($event, row)"
+                          />
+                        </div>
+                      </div>
+                    </td>
+  <td>
+    <div class="d-flex justify-content-end">
+      <div class="for-view me-2" (click)="viewPackage(row)">
+        <i class="fa-solid fa-eye"></i>
+      </div>
+      <div class="for-edit me-2" (click)="editPackage(row)">
+        <i class="fa-solid fa-pencil"></i>
+      </div>
+      <div class="for-delete" (click)="deletePackage(row)">
+        <i class="fa-regular fa-trash-can"></i>
+      </div>
+    </div>
+  </td>
+</tr>
+
+                  <!-- No data -->
+                  <tr *ngIf="!loading && !errorMsg && packages.length === 0">
+                    <td colspan="3" class="text-center">No packages found.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #confirmDefaultTpl let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirm</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    Are you sure! You want to set this package as default?
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button class="btn btn-primary" (click)="confirmDefault(modal)">Yes, Set Default</button>
+  </div>
+</ng-template>

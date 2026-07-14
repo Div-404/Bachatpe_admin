@@ -1,0 +1,656 @@
+<div class="container ">
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+                <div class="nk-block-head-content">
+                    <p class="mb-0 fw600">Deposit </p>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="usercard uc-bg1">
+                <div>
+                    <p class="lineone">Cash</p>
+                    <p class="linetwo">5784</p>
+                </div>
+                <div>
+                    <div class="usercard-circle">
+                        <i class='bx bx-rupee'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="usercard uc-bg2">
+                <div>
+                    <p class="lineone">UIP</p>
+                    <p class="linetwo">5740</p>
+                </div>
+                <div>
+                    <div class="usercard-circle">
+                        <i class='bx bx-qr-scan' ></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="usercard uc-bg3">
+                <div>
+                    <p class="lineone">Bank</p>
+                    <p class="linetwo">44</p>
+                </div>
+                <div>
+                    <div class="usercard-circle">
+                        <i class='bx bxs-bank' ></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="me-2 custom-select selected">
+                                        <ng-select class="wid-20 ">
+                                            <ng-option >Pending</ng-option>
+                                            <ng-option >Approved</ng-option>
+                                            <ng-option >Rejected</ng-option>
+                                            <ng-option >Overall</ng-option>
+                                        </ng-select>
+                                        <label [class.selected]="oFilter">Status</label>
+                                    </div>
+                                    <div class="me-2 custom-select selected">
+                                        <ng-select class="wid-20 " [(ngModel)]="oFilter" [clearOnBackspace]="false"
+                                            (change)="showDateRange($event)">
+                                            
+                                            <ng-option [value]="1">1 Week</ng-option>
+                                            <ng-option [value]="2">1 Month</ng-option>
+                                            <ng-option [value]="3">3 Months</ng-option>
+                                            <ng-option [value]="">1 Year</ng-option>
+                                            <ng-option [value]="4">Custom</ng-option>
+                                        </ng-select>
+                                        <label [class.selected]="oFilter">Date</label>
+                                    </div>
+                                    <div class="date" *ngIf="activeClass == 1">
+                                        <form [formGroup]="byManualAdminForm">
+                                            <div class="d-flex">
+                                                <div class="wid-20 me-2">
+                                                    <div class="login-right">
+                                                        <div class="form">
+                                                            <div class="form-group pos-res mb-0">
+                                                                <input type="date"  id="dtFrom" formControlName="dtFrom"
+                                                                    class="pad-b form-control">
+                                                                <label for="dtStart">From</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wid-20">
+                                                    <div class="login-right">
+                                                        <div class="form">
+                                                            <div class="form-group pos-res mb-0">
+                                                                <input type="date"  id="dtTo" formControlName="dtTo"
+                                                                    class="pad-b form-control">
+                                                                <label for="dtEnd">To</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="ms-2" *ngIf="activeClass == 1">
+                                        <button type="submit"
+                                            class="btn btn-success align-items-right  fw-500"
+                                            [disabled]="byManualAdminForm.invalid"
+                                            (click)="GET_PG_MG_ADM_MANUAL_RECPT(1,noOfRecords)"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-start">
+                                        <div class="me-2 custom-select mer-t selected"
+                                            [class.selected]="selectedFilter">
+                                            <ng-select class="wid-20" [(ngModel)]="selectedFilter">
+                                                <ng-option [value]="0" disabled> </ng-option>
+                                                <ng-option [value]="1">By Code </ng-option>
+                                                <ng-option [value]="2">By Name</ng-option>
+                                                <ng-option [value]="4">By Email</ng-option>
+                                                <ng-option [value]="5">By Phone</ng-option>
+                                            </ng-select>
+                                            <label [class.selected]="selectedFilter">Filter Type</label>
+                                        </div>
+                                        <div role="search" action="#" method="get">
+                                            <div class="main-header-center">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Search for anything..." [(ngModel)]="searchValue"
+                                                    onfocus="this.placeholder=''"
+                                                    onblur="this.placeholder='Search for anything...'"
+                                                    placeholder="Search for anything...">
+
+                                                <button *ngIf="searching == true" class="btn search-icon"
+                                                    [disabled]="!(selectedFilter && searchValue)"
+                                                    (click)="typeFilter(selectedFilter)"><i
+                                                        class='bx bx-search-alt'></i></button>
+                                                <button *ngIf="searching == false" type="button" class="btn search-icon"
+                                                    aria-label="Close" (click)="clear()"><i
+                                                        class='bx bx-x'></i></button>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="d-flex align-items-center justify-content-start ms-2">
+                                            <button placement="top" ngbTooltip="Export Excel" class="btn icon-circle export me-2" (click)="exportCsv()">
+                                                <i class='bx bx-download icon text-center'></i>
+                                                </button>
+                    
+                                                <button placement="top" ngbTooltip="Export Pdf" class="btn icon-circle export-1" (click)="exportPdf()">
+                                                    <i class='bx bx-file text-center'></i>
+                                                  </button>
+                                        </div> -->
+
+                                        <!-- <div   class="ms-2">
+                                            <button type="submit"  (click)="resetFilters()"
+                                                class="btn btn-default send-money align-items-right fw-500">Reset Filters</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-bordered text-nowrap border-bottom no-footer table-hover table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>Code / Name</th>
+                                            
+                                            <th>Amount</th>
+                                            <th>Source</th>
+                                            <th>Reference No.</th>
+                                            <th>Status</th>
+                                            <th>Receipt</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="showStatement==1">
+                                        <tr *ngFor="let data of byManualData">
+                                            <td>
+                                                <p class="text-muted00 mb-0">{{formatTimestamp(data.dtCreated)}}</p>
+                                            </td>
+
+
+                                            <td>
+                                                <div placement="top" ngbTooltip="{{data.Phone}}">
+                                                    <p class="tb-lead mb-0"> #546786</p>
+                                                    <p class="mb-0">Ashwani Yadav</p>
+                                                </div>
+                                            </td>
+                                            <!-- <td>{{data.Phone}}</td> -->
+                                            
+                                            <td class=""> <p class="tb-lead mb-0"> {{data.ReceiptInfo.Amount | number:'1.2-2'}}</p></td>
+                                            <td><p class="mb-0">UPI</p></td>
+                                            <td>{{data.Reference}}</td>
+                                            <td>
+                                                <p (click)="openLg3(content3)">onupdate-status</p>
+                                                <ng-container *ngIf="data.Status === 1; else showStatusBadge">
+                                                    <select [(ngModel)]="data.Status"
+                                                        (change)="UPDATE_PG_MG_ADM_MANUAL_STATUS($event, data)"
+                                                        [ngClass]="{'badge-soft-warning':data.Status==1,'badge-soft-success':data.Status==2,'badge-soft-danger':data.Status==3}">
+                                                        <option value="1">Pending </option>
+                                                        <option value="2">Success </option>
+                                                        <option value="3">Reject</option>
+                                                    </select>
+                                                </ng-container>
+                                                <ng-template #showStatusBadge>
+                                                    <span
+                                                        [ngClass]="{'badge-soft-warning':data.Status==1,'badge-soft-success':data.Status==2,'badge-soft-danger':data.Status==3}">
+                                                        {{ getStatusText(data.Status) }}
+                                                    </span>
+                                                </ng-template>
+                                            </td>
+                                            <td (click)="previewImg(uploadimagepreview,data)" style="cursor: pointer;">
+                                                <div
+                                                    class="d-flex align-items-center justify-content-start base-currency"><!--bindings={
+                                                    "(click)="previewImg(uploadimagepreview)" ng-reflect-ng-if": "false"
+                                                  }-->
+                                                    <div class="me-2 white-icon ng-star-inserted"
+                                                        *ngIf="data.ReceiptInfo.Receipt==''"><img
+                                                            src="assets/images/no-image-pic.png" width="30px"></div>
+                                                    <div class="me-2 white-icon ng-star-inserted"
+                                                        *ngIf="data.ReceiptInfo.Receipt!=''"><img
+                                                            src="{{data.ReceiptInfo.Receipt}}" width="30px" ></div>
+                                                    <!--bindings={
+                                                    "ng-reflect-ng-if": "true"
+                                                  }-->
+                                                    <p class="mb-0 fw-400">{{data.ReceiptInfo.Remarks}}</p>
+                                                </div>
+                                            </td>
+                                            <td class="view " (click)="chatAdmin(data)">
+                                                <div class="d-flex align-items-center justify-content-start">
+                                                    <div class="position-relative me-3">
+                                                        <!-- <div class="notification-btn">
+                                                            <i class='bx bx-bell'></i>
+                                                            <div class="position-absolute small-icon">
+                                                                2
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    <div>View Remarks <sup>3</sup></div>
+                                                </div>
+                                                
+                                            </td>
+                                            <td >
+                                                <div ngbDropdown container="body">
+                                                    <button type="button" class="btn btn-soft-warning btn-sm" ngbDropdownToggle>
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                    <div ngbDropdownMenu>
+                                                        <button class="fs14" ngbDropdownItem (click)="delete(data)"> <i class="bx bx-trash"></i> Delete</button>
+                                                        <button class="fs14" ngbDropdownItem (click)="openLg2(content2)"><i class='bx bx-table' ></i> Transaction</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- <button type="button" placement="top" ngbTooltip="Delete"
+                                                    class="btn btn-soft-warning btn-icon-circle border-0 btn-icon-circle-sm me-2 position-relative me-2">
+                                                    <i class="bx bx-trash"></i>
+                                                </button> -->
+                                     
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                    <tbody *ngIf="showStatement==0">
+                                        <tr class="statment-bg">
+                                            <td colspan="11">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-center">
+                                                            <div> <img src="assets/images/no-data.png" class="img-fluid"
+                                                                    width="180px">
+                                                            </div>
+                                                            <h2 class="no-data-text">
+                                                                No Data Found.
+                                                            </h2>
+                                                            <!-- <p class="mb-1">A Settlement
+                                                                statement is a list
+                                                                of all settlements
+                                                                for a account
+                                                                over a set period,
+                                                                usually monthly.</p>
+                                                            <p>Select dates to
+                                                                filter your
+                                                                statement
+                                                                accordingly.</p> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="page-title-box pt-3 pb-0" *ngIf="showStatement==1">
+                                    <div class="float-end">
+                                        <!-- <app-pagination [items]="byManualData"
+                                            (changePage)="onChangePage($event)"></app-pagination> -->
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center gap-2" *ngIf="count > 0">
+                                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="noOfRecords" (change)="onPageSizeChange()">
+                                                        <option [ngValue]="10">10</option>
+                                                        <option [ngValue]="20">20</option>
+                                                        <option [ngValue]="30">30</option>
+                                                        <option [ngValue]="50">50</option>
+                                                        <option [ngValue]="100">100</option>
+                                                    </select>
+                                                    <span class="text-muted small">Total: {{count}} records</span>
+                                                </div>
+                                                <ul class="pagination pagination-sm mb-0" *ngIf="count > 0">
+                                                    <li class="page-item" [ngClass]="{disabled:pager?.currentPage == 1}">
+                                                        <a class="page-link" (click)="setPage(1)">First</a>
+                                                    </li>
+                                                    <li class="page-item" [ngClass]="{disabled:pager?.currentPage == 1}">
+                                                        <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+                                                    </li>
+                                                    <li *ngFor="let page of pager?.pages" class="page-item"
+                                                        [ngClass]="{active:pager?.currentPage == page}">
+                                                        <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                                    </li>
+                                                    <li class="page-item" [ngClass]="{disabled:pager?.currentPage == pager?.totalPages}">
+                                                        <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+                                                    </li>
+                                                    <li class="page-item" [ngClass]="{disabled:pager?.totalPages == page}">
+                                                        <a class="page-link " (click)="setPage(pager?.totalPages)">Last</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #uploadimagepreview let-modal>
+        <div class="modal-body p-3">
+            <div class="white-box p-3">
+                <button type="button" aria-label="Close" class="btn-close-my" (click)="closeImagePreview()"><img
+                        src="assets/images/close-svg.svg" width="13px"></button>
+                <div class="text-center" *ngIf="imgPreview!=''"><img src={{imgPreview}} class="img-fluid"></div>
+                <div class="text-center" *ngIf="imgPreview==''"><img src='assets/images/no-image-pic.png' class="img-fluid"></div>
+            </div>
+        </div>
+    </ng-template>
+
+
+
+    <!-- <div class="chat-box mb-0" *ngIf="showChat">
+        <div class="chat-box-header" >
+            <h3>Remarks # {{referenceID}}</h3>
+            <p>
+                <i class="fa fa-times" (click)="closeChat()"></i>
+            </p>
+        </div>
+        <form [formGroup]="chatForm">
+        <div class="chat-box-body" #chatBoxBody>
+           
+            <div  *ngIf="chatHistory != ''">
+                <div *ngFor="let message of chatHistory">
+                    <div *ngIf="message.CreatedBy === 1" class="chat-box-body-send float-start">
+                        <div class="message-content">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="badge badge-soft-primary">User</div>
+                                <span>{{formatTimestamp(message.CreatedOn)  }}</span>
+                            </div> 
+                          <p class="mt-2">{{ message.Message }}</p>
+                         
+                          <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment" class="chequeImage-1">
+                        </div>
+                    </div>
+                    <div *ngIf="message.CreatedBy === 2" class="chat-box-body-receive float-end">
+                        <div class="message-content">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="badge badge-soft-danger">Admin</div> 
+                                <span>{{formatTimestamp(message.CreatedOn)  }}</span>
+                            </div>
+                          <p class="mt-2">{{ message.Message }}</p>
+                          <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment" class="chequeImage-1">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-box-body d-flex align-items-center justify-content-center" *ngIf="chatHistory == ''">
+                    <div class="text-center">
+                        <img src="assets/images/no-chat.png" class=" img-fluid">
+                        <p class="mt-2 badge rounded-pill badge-soft-warning"> No Remarks added yet
+                        </p>
+                    </div>
+                    
+               
+                </div>
+    
+        </div>
+        <div class="p-2 d-flex align-items-center justify-content-center ">
+            <div class="chip" (click)="setMessage('Payment Received')">
+                <span>Payment Received</span>
+            </div>
+            <div class="chip" (click)="setMessage('Payment Rejected')">
+                <span>Payment Rejected</span>
+            </div>
+            <div class="chip" (click)="setMessage('Invalid UTR Number')">
+                <span>Invalid UTR Number</span>
+            </div>
+        </div>
+        <div class="chat-box-footer">
+           
+            
+           
+            <input placeholder="Enter Your Message" type="text" formControlName="message">
+            <button class='send bx bx-paper-plane' [disabled]="chatForm.invalid" *ngIf="chatHistory != ''" (click)="ADD_USER_REMARKS()"></button>
+        </div>
+    </form>
+    </div> -->
+    
+    <div class="chat-box mb-0" *ngIf="showChat">
+        <div class="chat-box-header">
+          <h3>Remarks # {{referenceID}}</h3>
+          <p>
+            <i class="fa fa-times" (click)="closeChat()"></i>
+          </p>
+        </div>
+        <form [formGroup]="chatForm">
+          <div class="chat-box-body" #chatBoxBody>
+            <div class="loader-container" *ngIf="isLoadingMessages">
+            <span class="loader"></span>
+            <p class="loader-msg">Loading messages...</p>
+        </div>
+            <!-- <div *ngIf="isLoadingMessages" class="loader-container">
+              <div class="ab-loader">Loading</div>
+              <p class="loader-msg">Loading messages...</p>
+            </div> -->
+            <div *ngIf="!isLoadingMessages">
+              <div *ngIf="chatHistory != '' && remarksID != 0">
+                <div *ngFor="let message of chatHistory">
+                  <div *ngIf="message.CreatedBy === 1" class="chat-box-body-send float-start">
+                    <div class="message-content">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <div class="badge badge-soft-primary">User</div>
+                        <span>{{formatTimestamp(message.CreatedOn)}}</span>
+                      </div>
+                      <!-- Badge for user messages -->
+                      <p class="mt-2">{{ message.Message }}</p>
+                      <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment" class="chequeImage-1">
+                    </div>
+                  </div>
+                  <div *ngIf="message.CreatedBy === 2" class="chat-box-body-receive float-end">
+                    <div class="message-content">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <div class="badge badge-soft-danger">Admin</div>
+                        <!-- Badge for admin messages -->
+                        <span>{{formatTimestamp(message.CreatedOn)}}</span>
+                      </div>
+                      <p class="mt-2">{{ message.Message }}</p>
+                      <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment" class="chequeImage-1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-center" *ngIf="chatHistory == '' || remarksID == 0">
+                <div class="text-center">
+                  <img src="assets/images/no-chat.png" class=" img-fluid">
+                  <p class="mt-2 badge rounded-pill badge-soft-warning"> No Remarks added yet</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-2 d-flex align-items-center justify-content-center0 ">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember"> Show Admin Only
+              </label>
+            <!-- <div class="chip" (click)="setMessage('Payment Received')">
+              <span>Payment Received</span>
+            </div>
+            <div class="chip" (click)="setMessage('Payment Rejected')">
+              <span>Payment Rejected</span>
+            </div>
+            <div class="chip" (click)="setMessage('Invalid UTR Number')">
+              <span>Invalid UTR Number</span>
+            </div> -->
+          </div>
+          <div class="chat-box-footer">
+            <input placeholder="Enter Your Message" type="text" formControlName="message">
+            <button class='send bx bx-paper-plane' [disabled]="chatForm.invalid" *ngIf="chatHistory != '' && remarksID != 0" (click)="ADD_USER_REMARKS()"></button>
+          </div>
+        </form>
+      </div>
+      
+    
+    <div class="modal">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <h1>Add What you want here.</h1>
+        </div>
+    </div>
+
+    <ng-template #content2 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Transaction</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body" style="background: #fff;">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tblone table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                   <th>Name</th>
+                                   <th>Contact</th>
+                                    
+                                    <th>Account</th>
+                                    <th>Fee</th>
+                                    <th>Ref. No</th>
+                                    <th>Source</th>
+                                    <th>Status</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td><p class="mb-0">21-10-2024-11:30</p></td>
+                                
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="tbl-user-circle pending-color">AY</div>
+                                        <p class="tbl-user-name mb-0">Ashwani Yadaw</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="position-relative" style="min-width: 210px;">
+                                        <div class="d-flex">
+                                            <p class="mb-0 me-2">+91 7845125874</p>
+                                            <p class="mb-0 showmail" >
+                                              <img style="height: 10px; opacity: 0.5;" src="assets/images/showmail.png">
+                                            </p>
+                                          </div>
+                                         <div style=" min-width: 202px;">
+                                            <p class="mb-0 fs12 mymailid" >ashwanimaketwicks.com</p>
+                                         </div>
+                                    </div>
+                                </td>
+                                
+                               <td><p class="mb-0">40,00.00</p></td>
+                               <td><p class="mb-0">2%</p></td>
+                               <td>#REF124879</td>
+                               <td>Bank</td>
+                               <td>
+                                <div class="d-flex">
+                                    <div class="status-success">
+                                        <div><i class="fa-solid fa-circle-check"></i></div>
+                                        <span>Success</span>
+                                    </div>
+                                    
+                                </div>
+                               </td>
+                             
+                              
+                              </tr>
+                             
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #content3 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Update Status</h4>
+            <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="background: #fff;">
+            <div class="row align-items-end">
+                <div class="col-md-12">
+                    <div class="mod-decor pt-3">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Code</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="email" placeholder="" name="email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Name</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="email" placeholder="" name="email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Phone No.</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="email" placeholder="" name="email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Amount</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="email" placeholder="" name="email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="d-flex">
+                                    <div>
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="remember"> Apply Fee
+                                          </label>
+                                    </div>
+                                    <!-- <div class="px-2" style="color:#adadad">|</div> -->
+                                    <!-- <div>
+                                        <label for="email" class="form-label">Fee</label>
+                                    </div> -->
+                                </div>
+                             </div>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="email" placeholder="" name="email">
+                            </div>
+                        </div>
+
+                      
+                       
+                    </div>
+                </div>
+               </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+             <div class="col-md-3">
+                 <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="modal.close('Close click')">Close</button>
+             </div>
+             <div class="col-md-9">
+                 <button type="button" class="btn btn-success w-100 btn-sm0">Submit</button>
+             </div>
+            </div>
+         </div>
+    </ng-template>

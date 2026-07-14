@@ -1,0 +1,324 @@
+<div class="col-md-12">
+    <div class="d-flex align-items-center justify-content-between pb-3">
+        <div class="d-flex gap-4">
+
+            <label class="custom-radio-wrap">Money Transfer
+                <input type="radio" class="custom-radio-input" name="custom-service" (click)="checkService($event, 1)"
+                    [checked]="serviceType === 1" value="money">
+                <span class="custom-radio-checkmark"></span>
+            </label>
+            <label class="custom-radio-wrap">Recharge
+                <input type="radio" class="custom-radio-input" name="custom-service" (click)="checkService($event, 2)"
+                    [checked]="serviceType === 2" value="booking">
+                <span class="custom-radio-checkmark"></span>
+            </label>
+            <label class="custom-radio-wrap">Booking
+                <input type="radio" class="custom-radio-input" name="custom-service" (click)="checkService($event, 3)"
+                    [checked]="serviceType === 3" value="recharge">
+                <span class="custom-radio-checkmark"></span>
+            </label>
+            <label class="custom-radio-wrap">Utility
+                <input type="radio" class="custom-radio-input" name="custom-service" (click)="checkService($event, 4)"
+                    [checked]="serviceType === 4" value="utility">
+                <span class="custom-radio-checkmark"></span>
+            </label>
+            <label class="custom-radio-wrap">Miscellaneous
+                <input type="radio" class="custom-radio-input" name="custom-service" (click)="checkService($event, 5)"
+                    [checked]="serviceType === 5" value="utility">
+                <span class="custom-radio-checkmark"></span>
+            </label>
+
+        </div>
+        <div>
+            <div>
+                <div class="calc-view">
+
+                    <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
+                        autocomplete="off" [checked]="toggle == '1' " (click)="ChangeToggle('1')">
+                    <label class="btn btn-outline-success" for="success-outlined">Day Wise</label>
+
+                    <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined"
+                        autocomplete="off" [checked]="toggle == '2' " (click)="ChangeToggle('2')">
+                    <label class="btn btn-outline-danger" for="danger-outlined">Range Wise</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card" style="min-height: 50vh;">
+        <div class="card-header align-items-center">
+            <div class="row align-items-center ">
+                @if (queryParam){
+                <div class="col-md-12 mb-2">
+                    <button style="position: absolute;
+    top: -113px;
+    right: 20px;" class="btn" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                </div>
+                <!-- <div class="card-header align-items-center"> -->
+                <!-- <div class="row"> -->
+                <div class="col-md-6">
+                    <p class="mb-0">Name: <span class="fw600">{{First}} {{Last}}</span></p>
+                    <p class="mb-0">Phone: <span class="fw600">{{Phone}}</span></p>
+                    <p class="mb-0">Code: <span class="fw600">{{Code}}</span></p>
+                </div>
+                <!-- </div> -->
+                <!-- </div> -->
+                }
+                  @if (!queryParam){
+                <div class="col-md-6">
+                  
+                    <div class="row" style="align-items: baseline;">
+                        <div class="col-md-3">
+                            <div class="cc-search mt-1">
+                                <select class="form-select" (change)="selecAdType($event, 'tab2')"
+                                    [(ngModel)]="searchId">
+                                    <option value="0" selected disabled>Select</option>
+                                    <option value="1">Name</option>
+                                    <option value="7">Phone</option>
+                                    <option value="8">User Code</option>
+                                </select>
+                                <label>By DI</label>
+                            </div>
+                        </div>
+                        @if (advType != 0) {
+                        <div class="col-md-3">
+                            <div class="form-group cc-search mb-0 me-2">
+                                <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                    class="form-control fs12" (input)="getAdvanceFil($event)" />
+                                <div *ngIf="advList?.length > 0" class="dropdown-menu show">
+                                    <button class="dropdown-item fs12" *ngFor="let user of advList"
+                                        (click)="onSelectUser(user, 2)">
+                                        {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                    </button>
+                                </div>
+                                <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1
+                                    }}</label>
+                            </div>
+                        </div>
+                        }
+                        <!-- <div class="col-md-5">
+                                    <div class="pt-1">
+                                        <div class="form-group cc-search mb-0">
+                                            <input type="text"  class="pad-b form-control" >
+                                            <label for="dtStart">Search</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+                        <!-- @if (searchVal != '' && searchIcon ){
+                                <div class="col-md-1">
+                                    <div  class="me-3" style="padding-top: 4px;">
+                                        <fieldset><button  type="submit" class="btn btn-success align-items-right fw-500" (click)="search()">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button></fieldset>
+                                    </div>
+                                   </div>
+                                } -->
+                        @if (crossIcon){
+                        <div class="col-md-1">
+                            <div class="me-3" style="padding-top: 4px;">
+                                <fieldset><button type="submit" class="btn btn-success align-items-right fw-500"
+                                        (click)="clear()"><i class="fa-solid fa-xmark"></i>
+                                    </button></fieldset>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                  
+                </div>  }
+                <div class="col-md-6">
+                    <div class="row justify-content-end align-items-center">
+
+                        @if (toggle == 1) {
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk" (click)="changeDate('sub')">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div>
+                                    <p class="mb-0 mx-3">{{ updatedDates |
+                                        date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="dateclk" (click)="changeDate('add')">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        @if (toggle == 2) {
+                        <div class="col-md-3">
+                            <div class="cc-search mt-1">
+                                <select class="form-select" (change)="selectDate($event)" [(ngModel)]="dateclear">
+                                    <option value="0" selected disabled class="fs12">Select</option>
+                                    <option value="7">Last 1 Week</option>
+                                    <option value="31">Last 1 Month</option>
+                                    <option value="93">Last 3 Months</option>
+                                    <option value="367">Last 1 Year</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <label>Date</label>
+                            </div>
+
+                        </div>
+                        }
+                        @if (customDate == 'custom' || customDate == '') {
+                        <div class="col-md-3">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="date" class="pad-b form-control" [(ngModel)]="lastDaysDate"
+                                        (change)="dateSelectFromTO($event, 'from')">
+                                    <label for="dtStart">From</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="date" class="pad-b form-control" [(ngModel)]="updatedDate"
+                                        (change)="dateSelectFromTO($event,'to')">
+                                    <label for="dtStart">To</label>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Type Dropdown -->
+
+        </div>
+        <div class="card-body">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="tblone table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <!-- <th class="position-relative" rowspan="2"><p class="mb-0 mngttit">Timestamp</p></th> -->
+                                    <th colspan="3" class="text-center">User Detail</th>
+                                    <th colspan="2" class="text-center text-success">Success</th>
+                                    <th colspan="2" class="text-center text-danger">Failed</th>
+                                    <th colspan="2" class="text-center text-primary">Refund</th>
+                                    <th colspan="2" class="text-center text-warning">Progress</th>
+                                    <th colspan="2" class="text-center text-danger">Rejected</th>
+                                    <!-- <th rowspan="2" class="position-relative"><p class="mb-0 mngttit">Status</p></th> -->
+                                    <th rowspan="2" class="position-relative tbl120">
+                                        <p class="mb-0 mngttit ">M.Distributor</p>
+                                    </th>
+                                    <th rowspan="2" class="position-relative tbl120">
+                                        <p class="mb-0 mngttit ">Distributor</p>
+                                    </th>
+                                    <th rowspan="2" class="position-relative tbl120">
+                                        <p class="mb-0 mngttit ">Retailer</p>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="fw600">Name</th>
+                                    <th class="fw600">Code</th>
+                                    <th class="fw600">Phone</th>
+                                    <th class="bgtbl-green fw600">Amount</th>
+                                    <th class="bgtbl-green fw600">Transaction</th>
+                                    <th class="bgtbl-red fw600">Amount</th>
+                                    <th class="bgtbl-red fw600">Transaction</th>
+                                    <th class="bgtbl-refund fw600">Amount</th>
+                                    <th class="bgtbl-refund fw600">Transaction</th>
+                                    <th class="bgtbl-pending fw600">Amount</th>
+                                    <th class="bgtbl-pending fw600">Transaction</th>
+                                    <th class="bgtbl-red fw600">Amount</th>
+                                    <th class="bgtbl-red fw600">Transaction</th>
+                                </tr>
+                            </thead>
+                            @for (data of pageOfItems2; track $index) {
+                            <tbody>
+
+                                <tr>
+                                    <!-- <td><p class="mb-0 ">24-04-2025</p></td> -->
+                                    <td>
+                                        <p class="mb-0 fw600">{{data.oUserSnap.Name}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 ">{{data.oUserSnap.Code}}
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 ">{{data.oUserSnap.Phone}}
+                                    </td>
+                                    <td class="bgtbl-green">
+                                        <p class="mb-0  fw600">{{data.oStat.sAmt | number: '1.2-2'}}</p>
+                                    </td>
+                                    <td class="bgtbl-green">
+                                        <p class="mb-0  ">{{data.oStat.sTrans }}</p>
+                                    </td>
+                                    <td class="bgtbl-red">
+                                        <p class="mb-0  fw600">{{data.oStat.faAmt | number: '1.2-2'}}</p>
+                                    </td>
+                                    <td class="bgtbl-red">
+                                        <p class="mb-0  ">{{data.oStat.faTrans }}</p>
+                                    </td>
+                                    <td class="bgtbl-refund">
+                                        <p class="mb-0  fw600">{{data.oStat.rfAmt | number: '1.2-2'}} </p>
+                                    </td>
+                                    <td class="bgtbl-refund">
+                                        <p class="mb-0  ">{{data.oStat.rfTrans }} </p>
+                                    </td>
+                                    <td class="bgtbl-pending">
+                                        <p class="mb-0  fw600">{{data.oStat.prAmt | number: '1.2-2'}}</p>
+                                    </td>
+                                    <td class="bgtbl-pending">
+                                        <p class="mb-0  ">{{data.oStat.prTrans }}</p>
+                                    </td>
+                                    <td class="bgtbl-red">
+                                        <p class="mb-0  fw600">{{data.oStat.reAmt | number: '1.2-2'}}
+                                        </p>
+                                    </td>
+                                    <td class="bgtbl-red">
+                                        <p class="mb-0  ">{{data.oStat.reTrans }} </p>
+                                    </td>
+                                    <!-- <td>
+                                            <div class="status-success"><div><i  class="fa-solid fa-circle-check"></i></div><span >Success</span></div>
+                                            <div class="status-pending"><div><i class="fa-solid fa-circle-minus"></i></div><span >Pending</span></div>
+                                            <div  class="status-cancel"><div><i class="fa-solid fa-circle-xmark"></i></div><span >Rejected</span></div>
+                                            <div  class="status-refunded"><div><i class="fa-solid fa-thumbs-up"></i></div><span >Refund</span></div>
+                                        </td> -->
+                                    <td>
+                                        <p class="mb-0 fw500">{{data.oStat.MD | number: '1.2-2'}}</p>
+                                        <!-- <p class="mb-0">MD-24V-6783</p> -->
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 fw500">{{data.oStat.DL | number: '1.2-2'}}</p>
+                                        <!-- <p class="mb-0">D-24V-6783</p> -->
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 fw500">{{data.oStat.RL | number: '1.2-2'}}</p>
+                                        <!-- <p class="mb-0">R-24V-6783</p> -->
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            } @empty {
+
+                            <tr>
+                                <td colspan="16">
+                                    <div class="no-data-container">
+                                        <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                        <h5 class="no-data-text">No Data Found.</h5>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+
+                        </table>
+
+                        @if (tiemStampList.length != 0) {
+                        <div class="col-md-12 d-flex justify-content-end ">
+                            <app-pagination [items]="tiemStampList"
+                                (changePage)="onChangePage2($event)"></app-pagination>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

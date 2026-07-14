@@ -1,0 +1,145 @@
+<div class="col-md-12" *ngIf="selectedTab == 'tab1'">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ocard">
+                <h1 class="fs13 fw600">Overall</h1>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="divsu1 asofcard">
+                            <p class="divp1">Success</p>
+                            <p class="divp11">{{overAllHead?.BAL_Success | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="divsu2 asofcard">
+                            <p class="divp1">Pending</p>
+                            <p class="divp11">{{overAllHead?.BAL_Pending | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="divsu3 asofcard">
+                            <p class="divp1">Rejected</p>
+                            <p class="divp11">{{overAllHead?.BAL_Reject | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ocard">
+                <h1 class="fs13 fw600">Total</h1>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="divsu1 asofcard">
+                            <p class="divp1">Success</p>
+                            <p class="divp11">{{totalHead?.BAL_Success | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="divsu2 asofcard">
+                            <p class="divp1">Pending</p>
+                            <p class="divp11">{{totalHead?.BAL_Pending | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="divsu3 asofcard">
+                            <p class="divp1">Rejected</p>
+                            <p class="divp11">{{totalHead?.BAL_Reject | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="min-height: 50vh;">
+        <div class="card-header align-items-center d-none">
+            <div class="row">
+                <div class="col-md-2"><p class="mb-0 fw600 d-none">By User</p></div>
+                <div class="col-md-10">
+                    <div class="row justify-content-end align-items-center ">
+                        
+                        <div class="col-md-2">
+                            <div class="cc-search mt-1">
+                                <select class="form-select">
+                                    <option  disabled value="0">Select</option>
+                                    <option value="">Name</option>
+                                    <option value="">Phone </option>
+                                    <option value="">Code </option>
+                                </select>
+                                <label>Filter By</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="text"  class="pad-b form-control" >
+                                    <label for="dtStart">Search</label>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="col-md-1">
+                        <div  class="me-3" style="padding-top: 4px;">
+                            <fieldset><button  type="submit" class="btn btn-success align-items-right fw-500">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button></fieldset>
+                        </div>
+                       </div>
+                       
+                        
+                       
+                    </div>
+                </div>
+            </div>
+           
+            <!-- Filter Type Dropdown -->
+            
+        </div>
+        <div class="card-body">
+           <div class="row ">
+                <div class="col-md-12">
+                    <div class="tblone table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>Timestamp</th>
+                                <th>Success</th>
+                                <th>Pending</th>
+                                <th>Rejected</th>
+                               
+                             </tr>
+                             </thead>
+                             @for (data of pageOfItems; track $index;) {
+                            <tbody>
+                                <tr>
+                                    <td><p class="mb-0 ">{{data.oTm.Tm_Str | date: 'yyyy-MM-dd HH:mm'}}</p></td>
+                                    <td><p class="mb-0 "><b>{{data.oStat.BAL_Success  | number:'1.2-2'}} </b></p></td>
+                                    <td><p class="mb-0 "><b>{{data.oStat.BAL_Pending | number:'1.2-2'}} </b></p></td>
+                                    <td><p class="mb-0 "><b>{{data.oStat.BAL_Reject | number:'1.2-2'}} </b></p></td>
+                                </tr>
+                      
+                            </tbody>
+                        }@empty{
+                            <!-- <tbody> -->
+                                <tr>
+                                  <td colspan="7">
+                                    <div class="no-data-container">
+                                      <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                      <h5 class="no-data-text">No Data Found.</h5>
+                                    </div>
+                                  </td>
+                                </tr>
+                              <!-- </tbody> -->
+                            }
+                          </table>
+
+                          @if (OverAllList?.length != 0) {
+                            <div class="col-md-12 d-flex justify-content-end " >
+                                <app-pagination [items]="OverAllList" (changePage)="onChangePage($event)"></app-pagination>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   </div>

@@ -1,0 +1,16 @@
+
+@if (isLoader) {
+   <app-loader></app-loader>
+   }
+<section class="dashboard-section1" >
+
+    
+       <!-- @if (api.islogin()) { -->
+    <app-header [ngClass]="{displayBlock: !api.islogin()}"></app-header>
+       <!-- } -->
+       <!-- @if (api.islogin()) { -->
+    <app-side-bar [ngClass]="{displayBlock: !api.islogin()}"></app-side-bar>
+       <!-- } -->
+    <router-outlet></router-outlet>
+</section>
+

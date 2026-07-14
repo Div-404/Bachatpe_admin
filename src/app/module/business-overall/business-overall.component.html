@@ -1,0 +1,151 @@
+  <div class="col-md-12">
+                <div class="card" style="min-height: 50vh;">
+                    <div class="card-header align-items-center">
+                    
+                       <div class="row align-items-center">
+                         <div class="col-md-2"><p class="mb-0 fw600 ">Business</p></div>
+                        <div class="col-md-10">
+                                
+                            <div class="row justify-content-end align-items-end ">
+
+                                <div class="col-md-2">
+                                    <div class="cc-search mt-1">
+                                        <select class="form-select" (change)="selecAdType($event, 'tab1')"
+                                            [(ngModel)]="searchId">
+                                            <option value="0" selected hidden>Select</option>
+                                            <option value="1">Name</option>
+                                            <option value="2">Phone</option>
+                                            <option value="3">User Code</option>
+                                        </select>
+                                        <label> By User</label>
+                                    </div>
+                                </div>
+                                @if (advType != 0) {
+                                <div class="col-md-2">
+                                    <div class="form-group cc-search mb-0 me-2">
+                                        <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                            class="form-control fs12" (input)="getAdvanceFil($event)" />
+                                        <div *ngIf="advList?.length > 0" class="dropdown-menu show">
+                                            <button class="dropdown-item fs12" *ngFor="let user of advList"
+                                                (click)="onSelectUser(user, 1)">
+                                                {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                            </button>
+                                        </div>
+                                        <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1
+                                            }}</label>
+                                    </div>
+                                </div>
+                                }
+
+                                @if (crossIcon){
+                                <div class="col-md-1">
+                                    <div class="me-3" style="padding-top: 4px;">
+                                        <fieldset><button type="submit" class="btn btn-danger align-items-right fw-500"
+                                                (click)="clear()"><i class="fa-solid fa-xmark"></i>
+                                            </button></fieldset>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+
+
+                        </div>
+                       </div>
+
+
+
+                        <!-- Filter Type Dropdown -->
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="tblone table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th>Timestamp</th> -->
+                                                <th>User Name</th>
+                                                <th>User Code</th>
+                                                <th>Phone No.</th>
+                                                <th class="text-end">Business</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (data of overAllList; track $index) {
+                                            <tr>
+                                                <!-- <td><p class="mb-0 ">{{data.oTm.Tm_Str | date:'yyyy-MM-dd  hh:mm'}}</p></td> -->
+                                                <td>
+                                                    <p class="mb-0 ">{{data.oUser.Name}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 ">{{data.oUser.Code}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 ">{{data.oUser.Phone}}</p>
+                                                </td>
+                                                <td class="text-end">
+                                                    <p class="mb-0 fw600">{{data.Amt | number:'1.2-2'}}</p>
+                                                </td>
+                                            </tr>
+                                            }@empty{
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div class="no-data-container ">
+                                                        <img src="assets/images/nodata1.png" class="img-fluid"
+                                                            width="180px">
+                                                        <h5 class="no-data-text">No Data Found.</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                        @if (Count > 0) {
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(1)">First</a>
+
+                                        </li>
+
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                        </li>
+
+                                        <li *ngFor="let page of pager.pages" class="page-item"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                        </li>
+
+                                        }
+                                    
+                                </ul>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

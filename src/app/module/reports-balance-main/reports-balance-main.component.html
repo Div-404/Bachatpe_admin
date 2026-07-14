@@ -1,0 +1,52 @@
+
+<section class="page">
+    <div class="container-fluid">
+        @if (!headerHide){
+        <div class="row ">
+           <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between pb-3">
+                <div>
+                    <ul class="tabnavc-ul ps-0 mb-0">
+                        <li [ngClass]="{'active': selectedTab == 'balance-overall'  || selectedTab == 'reportbalance-main'}" (click)="navigate('balance-overall')">
+                            <div class="tabnavc-a ">
+                                <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span class="tabnavc-txt">Overall</span>
+                            </div>
+                        </li>
+                        <li [ngClass]="{'active': selectedTab == 'balance-user' || selectedTab == 'reportbalance-main/balance-user'}" (click)="navigate('balance-user')">
+                            <div class="tabnavc-a">
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">User Wise</span>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+               <div>
+                <div *ngIf="selectedTab == 'tab2'" class="d-none">
+                    <div class="calc-view">
+                                      
+                        <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
+                            autocomplete="off" checked >
+                        <label class="btn btn-outline-success" for="success-outlined">Day Wise</label>
+        
+                        <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined"
+                            autocomplete="off">
+                        <label class="btn btn-outline-danger" for="danger-outlined" >Range Wise</label>
+                    </div>
+                </div>
+               </div>
+            </div>
+           </div>
+           
+       
+            <hr>
+        </div>
+    }
+       <div class="row">
+        <router-outlet></router-outlet>
+          
+        </div>
+    </div>
+</section>
+
+
+   

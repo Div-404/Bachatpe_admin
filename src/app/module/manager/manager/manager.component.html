@@ -1,0 +1,155 @@
+<div class="page executives" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12  py-4 ">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="nk-block-head-content">
+                        <h3 class="nk-block-title page-title">Tab </h3>
+                        <p>You can change the status for sub admins as disable or enable. </p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-success" (click)="openVerticallyCentered(content,0)">
+                            <i  class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i> Add
+                            Tab</button>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+     
+        <div class="row mb-3" >
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
+                <div class="executives-card p-3 pb-0" style="background: #F6F9FC; min-height: 70vh; margin-bottom: 50px;">
+                    <div class="row" >
+                     
+                        <ng-container *ngIf="moduleData && moduleData.length; else noDataTemplate">
+                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mb-3" *ngFor="let data of moduleData">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h4 class="pb-0 mb-0"><i class='bx bx-cube me-2'></i>{{data.Master}}</h4>
+                                            <div ngbDropdown class="d-inline-block">
+                                                <button type="button" class="btn btn-outline-primary drop" id="dropdownForm1" ngbDropdownToggle>
+                                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                                                    <button type="button" ngbDropdownItem (click)="openVerticallyCentered(content, data)">
+                                                        <i class='bx bxs-edit me-1'></i>Edit
+                                                    </button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button type="button" ngbDropdownItem (click)="deleteModule(data.MasterID, data.Master)">
+                                                        <i class='bx bx-trash me-1'></i>Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text">Tab Status</div>
+                                            <div class="badge-soft-success ng-pristine ng-valid ng-touched" *ngIf="data.oEnable == 1">
+                                                <i class='bx bx-user-check me-1'></i> Enable
+                                            </div>
+                                            <div class="badge-soft-danger ng-pristine ng-valid ng-touched" *ngIf="data.oEnable == 0">
+                                                <i style="vertical-align: middle;" class='bx bx-user-x me-1'></i> Disable
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    
+                        <ng-template #noDataTemplate>
+                            <div class="no-data-container text-center align-items-center justify-content-center">
+                                <img src="assets/images/nodata1.png" class="img-fluid" width="180px" style="margin-top: 7%;">
+                                <h5 class="no-data-text">No Data Found.</h5>
+                            </div>
+                        </ng-template>
+                     
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+       
+        <h4 *ngIf="!getEditData"class="modal-title">Add Tab</h4>
+        <h4 *ngIf="getEditData" class="modal-title"> Update Tab</h4>
+        <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body p-3">
+        <!-- <button type="button" aria-label="Close" (click)="modal.dismiss('Cross click')" class="btn-close-my"><img src="assets/images/close-svg.svg" width="13px"></button> -->
+        <div class="white-box p-3">
+            <!-- <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                   
+                        <div class="text-start background-text">
+                            <h4 *ngIf="!getEditData" class="mb-1 modal-title-1 text-orange"> Add Tab</h4>
+                            <h4 *ngIf="getEditData" class="mb-1 modal-title-1 text-orange">Update Tab</h4>
+                            <p class="tx-18 mb-0">Easily add tab with just a few details.</p>
+                        </div>
+                
+                    <hr class="mt-2 mb-3">
+                </div>
+            </div> -->
+            <form [formGroup]="moduleForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label"> Tab Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="email" (keypress)="onKeyPress($event)" placeholder="Enter Tab Name"
+                        [readonly]="getEditData" formControlName="name" required>
+                </div>
+    
+    
+                <!-- <div class="form-floating">
+                                <input type="text" cclass="form-control" id="email" [readonly]="getEditData" onfocus="this.removeAttribute('readonly');" formControlName="name" required>
+                                <label for="email">Enter Module Name</label>
+                            </div> -->
+                <div>
+    
+                    <label for="email" class="form-label">Select Status <span class="text-danger">*</span></label>
+                    <select class="form-select" formControlName="status">
+                        <option [value]="9" disabled selected >Select</option>
+                        <option [value]="1">Enable</option>
+                        <option [value]="0">Disable</option>
+                    </select>
+    
+                    <!-- <select class="form-select" formControlName="status">
+                                <option value="1">Enable </option>
+                                <option value="0">Disable </option>
+                              </select> -->
+                </div>
+                <!-- <div class="form-group">
+                                <select formControlName="status">
+                                    <option value="1">Enable </option>
+                                    <option value="0">Disable </option>
+                                </select>
+                                
+                                <label for="email">Select Status</label>
+                            </div> -->
+                            <div class="d-flex align-items-center justify-content-end mt-4 ">
+                                <button type="button" class="btn btn-success btn-sm px-5" *ngIf="!getEditData" [disabled]="moduleForm.invalid"
+                                (click)="addModule()">Submit</button>
+                            <button type="button" class="btn btn-success btn-sm px-5" *ngIf="getEditData" [disabled]="moduleForm.invalid"
+                                (click)="updateStatus()">Update Status</button>
+                                    <!-- <button type="button" class="btn close w-50 mx-auto" (click)="modal.close('Close click')">Close</button> -->
+                            </div>
+            </form>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-light close w-50 mx-auto" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-light send-money w-50 mx-auto me-3" *ngIf="!getEditData" [disabled]="moduleForm.invalid"
+            (click)="addModule()">Submit</button>
+        <button type="button" class="btn btn-light send-money w-50 mx-auto me-3" *ngIf="getEditData" [disabled]="moduleForm.invalid"
+            (click)="updateStatus()">Update Status</button>
+    </div> -->
+</ng-template>
+
+<!-- 
+vikas
+<p *ngFor="let data of moduleData">hello test</p> -->
+

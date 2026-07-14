@@ -1,0 +1,403 @@
+<section class="page">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header flex-center-between">
+                        <p class="mb-0 fw600">Manage API</p>
+                        <!-- <button class="btn btn-sm btn-success">Add</button> -->
+                        <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openLg(content)">Large modal</button> -->
+                        <button class="btn btn-sm btn-success" (click)="openEnd(content)"><i style="color:#F8E000"
+                                class="fa-solid fa-circle-plus me-2"></i>API</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="tblone table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        @if (pageOfItems?.length != 0) {
+                                        <thead>
+                                            <tr>
+                                                <th>Vendor</th>
+                                                <th>Api Name</th>
+                                                <th>Balance</th>
+
+                                                <th>Status</th>
+
+                                                <th>Transaction Failed</th>
+                                                <th>Transaction Success</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        }
+                                        <tbody>
+                                            @for(data of pageOfItems; track data;) {
+                                            <tr>
+                                                @for (name of serviceDro; track name;) {
+                                                @if (name.VendorID == data.oConfig.SourceID) {
+                                                <td>{{name.Vendor}}</td>
+                                                }
+                                                }
+                                                <td> {{data.oConfig.Source_ByName}} 
+                                                     <i class="fa-solid fa-circle-exclamation" placement="top" ngbTooltip="{{tooltipData}}"
+                                                      (mouseover)="showTooltip(data)" (mouseout)="hideTooltip()"></i>
+                                                </td>
+                                                <!-- @if (tooltipVisible) {
+                                                    <p class="muted">{{tooltipData}}</p>
+                                                    } -->
+                                                <td>{{data.Balance}}</td>
+
+                                                <td>
+                                                    <button style="width: 76px;" type="button" class="btn btn-sm fs13"
+                                                        [ngClass]="data.oConfig.Status == 1  ? 'btn-success' : 'btn-danger'"
+                                                        (click)="toggleButton(data)">{{ data.oConfig.Status == 0 ?
+                                                        'Deactive' : 'Active' }}</button>
+                                                </td>
+
+                                                <td>{{data.Trans_Failed}}</td>
+                                                <td>{{data.Trans_Success}}</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="for-edit" (click)="openForEdit(content, data)"> <i
+                                                                class="fa-solid fa-pencil "></i></div>
+                                                        <div class="for-delete" (click)="deleteApiConf(data)"><i
+                                                                class="fa-regular fa-trash-can"></i></div>
+
+                                                        <div ngbDropdown container="body">
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-outline-success fs12 btn-sm"
+                                                                ngbDropdownToggle><i
+                                                                    class="fa-solid fa-list-ul"></i></button>
+                                                            <div ngbDropdownMenu class="tbl-dd">
+                                                                <button ngbDropdownItem
+                                                                    (click)="navigateToComm(data)">Commission
+                                                                    Structure</button>
+                                                                <!-- <div class="dropdown-divider"></div>
+                                                                <button ngbDropdownItem class=""
+                                                                    (click)="navigate('logs-report')">Transaction</button> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }@empty {
+                                            <tr>
+                                                <td class="d-flex align-items-center justify-content-center"
+                                                    style="height: 400px;" colspan="11">
+                                                    <div class="text-center">
+                                                        <img style="height: 170px; opacity: 0.5;" class="bg-img  mb-3"
+                                                            src="assets/images/nodata1.png" alt="">
+                                                        <p class="p-img">No data found</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    @if (apiList.length != 0) {
+                                    <div class="col-md-12 d-flex justify-content-end " >
+                                        <app-pagination [items]="apiList" (changePage)="onChangePage($event)"></app-pagination>
+                                    </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #content let-offcanvas>
+        <div class="offcanvas-header">
+            @if(!buttonAddEdit) {
+            <h4 class="offcanvas-title">Add API</h4>
+            }
+            @if(buttonAddEdit) {
+            <h4 class="offcanvas-title">Edit API</h4>
+            }
+            <button type="button" class="btn-close" aria-label="Close"
+                (click)="offcanvas.dismiss('Cross click')"></button>
+        </div>
+        <div class="offcanvas-body pt-0">
+            <form [formGroup]="apiForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row first-ele">
+                            <div class="col-md-12">
+                                <label for="email" class="form-label">Source</label>
+                                <fieldset [disabled]="buttonAddEdit">
+                                <select class="form-select" formControlName="SourceID" placeholder=""   
+                                    [ngClass]="{ 'is-invalid': submitted && f['SourceID'].errors }">
+                                    <option value="" selected hidden> Select source</option>
+                                    @for (data of serviceDro; track data) {
+                                    <option [value]=data.VendorID>{{data.Vendor}}</option>
+                                    }
+                                    <!-- <option value="16">WTS</option>f
+                            <option value="2104">PanMitra</option>
+                            <option value="2138">MitraServices</option>
+                            <option value="2139">MitraServices</option>
+                            <option value="2213">MPLAN OFFLINE</option> -->
+                                </select>
+                                @if (submitted && f['SourceID'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['SourceID'].errors['required']) {
+                                    <div>Source is required</div>
+                                    }
+                                </div>
+                                }
+                            </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Name</label>
+                                    <fieldset [disabled]="buttonAddEdit">
+                                    <input type="email" class="form-control" id="email" formControlName="Source_ByName" placeholder="Enter name"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Source_ByName'].errors }">
+                                    @if (submitted && f['Source_ByName'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Source_ByName'].errors['required']) {
+                                        <div>Name is required</div>
+                                        }
+                                        @if (f['Source_ByName'].errors['pattern']) {
+                                            <div>Enter correct name</div>
+                                            }
+                                    </div>
+                                    }
+                                </fieldset>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Description</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Description" placeholder="Enter description"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Description'].errors }">
+                                    @if (submitted && f['Description'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Description'].errors['required']) {
+                                        <div>Description is required</div>
+                                        }
+                                        <!-- @if (f['Description'].errors['pattern']) {
+                                            <div>Description is required</div>
+                                            } -->
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-4">
+                            <!-- <div class="col-md-12">
+                  <div class="mb-3">
+                   <label for="email" class="form-label">Crediential Mode</label>
+                   <select class="form-select">
+                      <option selected="selected" value="1">Active</option>
+                      <option value="0">Deactive</option>
+                    </select>
+                  </div>
+                </div> -->
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 1</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve1"
+                                      >
+                                    <!-- @if (submitted && f['Reserve1'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve1'].errors['required']) {
+                                        <div>Reserve1 is required</div>
+                                        }
+                                    </div>
+                                    } -->
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 2</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve2"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve2'].errors }">
+                                    @if (submitted && f['Reserve2'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve2'].errors['required']) {
+                                        <div>Reserve2 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 3</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve3"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve3'].errors }">
+                                    @if (submitted && f['Reserve3'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve3'].errors['required']) {
+                                        <div>Reserve3 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 4</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve4"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve4'].errors }">
+                                    @if (submitted && f['Reserve4'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve4'].errors['required']) {
+                                        <div>Reserve4 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 5</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve5"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve5'].errors }">
+                                    @if (submitted && f['Reserve5'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve5'].errors['required']) {
+                                        <div>Reserve5 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 6</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve6"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve6'].errors }">
+                                    @if (submitted && f['Reserve6'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve6'].errors['required']) {
+                                        <div>Reserve6 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 7</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve7"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve7'].errors }">
+                                    @if (submitted && f['Reserve7'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve7'].errors['required']) {
+                                        <div>Reserve7 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 8</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve8"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve8'].errors }">
+                                    @if (submitted && f['Reserve8'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve8'].errors['required']) {
+                                        <div>Reserve8 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 9</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve9"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve9'].errors }">
+                                    @if (submitted && f['Reserve9'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve9'].errors['required']) {
+                                        <div>Reserve9 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Reserve 10</label>
+                                    <input type="email" class="form-control" id="email" formControlName="Reserve10"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Reserve10'].errors }">
+                                    @if (submitted && f['Reserve10'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Reserve10'].errors['required']) {
+                                        <div>Reserve10 is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="offcanvas-footer ">
+            <div class="row">
+                <div class="col-md-12">
+                    @if(!buttonAddEdit) {
+                    <button class="btn btn-success w-100" (click)="addApiConfig()">Submit</button>
+                    }
+                    @if(buttonAddEdit) {
+                    <button class="btn btn-success w-100" (click)="editApiConfig(editData)">Update</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Add API</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+           <div class="row">
+                <div class="col-md-12">
+                    <p class="mb-1 fs13">Select Service</p>
+                    <select class="form-select">
+                        <option selected="selected" value="0">--Select--</option>
+                        <option value="1">MOBILE</option>
+                        <option value="2">DTH</option>
+                        <option value="3">Money Transfer</option>
+                        <option value="4">AEPS</option>
+                        <option value="5">Electricity</option>
+                        <option value="6">PostPaid</option>
+                        <option value="7">Payouts</option>
+                        <option value="8">UTI Pancard</option>
+                        <option value="9">Loan Repayment</option>
+                        <option value="10">SMS</option>
+                        <option value="11">Flight</option>
+                        <option value="12">Gas</option>
+                        <option value="13">INSURANCE</option>
+                        <option value="14">INTERNET/ISP</option>
+                        <option value="15">LANDLINE</option>
+                        <option value="16">WATER</option>
+                        <option value="17">FASTAG</option>
+                        <option value="18">Mplan</option>
+                        <option value="19">Offline Electricity</option>
+                    </select>
+                </div>
+           </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+        </div>
+    </ng-template> -->
+</section>

@@ -1,0 +1,64 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="col-md-12 mb-2">
+            <!-- @if (queryParam){
+                <button class="btn" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                } -->
+        </div>
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center justify-content-between pb-3">
+                    <div>
+                        <ul class="tabnavc-ul ps-0 mb-0">
+                            <li [ngClass]="{'active': SelectedTab == 'user-main/user-reports' || SelectedTab == 'user-main'}" (click)="navigate ('user-reports')">
+                                <div class="tabnavc-a ">
+                                    <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span
+                                        class="tabnavc-txt">Overall</span>
+                                </div>
+                            </li>
+                            <li [ngClass]="{'active': SelectedTab == 'm-distributor' || SelectedTab == 'user-main/m-distributor'}" (click)="navigate ('m-distributor')">
+                                <div class="tabnavc-a">
+                                    <span class="tbicon"><i class="fa-regular fa-clock"></i></span><span
+                                        class="tabnavc-txt">M. Distributor</span>
+                                </div>
+                            </li>
+                            <li [ngClass]="{'active': SelectedTab == 'user-distributor' || SelectedTab == 'user-main/user-distributor'}" (click)="navigate ('user-distributor')">
+                                <div class="tabnavc-a">
+                                    <span class="tbicon"><i class="fa-regular fa-clock"></i></span><span
+                                        class="tabnavc-txt">Distributor</span>
+                                </div>
+                            </li>
+                            <li [ngClass]="{'active': SelectedTab == 'user-retailer' || SelectedTab == 'user-main/user-retailer'}" (click)="navigate ('user-retailer')">
+                                <div class="tabnavc-a">
+                                    <span class="tbicon"><i class="fa-regular fa-clock"></i></span><span
+                                        class="tabnavc-txt">Retailer</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div>
+                        <div *ngIf="SelectedTab == 'tab2'">
+                            <div class="calc-view">
+
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
+                                    autocomplete="off" [checked]="toggle == '1' " (click)="ChangeToggle('1')">
+                                <label class="btn btn-outline-success" for="success-outlined">Day Wise</label>
+
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined"
+                                    autocomplete="off" [checked]="toggle == '2' " (click)="ChangeToggle('2')">
+                                <label class="btn btn-outline-danger" for="danger-outlined">Range Wise</label>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        
+           
+        </div>
+        <div class="row">
+            <router-outlet></router-outlet>
+           
+            
+        </div>
+    </div>
+</section>

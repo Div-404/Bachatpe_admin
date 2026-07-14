@@ -1,0 +1,115 @@
+<section class="headertop">
+    <div class="row w-100">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between w-100 align-items-center">
+                <div class="header-toggle"><i class="fa-solid fa-list"></i></div>
+
+                <div class="header-toggle ms-5" >
+                    <div ngbDropdown container="body">
+                        <button type="button" class="btn topprofile-dd btn-sm" ngbDropdownToggle>
+                            <p class="user-fl-name mb-0">Admin</p>
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button class="fs13" (click)="openLg3(content3)" ngbDropdownItem><i class="fa-solid fa-key me-1"></i> Change Password </button>
+                            <div class="dropdown-divider"></div>
+                            <button class="fs13" ngbDropdownItem (click)="logOut()" ><i class="fa-solid fa-power-off me-1"></i>Logout</button>
+                            <!-- <button style=" margin-left: 1300px;" (click)="logOut()" > Log out</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #content3 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Change Admin Password</h4>
+        <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="changePassForm">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <p class="fs13 mb-1">Old Password</p>
+            </div>
+            <div class="col-md-12">
+                <input type="text" class="form-control"  placeholder="" name="email" formControlName="OldPwd"
+                [ngClass]="{ 'is-invalid': submitted && f['OldPwd'].errors }">
+              
+                @if (submitted && f['OldPwd'].errors) {
+                    <div class="invalid-feedback">
+                        @if (f['OldPwd'].errors['required']) {
+                        <div>Old password is required</div>
+                        } 
+                        <!-- @if (f['OldPwd'].errors['pattern']) {
+                        <div>OldPwd must be in correct format</div>
+                        } -->
+                    </div>
+                    }
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <p class="fs13 mb-1">New Password</p>
+            </div>
+            <div class="col-md-12">
+                <input [type]="hide ? 'text' : 'password'" class="form-control"  placeholder="" name="email" formControlName="NewPwd"
+                [ngClass]="{ 'is-invalid': submitted && f['NewPwd'].errors }">
+                                <span class="sub-text">
+                    <i [class]="hide ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'"
+                       style="position: absolute; bottom: 30%; left: 85%; margin-bottom: 40px; margin-left: 20px;" 
+                       (click)="toggleVisibility(1)"></i>
+                  </span>
+               
+                @if (submitted && f['NewPwd'].errors) {
+                    <div class="invalid-feedback">
+                        @if (f['NewPwd'].errors['required']) {
+                        <div>New password is required</div>
+                        } 
+                        @if (f['NewPwd'].errors['pattern']) {
+                        <div> 8-digit password: Alphanumeric & Special character required</div>
+                        }
+                    </div>
+                    }
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <p class="fs13 mb-1">Confirm Password</p>
+            </div>
+            <div class="col-md-12">
+                <input [type]="hide2 ? 'text' : 'password'" class="form-control"  placeholder="" name="email" formControlName="ReCheckPwd"
+                [ngClass]="{ 'is-invalid': submitted && f['ReCheckPwd'].errors }">
+                <i [class]="hide2 ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'"
+                       style="position: absolute; bottom: 30%; left: 85%; margin-bottom: -33px; margin-left: 20px;" 
+                       (click)="toggleVisibility(2)"></i>
+                @if (submitted && f['ReCheckPwd'].errors) {
+                    <div class="invalid-feedback">
+                        @if (f['ReCheckPwd'].errors['required']) {
+                        <div>Confirm password is required</div>
+                        } 
+                        @if (f['ReCheckPwd'].errors['pattern']) {
+                        <div> 8-digit password: Alphanumeric & Special character required</div>
+                        }
+                    </div>
+                    }
+            </div>
+        </div>
+    </form>
+     </div>
+     <div class="modal-footer" style="display: block;">
+        <div class="row">
+            <div class="col-md-3">
+                <button  type="button" class="btn btn-secondary w-100 btn-sm0" (click)="modal.dismiss('Cross click')">Close</button>
+            </div>
+            <div class="col-md-9">
+              
+                <button  type="button" class="btn btn-success w-100 btn-sm0" (click)="changePass()">Update</button>
+              
+            </div>
+        </div>
+    </div>
+
+</ng-template>

@@ -1,0 +1,233 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Settings </h3>
+                    <!-- <p>You can easily modify the settings of wallet in this section.</p> -->
+                </div>
+              
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card p-3 p-md-3 mb-3">
+               
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="text-start background-text">
+                            <h4 class="mb-1 tx-medium text-center">Currency Usage Across Countries</h4>
+                            <p class="tx-18 mb-4 text-center">
+                                {{projectTitle}} supports nearly 5 major currencies from all over the globe. </p>
+                        </div>
+                        <div class="currency-set p-4 ">
+                            <div class="row">
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <form [formGroup]="currencySetForm">
+                                        <div class="row">
+
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="custom-select"
+                                                    [class.selected]="currencySetForm.get('selectedCountry').value">
+                                                    <ng-select name="selectedCountry" formControlName="selectedCountry"
+                                                        [ngClass]="{ 'is-invalid': currencySetForm.get('selectedCountry').touched && currencySetForm.get('selectedCountry').invalid,
+                                                'is-valid': currencySetForm.get('selectedCountry').touched && currencySetForm.get('selectedCountry').valid }">
+                                                        <ng-option *ngFor="let country of countries"
+                                                            [value]="country.name"> {{ country.name }}</ng-option>
+                                                    </ng-select>
+                                                    <label for="selectedCountry"
+                                                        [class.selected]="currencySetForm.get('selectedCountry').value">Select
+                                                        Country</label>
+                                                </div>
+
+
+                                            
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="login-right mb-3 mb-md-0">
+                                                    <div class="form">
+                                                        <div class="form-group">
+                                                            <div class="custom-select"
+                                                                [class.selected]="currencySetForm.get('selectedCurrency').value">
+                                                              
+                                                                <ng-multiselect-dropdown
+                                                                [ngClass]="{ 'is-invalid': currencySetForm.get('selectedCurrency').touched && currencySetForm.get('selectedCurrency').invalid,
+                                                        'is-valid': currencySetForm.get('selectedCurrency').touched && currencySetForm.get('selectedCurrency').valid }"
+                                                                    [placeholder]="'&nbsp;Select Currency'"
+                                                                    [settings]="dropdownSettings" [data]="dropdownList"
+                                                                    [(ngModel)]="selectedItems"
+                                                                    (onSelect)="onItemSelect($event)"
+                                                                    (onDeSelect)="onDeSelect($event)"
+                                                                    (onSelectAll)="onSelectAll($event)"
+                                                                    (onDeSelectAll)="onDeSelectAll($event)"
+                                                                    formControlName="selectedCurrency">
+                                                                </ng-multiselect-dropdown>
+                                                                <label for="selectedCurrency"
+                                                                    [class.selected]="currencySetForm.get('selectedCurrency').value">
+                                                                    Currency</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="custom-select"
+                                                    [class.selected]="currencySetForm.get('loginType').value">
+                                                    <ng-select name="loginType" formControlName="loginType"
+                                                        [(ngModel)]="selectedLoginType"
+                                                        [ngClass]="{ 'is-invalid': currencySetForm.get('loginType').touched && currencySetForm.get('loginType').invalid,
+                                                'is-valid': currencySetForm.get('loginType').touched && currencySetForm.get('loginType').valid }">
+                                                        <ng-option *ngFor="let option of loginTypeOptions"
+                                                            [value]="option.value"> {{ option.name }}</ng-option>
+
+                                                    </ng-select>
+                                                    <label for="loginType"
+                                                        [class.selected]="currencySetForm.get('loginType').value">Select
+                                                        Login Type</label>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="custom-select"
+                                                    [class.selected]="currencySetForm.get('kycType').value">
+                                                    <ng-select name="kycType" formControlName="kycType"
+                                                        [ngClass]="{ 'is-invalid': currencySetForm.get('kycType').touched && currencySetForm.get('kycType').invalid,
+                                                'is-valid': currencySetForm.get('kycType').touched && currencySetForm.get('kycType').valid }">
+                                                        <ng-option *ngFor="let option of kycTypeOptions"
+                                                            [value]="option.value"> {{option.name}}</ng-option>
+
+                                                    </ng-select>
+                                                    <label for="kycType"
+                                                        [class.selected]="currencySetForm.get('kycType').value">Select
+                                                        KYC Type</label>
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="message-box"><i class='bx bx-info-square me-2 p-2 '></i> First, pick the
+                                        country and then proceed to specify the currency. </div>
+                                </div>
+                                <div class="col-xxl-3 col-xl-3 col-lg-3s col-md-12 col-sm-12 col-xs-12 text-end">
+                                    <div class="background-text">
+                                        <button type="button" class="btn btn-secondary ps-3 pe-3 mx-auto rounded-6"
+                                            *ngIf="!updateButton"
+                                            [disabled]="currencySetForm.invalid || selectedItems.length==0"
+                                            (click)="onSubmit()">Currency Set Now
+                                           </button>
+                                        <button type="button" class="btn btn-secondary ps-3 pe-3 mx-auto rounded-6"
+                                            [disabled]="currencySetForm.invalid || selectedItems.length==0"
+                                            *ngIf="updateButton" (click)="updateCurrency()">Update Currency Set Now</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card mb-3 white-bg">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="card-title">Currencies We Support</h4>
+                       
+                    </div>
+
+
+                </div>
+
+                <div class="card-body">
+                    <div class="card-inner">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom no-footer table-hover table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Country</th>
+                                        <th scope="col">Allocated Currencies</th>
+                                        <th scope="col">Login Type</th>
+                                        <th scope="col">KYC Type</th>
+                                        <!-- <th scope="col" class="text-start">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of listData">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="name text-13 mfw500">{{list.Country}}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3">
+                                                    <div class="d-flex align-items-center">
+                                                      
+                                                        <div>
+                                                            <span *ngFor="let d of list.lstCurrency"
+                                                                class="country-name badge rounded-pill me-2">
+                                                                {{d}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="name badge rounded-pill badge-soft-success">
+                                                    {{list.oLogin === 1 ? 'ON_SIGNUP' : list.oLogin === 2 ?
+                                                    'ON_OTP_VERIFY' : list.oLogin === 3 ? 'ON_KYC_UPLOAD' :list.oLogin
+                                                    === 4 ? 'ON_KYC_VERIFIED' : ''}}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="name badge rounded-pill badge-soft-warning">{{list.oKYC === 1 ? 'ON_SIGNUP'
+                                                    : list.oKYC === 2 ? 'ON_OTP_VERIFY' : list.oKYC === 3 ?
+                                                    'ON_KYC_UPLOAD' :list.oKYC === 4 ? 'ON_KYC_VERIFIED' : ''}}</div>
+                                            </div>
+                                        </td>
+
+                                        <!-- <td class="text-start"><button type="button"
+                                                class="btn btn-secondary p-2" style="min-height: 30px !important;" placement="top" ngbTooltip="Edit Currency" (click)="editList(list)"><i
+                                                    class='bx bx-edit' style="font-size: 14px;"></i></button></td> -->
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- <div class="page-title-box pt-2 pb-0">
+                            <div class="float-end">
+                                <app-pagination [items]="listData" (changePage)="onChangePage($event)"></app-pagination>
+                            </div>
+                          
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

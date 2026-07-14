@@ -1,0 +1,314 @@
+<div class="page executives" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-4">
+            <div class="nk-block-head-content" *ngIf="editOption==0">
+                <h3 class="nk-block-title page-title">Add Executive</h3>
+                <p>You can add executive tabs in this section. </p>
+            </div>
+            <div class="nk-block-head-content" *ngIf="editOption==1">
+                <h3 class="nk-block-title page-title">Update Executive</h3>
+                <p>You can update executive tabs in this section. </p>
+            </div>
+            <!-- <hr> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card p-3 p-md-3 mb-3">
+                <div class="login-right p-3 p-md-3">
+                    <div class="form">
+                        <div class="row">
+                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="nk-block-head-content">
+                                    <h3 class="nk-block-title page-title text-123" *ngIf="editOption==0">Add Executive </h3>
+                                    <h3 class="nk-block-title page-title text-123" *ngIf="editOption==1">Update Executive </h3>
+                                    <p class="mb-0" style="font-size: 13px;" *ngIf="editOption==0">You may add an executive role right below.
+                                    <p class="mb-0" style="font-size: 13px;" *ngIf="editOption==1">You may update an executive role right below.
+                                    </p>
+                                </div>
+                                <hr class="mt-2 mb-3">
+                                <form [formGroup]="execForm">
+                                    <div class="row">
+                                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12 mb-3">
+                                            <div class="form-group123">
+                                                <label for="email">Executive Name</label>
+                                                <input class="form-control" type="text" id="email" formControlName="name" [readonly]="editOption==1"
+                                                    [ngClass]="{ 'is-invalid': execForm.get('name').touched && execForm.get('name').invalid }"
+                                                    required>
+                                                
+                                                <div *ngIf="execForm.get('name').touched && execForm.get('name').invalid"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="execForm.get('name').errors.required">Name
+                                                        is Required.</div>
+                                                        <div *ngIf="execForm.get('name').errors.pattern">Name is Invalid.
+                                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+										
+                                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12 mb-3">
+                                            <div class="form-group123">
+                                                <label for="email">Email Id</label>
+                                                <input class="form-control" type="text" id="email" formControlName="email" [readonly]="editOption==1"
+                                                    [ngClass]="{ 'is-invalid': execForm.get('email').touched && execForm.get('email').invalid }"
+                                                    required>
+                                               
+                                                <div *ngIf="execForm.get('email').touched && execForm.get('email').invalid"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="execForm.get('email').errors.required">Email
+                                                        is Required.</div>
+                                                        <div *ngIf="execForm.get('email').errors.pattern">Email is Invalid.
+                                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12 mb-3">
+                                            <div class="form-group123">
+                                                <label for="email">Phone</label>
+                                                <input class="form-control" type="text" id="email" formControlName="phone" (keypress)="numberOnly($event)" [readonly]="editOption==1"
+                                                    [ngClass]="{ 'is-invalid': execForm.get('phone').touched && execForm.get('phone').invalid }"
+                                                    required>
+                                                
+                                                <div *ngIf="execForm.get('phone').touched && execForm.get('phone').invalid"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="execForm.get('phone').errors.required">Phone Number
+                                                        is Required.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12 mb-3">
+                                            <div class="form-group">
+                                                <!-- <input type="text" id="email" formControlName="country"
+                                                    [ngClass]="{ 'is-invalid': execForm.get('country').touched && execForm.get('country').invalid }"
+                                                    required> -->
+                                                    
+                                                    <div class="custom-select form-group123" [class.selected]="execForm.get('country').value">
+                                                        <label for="country" style="z-index: 999;"> Country</label>
+                                                        <!-- <select class="form-select" readonly="editOption==1">
+                                                            <option *ngFor="let country of countryData" [value]="country.Country" [ngClass]="{ 'is-invalid': execForm.get('country').touched && execForm.get('country').invalid, 
+                                                            'is-valid': execForm.get('country').touched && execForm.get('country').valid }">{{ country.Country }}</option>
+                                                        </select> -->
+                                                        <ng-select   formControlName="country" [readonly]="editOption==1">
+                                                            <ng-option *ngFor="let country of countryData" [value]="country.Country" [ngClass]="{ 'is-invalid': execForm.get('country').touched && execForm.get('country').invalid, 
+                                                        'is-valid': execForm.get('country').touched && execForm.get('country').valid }"> {{ country.Country }}</ng-option>
+                                                        </ng-select>
+                                                        <!-- <label for="country" [class.selected]="execForm.get('country').value"> Country22</label> -->
+                                                    </div>
+                                                <!-- <label for="email">Country</label> -->
+                                                <div *ngIf="execForm.get('country').touched && execForm.get('country').invalid"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="execForm.get('country').errors.required">Value
+                                                        is Required.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12 mb-3">
+                                            <div class="custom-select form-group123" [class.selected]="execForm.get('status').value">
+                                                <label for="status" style="z-index: 999;">Status</label>
+                                                <ng-select formControlName="status" [readonly]="editOption==1"
+                                                    [ngClass]="{ 'is-invalid': execForm.get('status').touched && execForm.get('status').invalid,
+                                                'is-valid': execForm.get('status').touched && execForm.get('status').valid }">
+                                                    <ng-option [value]="1">Active</ng-option>
+                                                    <ng-option [value]="0">In Active</ng-option>
+                                                </ng-select>
+                                                <!-- <label for="status" [class.selected]="execForm.get('status').value">Status</label> -->
+                                                
+                                            </div>
+                                            <div *ngIf="execForm.get('status').touched && execForm.get('status').invalid"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="execForm.get('status').errors.required">Value
+                                                        is Required.</div>
+                                                </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <div class="row">
+                                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="nk-block-head-content ">
+                                            <h3 class="nk-block-title page-title text-123">Required Module</h3>
+                                            <p class="mb-0" style="font-size: 13px;"> You may add an module right below.
+                                            </p>
+                                        </div>
+                                        <hr class="mt-2 mb-3">
+                                        <div class="row">
+                                            <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
+                                                <div class="cust2">
+                                                    <label for="">Select Tab</label>
+                                                    <ng-select [(ngModel)]="masterMdule" [clearOnBackspace]="false"
+                                                    (change)="onMasterIDChange($event)">
+                                                    <ng-option *ngFor="let master of masterOptions"
+                                                        [value]="master">{{ master.name }}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                
+
+                                            </div>
+                                            <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-6 col-12">
+                                               <div class="cust2">
+                                                <label for="">Select Sub Tab</label>
+                                                <ng-select [(ngModel)]="subModule" (change)="onSubModuleChange($event)" [clearOnBackspace]="false" >
+                                                    <ng-option *ngFor="let submaster of subMasterOptions"
+                                                        [value]="submaster">{{ submaster.SubMaster }}</ng-option>
+                                                </ng-select>
+                                               </div>
+                                               
+
+                                                <div *ngIf="editOption==1">
+                                                    <div class="p-3 pt-3 card-2">
+                                                        <div class="nk-block-head-content ">
+                                                            <h3 class="nk-block-title page-title text-123">Add other
+                                                                module permission</h3>
+                                                            <p class="mb-0"> You may click below to give permission.
+                                                            </p>
+                                                        </div>
+                                                        <hr class="mt-2 mb-4">
+                                                        
+                                                        <ul
+                                                            class="d-flex align-items-center justify-content-between m-0 p-0">
+                                                            <li>
+                                                                <input type="checkbox" class="styled-checkbox0"
+                                                                    [(ngModel)]="Access_All"
+                                                                    (change)="chengeData($event, 4)">
+                                                                <label for="styled-checkbox-1">Access All Permission</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" class="styled-checkbox0"
+                                                                    [(ngModel)]="add"  (change)="chengeData($event, 0)">
+                                                                <label for="styled-checkbox-1">Add Permission</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" class="styled-checkbox0"
+                                                                    (change)="chengeData($event, 1)" [(ngModel)]="edit">
+                                                                <label for="styled-checkbox-1">Edit Permission</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" class="styled-checkbox0"
+                                                                    [(ngModel)]="delete"
+                                                                    (change)="chengeData($event, 2)">
+                                                                <label for="styled-checkbox-1">Delete Permission</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" class="styled-checkbox0"
+                                                                    [(ngModel)]="Access"
+                                                                    (change)="chengeData($event, 3)">
+                                                                <label for="styled-checkbox-1">Access Permission</label>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="mt-3 mb-3">
+                                        <div class="row ">
+
+
+
+                                            <div
+                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex justify-content-center ">
+                                                <button class="btn btn-success close-button00 me-3 ps-5 pe-5  text-center" 
+                                                    (click)="addMoreDataFunc()" [disabled]="((masterID=='')||(subMasterValue.id=='')||(subMasterValue.id==undefined))">Add More</button>
+
+                                                  
+<!-- 
+                                                <button class="btn btn-light update-permissions  text-center"
+                                                    *ngIf="!getEditData" (click)="addExecutive()">Submit</button>
+                                                <button class="btn btn-light update-permissions  text-center"
+                                                    *ngIf="getEditData" (click)="updateUserPermissions()">Update
+                                                    Permissions</button> -->
+                                                    <fieldset  *ngIf="((!getEditData)&&(vUsetData.length !=0))">
+                                                <button class="btn btn-success update-permissions  text-center" 
+                                                [disabled]="execForm.get('name').invalid || execForm.get('email').invalid ||  execForm.get('phone').invalid || execForm.get('country').invalid || execForm.get('status').invalid " (click)="addExecutive()">Submit</button>
+                                            </fieldset>
+                                            <button class="btn btn-light update-permissions  text-center"
+                                                 *ngIf="((getEditData)&&(vUsetData.length !=0))" (click)="updateUserPermissions()">Update
+                                                Permissions</button>
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row executives-card-1 ">
+                <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mb-3" *ngFor="let res of vUsetData; let i = index">
+                    <div class="card">
+                        <div class="executives-card-1" style="width: 100%; display: block;">
+                                <div class="d-flex align-items-center justify-content-between card-header">
+                                    <h1>{{res.Master}}</h1>
+                                    <div class="text-123">
+                                       <strong>Sub - Tab</strong> :
+                                       {{res.SubMaster }}
+                                        <span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div *ngIf="((editOption==1))">
+                                    <div class="card-body" >
+                                        <div class="nk-block-head-content ">
+                                            <h3 class="nk-block-title page-title text-123">Edit permissions</h3>
+                                            <p class="mb-0"> You may click below to give permissions.
+                                            </p>
+                                        </div>
+                                        <hr class="mt-2 mb-2">
+                                         <ul class="d-flex align-items-center justify-content-between m-0 p-0">
+                                            <li class="form-check">
+
+                                                <input type="checkbox" class="form-check-input" [checked]="res.Access_All" [(ngModel)]="res.Access_All" >
+                                                <label for="chkbx4">Access All </label>
+                                            </li>
+                                            <li class="form-check">
+                                                <input type="checkbox" class="form-check-input"  [checked]="res.Add" [(ngModel)]="res.Add" >
+                                                <label for="chkbx1">Add</label>
+                                            </li>
+                                            <li class="form-check">
+                                                <input type="checkbox" class="form-check-input" [checked]="res.Edit" [(ngModel)]="res.Edit">
+                                                <label for="chkbx2">Edit</label>
+                                            </li>
+                                            <li class="form-check">
+                                                <input type="checkbox" class="form-check-input" [checked]="res.Access" [(ngModel)]="res.Access">
+                                                <label for="chkbx3">Access</label>
+                                            </li>
+                                            <li class="form-check">
+
+                                                <input type="checkbox" class="form-check-input" [checked]="res.Delete" [(ngModel)]="res.Delete" >
+                                                <label for="chkbx4">Delete </label>
+                                            </li>
+                                            
+                                        </ul> 
+                                        <hr class="mt-2 mb-2">
+                                        <div class="text-end"><button class="btn btn-light remove text-center" (click)="removeCard(i)">Remove Executive</button></div>
+                                    </div>
+                                </div>
+
+
+                        
+                        </div>
+                
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row ">
+           <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between pb-3">
+                <div>
+                    <ul class="tabnavc-ul ps-0 mb-0">
+                        
+                        <li [ngClass]="{'active': selectedTab == 'creditDw' || selectedTab == 'creditDw/credit-deposit'}" (click)="navigate('credit-deposit')">
+                            <div class="tabnavc-a">
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">Deposit</span>
+                            </div>
+                        </li>
+                         <li [ngClass]="{'active': selectedTab == 'creditDw/credit' || selectedTab == 'credit-withdraw' }" (click)="navigate('credit-withdraw')">
+                            <div class="tabnavc-a">
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">Withdraw</span>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+               <div>
+               </div>
+            </div>
+           </div>
+           
+       
+            <hr>
+        </div>
+    
+       <div class="row">
+          
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>

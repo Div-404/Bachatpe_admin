@@ -1,0 +1,1165 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row d-none">
+            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="usercard uc-bg1">
+                    <div>
+                        <p class="lineone">Total 55Users</p>
+                        <p class="linetwo">5784</p>
+                    </div>
+                    <div>
+                        <div class="usercard-circle">
+                            <i class='bx bx-user'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="usercard uc-bg2">
+                    <div>
+                        <p class="lineone">Total Approved</p>
+                        <p class="linetwo">5740</p>
+                    </div>
+                    <div>
+                        <div class="usercard-circle">
+                            <i class='bx bx-user-check'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="usercard uc-bg3">
+                    <div>
+                        <p class="lineone">Total Pending</p>
+                        <p class="linetwo">44</p>
+                    </div>
+                    <div>
+                        <div class="usercard-circle">
+                            <i class='bx bx-user-minus'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="usercard uc-bg4">
+                    <div>
+                        <p class="lineone">Total Rejected</p>
+                        <p class="linetwo">12</p>
+                    </div>
+                    <div>
+                        <div class="usercard-circle">
+                            <i class='bx bx-user-x'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pe-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header flex-center-between">
+                        <div>
+                            <p class="mb-0 fw600">Distributor</p>
+                        </div>
+                        <div>
+                            <!-- <p class="mb-0 fw600">{{First}} {{Last}}</p>
+                            <p class="mb-0 fw600">{{Code}}</p>
+                            <p class="mb-0 fw600">{{Phone}}</p> -->
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-2">
+                                <button class="btn btn-adv" placement="top" ngbTooltip="Advanced Search"
+                                    (click)="openLg3(content3)"><i
+                                        class="fa-solid fa-magnifying-glass-plus"></i></button>
+
+                            </div>
+                            <div class="cc-search me-2">
+                                <select class="form-select" (change)="sleectFilter($event)" [(ngModel)]="filterVal">
+                                    <option disabled value="0">Select user</option>
+                                    <option value="8">By Code</option>
+                                    <option value="7">By Phone</option>
+                                </select>
+                                <label>Filter Type</label>
+                            </div>
+
+
+                            <!-- <input type="text" [(ngModel)]="searchVal" placeholder="Enter search value" 
+                               class="form-control fs12" (input)="loadFilteredUsers($event)" />
+                        <div *ngIf="filteredUsers1.length > 0" class="dropdown-menu show">
+                          <button class="dropdown-item fs12" *ngFor="let user of filteredUsers1" 
+                                  (click)="onUserSelect1(user)">
+                           {{user.Code}} -  {{ user.Name }} - {{ user.Phone }} 
+                          </button>
+                        </div>
+                        <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</label> -->
+
+
+                            <div class="cc-search me-2">
+                                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchVal">
+                            </div>
+                            <div class="">
+                                @if(searchVal != '' && filterVal != 0){
+                                <button class="btn btn-success me-2" (click)="search()"><i
+                                        class="fa-solid fa-magnifying-glass"></i></button>
+                                }
+                            </div>
+                            <div class="">
+                                @if(crossIcon){
+                                <button class="btn btn-danger me-2" (click)="clear()"><i
+                                        class="fa-solid fa-xmark"></i></button>
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="tblone table-responsive">
+                                    <div ngbDropdown class="dropdown tableshowtdd">
+                                        <button class="btn  dropdown-toggle tableshowt" ngbDropdownToggle>
+                                            <i class="fa-brands fa-delicious"></i>
+                                        </button>
+                                        <div ngbDropdownMenu>
+                                            <div *ngFor="let column of columns" class="dropdown-item">
+                                                <label>
+                                                    <input type="checkbox" [(ngModel)]="column.visible"
+                                                        (change)="onColumnChange()"> {{ column.label }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th>Joined</th>
+                                                
+                                                <td>M. Distributor</td>
+                                                <td>User Details</td>
+                                                <td>Code </td>
+                                                <td>City/State </td>
+                                                <td>KYC</td>
+                                                <td>Login Status</td>
+                                                <td>Balance</td>
+                                                <td>Credit</td>
+                                                <td>View RL</td>
+                                                <td>Action</td> -->
+
+                                                <th *ngIf="isColumnVisible('Created On')">Created On</th>
+                                                <td *ngIf="isColumnVisible('M. Distributor')">M. Distributor</td>
+                                                <td *ngIf="isColumnVisible('User Details')">User Details</td>
+                                                <td *ngIf="isColumnVisible('Code')">Code </td>
+                                                <td *ngIf="isColumnVisible('City/State')">City/State </td>
+                                                <td *ngIf="isColumnVisible('KYC')">KYC</td>
+                                                <td *ngIf="isColumnVisible('Login Status')">Login Status</td>
+                                                <td *ngIf="isColumnVisible('Balance')">Balance</td>
+                                                <td *ngIf="isColumnVisible('Credit')">Credit</td>
+                                                <th *ngIf="isColumnVisible('View DI/RL')">View DI/RL</th>
+                                                <th *ngIf="isColumnVisible('Action')">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (data of diList; track $index) {
+                                            <tr *ngIf="isColumnVisible('Created On')">
+                                                <td>
+                                                    <p class="mb-0 color-light">{{data.Created.Tm_Str.substring(0, 16)}}
+                                                    </p>
+                                                </td>
+                                                @if ( data.MD_INFO.Name != null) {
+                                                <td *ngIf="isColumnVisible('M. Distributor')">
+                                                    <p class="mb-0">{{data.MD_INFO.Name}}</p>
+                                                    <p class="mb-0 color-light">{{data.MD_INFO.ClientCode}}</p>
+                                                </td>
+                                                }
+                                                @if ( data.MD_INFO.Name === null) {
+                                                <td *ngIf="isColumnVisible('M. Distributor')">
+                                                    <p class="mb-0">--</p>
+                                                    <p class="mb-0 color-light">--</p>
+                                                    <i class="fa-solid fa-sitemap ms-2 color-light"
+                                                        ngbTooltip="Assign Md"
+                                                        (click)="openLgrole(contentrole, data)"></i>
+                                                </td>
+                                                }
+
+                                                <!-- <td>
+                                                    @if (data.UserType == 1) {
+                                                    <div class="tbl-user-circle pending-color">
+                                                        <p class="mb-0">MD</p>
+                                                    </div>
+                                                    }
+                                                    @if (data.UserType == 2) {
+                                                    <div class="tbl-user-circle pending-color">
+                                                        <p class="mb-0">DI</p>
+                                                    </div>
+                                                    }
+                                                    @if (data.UserType == 3) {
+                                                    <div class="tbl-user-circle pending-color">
+                                                        <p class="mb-0">RI</p>
+                                                    </div>
+                                                    }
+                                                </td> -->
+                                                <td *ngIf="isColumnVisible('User Details')">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="tbl-user-circle pending-color">
+                                                            {{((data.First).charAt(0)).toUpperCase()}}{{(data.Last).charAt(0).toUpperCase()}}
+                                                        </div>
+                                                        <!-- <div>
+                                                            <div class="d-flex justify-content-between" style="width:100%">
+                                                                <p class="mb-0 me-2">  {{data.First}} {{data.Last}}</p>
+                                                                <i class="color-light fa-solid fa-angle-down"></i>
+                                                            </div>
+                                                       <div>
+                                                        <p class="mb-0 color-light"> {{data.Email}}</p>
+                                                        <p class="mb-0 me-2 color-light"> {{data.Phone}}</p>
+                                                       </div>
+                                                        </div> -->
+
+                                                        <div>
+                                                            <div class="d-flex justify-content-between"
+                                                                style="width:100%">
+                                                                <p class="mb-0 me-2"> {{data.First}} {{data.Last}}</p>
+                                                                <i class="color-light fa-solid fa-angle-down"
+                                                                    [ngClass]="expandedIndex === $index ? 'fa-angle-up' : 'fa-angle-down'"
+                                                                    (click)="toggleExpend($index)"></i>
+                                                            </div>
+                                                            <div *ngIf="expandedIndex === $index">
+                                                                <p class="mb-0 color-light"> {{data.Email}}</p>
+                                                                <p class="mb-0 me-2 color-light"> {{data.Phone}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td *ngIf="isColumnVisible('Code')">
+                                                    <p class="mb-0 me-2"><b>{{data.Code}}</b></p>
+
+                                                </td>
+                                                <td *ngIf="isColumnVisible('City/State')">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <p class="mb-0">{{data.Addr.oUserAddr.City}}</p>
+                                                            <p class="mb-0 color-light">{{data.Addr.oUserAddr.State}}
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <i (click)="openLg4(content4, data)"
+                                                                class="fa-regular fa-eye color-light"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td *ngIf="isColumnVisible('KYC')">
+                                                    <div class="d-flex">
+                                                        <!-- @if (data.KYC==2) {
+                                                        <div class="status-success">
+                                                            <div><i class="fa-solid fa-circle-check"></i></div>
+                                                            <span>Success</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.KYC==1) {
+                                                        <div class="status-pending">
+                                                            <div><i class="fa-solid fa-circle-check"></i></div>
+                                                            <span>Pending</span>
+                                                        </div>
+                                                        } -->
+
+                                                        <select class="form-select select-sm" [ngClass]="{   'pending-color': data.KYC === 1,
+                                                        'success-color': data.KYC === 5,
+                                                           'reject-color': data.KYC === 3,
+                                                          'suspended-color': data.KYC === 2
+                                                     }" (change)="changeStatus($event, data, 'kyc')"
+                                                            [(ngModel)]="data.KYC">
+                                                            <option value="1" class="pending-color">Pending </option>
+                                                            <option value="5" class="success-color">Success </option>
+                                                            <option value="3" class="reject-color">Reject </option>
+                                                            <option value="2" class="status-suspend">Suspend</option>
+                                                        </select>
+                                                        <div class="ms-3" ngbDropdown container="body">
+                                                            <i ngbDropdownToggle class="fa-solid fa-shuffle"></i>
+                                                            <div ngbDropdownMenu class="fs14">
+                                                                <!-- <button ngbDropdownItem (click)="openLgkyc(contentkyc)">View KYC</button> -->
+                                                                <!-- <button ngbDropdownItem
+                                                                    (click)="navigate('view-kyc', data.Profile)">View
+                                                                    KYC</button>
+                                                                @if (data.Stage != 9) { <div class="dropdown-divider">
+                                                                </div>
+                                                                <button ngbDropdownItem
+                                                                    (click)="openLg2(content2,data )">Upload
+                                                                    KYC</button>
+                                                                } -->
+                                                                @if(data.Stage == 0 || (data.Stage > 0 && data.Stage <
+                                                                    99)) { <button ngbDropdownItem
+                                                                    (click)="openLg2(data)">
+                                                                    Upload KYC
+                                                                    </button>
+
+                                                                    }
+
+                                                                    <!-- View KYC -->
+                                                                    @if(data.Stage == 99) {
+
+                                                                    <button ngbDropdownItem
+                                                                        (click)="navigate('view-kyc',data.Profile)">
+                                                                        View KYC
+                                                                    </button>
+
+                                                                    }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td *ngIf="isColumnVisible('Login Status')">
+                                                    <!-- <select class="form-select select-sm pending-color">
+                                                <option>Pending</option>
+                                                <option>Success</option>
+                                                <option>Reject</option>
+                                              </select> -->
+                                                    <select class="form-select select-sm" [ngClass]="{   'pending-color': data.Login === 1,
+                                              'success-color': data.Login === 5,
+                                                 'reject-color': data.Login === 3,
+                                                'suspended-color': data.Login === 2
+                                           }" (change)="changeStatus($event, data, 'login')" [(ngModel)]="data.Login">
+                                                        <option value="1" class="pending-color">Pending </option>
+                                                        <option value="5" class="success-color">Success </option>
+                                                        <option value="3" class="reject-color">Reject </option>
+                                                        <option value="2" class="status-suspend">Suspend</option>
+                                                    </select>
+                                                </td>
+                                                <td *ngIf="isColumnVisible('Balance')">@for (dd of data.oTag_Lst; track
+                                                    $index;) {
+                                                    @if (dd.Tag === 'BALANCE'){
+                                                    <p class="mb-0 fw600 text-success">{{dd.Balance | number: '1.2-2'}}
+                                                    </p>
+                                                    }
+                                                    }
+
+                                                </td>
+
+                                                <td *ngIf="isColumnVisible('Credit')">
+                                                    @for (dd of data.oTag_Lst; track $index;) {
+                                                    @if (dd.Tag === 'CREDIT'){
+                                                    <p class="mb-0 fw600 text-warning">{{dd.Balance | number: '1.2-2'}}
+                                                    </p>
+                                                    }
+                                                    }
+                                                </td>
+
+                                                <td *ngIf="isColumnVisible('View DI/RL')">
+                                                    <p style="cursor: pointer;" class="mb-0 text-warning"
+                                                        (click)="navToDis(data)">View RT</p>
+                                                </td>
+
+                                                <td *ngIf="isColumnVisible('Action')">
+                                                    <div class="ms-3" ngbDropdown container="body" class="dropdown">
+                                                        <button type="button" style="padding: 4px 14px;"
+                                                            class="btn btn-sm btn-outline-success btn-sm"
+                                                            ngbDropdownToggle><i
+                                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                                        <div ngbDropdownMenu class="tbl-dd">
+                                                            <!-- <button class="fs13" ngbDropdownItem
+                                                                (click)="openChangePass(contentPass, data)"> Change
+                                                                Password</button>
+                                                            <div class="dropdown-divider"></div> -->
+                                                            <!-- <button class="fs13" ngbDropdownItem>Manage
+                                                                Services</button>
+                                                            <div class="dropdown-divider"></div> -->
+                                                            <button class="fs13" ngbDropdownItem
+                                                                (click)="navComm(data.PkgID, data, data.Profile)">Commission
+                                                            </button>
+                                                            <div class="dropdown-divider"></div>
+                                                            <button class="fs13" ngbDropdownItem
+                                                                (click)="navChangeLedger(data)">Ledger</button>
+                                                            <div class="dropdown-divider"></div>
+                                                            <!-- <button class="fs13" ngbDropdownItem (click)="navigate2('user-wise-reports')">Report</button> -->
+                                                            <div class="dropdown-submenu ">
+                                                                <button
+                                                                    class="dropdown-item dropdown-toggle fs13 d-flex  align-items-center justify-content-between"
+                                                                    type="button">
+                                                                    <div>Report</div><i
+                                                                        class="fa-solid fs10 fa-chevron-right"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu tbl-dd">
+                                                                    <button class="dropdown-item fs13"
+                                                                        (click)="navigateQueryUserType( data)">Transaction</button>
+                                                                    <button class="dropdown-item fs13"
+                                                                        (click)="navigateQury('reportbalance-main/balance-user', data)">Deposit</button>
+                                                                    <button class="dropdown-item fs13"
+                                                                        (click)="navigateQury('reportcredit-main/report-user', data)">Credit</button>
+                                                                    <button class="dropdown-item fs13"
+                                                                        (click)="navigateQury('penality-main/user-penality', data)">Penalty</button>
+                                                                    <button class="dropdown-item fs13"
+                                                                        (click)="navigateQury('tax', data)">TDS/GST</button>
+                                                                    <button
+                                                                        class="dropdown-item fs13">Activity/Logs</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-divider"></div>
+                                                            <button class="fs13" ngbDropdownItem
+                                                                (click)="navigate2('dwmain', data)">Balance
+                                                                D/W</button>
+                                                            <div class="dropdown-divider"></div>
+                                                            <!-- <button class="fs13" ngbDropdownItem
+                                                                (click)="navigate2('creditDw', data)">Credit D/W</button>
+                                                            <div class="dropdown-divider"></div> -->
+                                                            <!-- <button class="fs13" ngbDropdownItem>Direct Access </button>
+                                                            <div class="dropdown-divider"></div> -->
+                                                            <button class="fs13" ngbDropdownItem>Support</button>
+                                                            <div class="dropdown-divider"></div>
+                                                            <button class="fs13" ngbDropdownItem
+                                                                (click)="navigateQury('message-center', data)">Message</button>
+                                                            <div class="dropdown-divider"></div>
+                                                            <button class="fs13" ngbDropdownItem
+                                                                (click)="userRiskNav(data)">User risk</button>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                            @empty{
+
+                                            <tr>
+                                                <td colspan="11">
+                                                    <div class="no-data-container text-center">
+                                                        <img src="assets/images/nodata1.png" class="img-fluid"
+                                                            width="180px">
+                                                        <h5 class="no-data-text">No Data Found.</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                        @if (Count > 0) {
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(1)">First</a>
+
+                                        </li>
+
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                        </li>
+
+                                        <li *ngFor="let page of pager.pages" class="page-item"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                        </li>
+
+                                        }
+                                    
+                                </ul>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Add User</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                            value="option1">
+                        <label class="form-check-label fs12 fw600" for="inlineRadio1">Login Only</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                            value="option2">
+                        <label class="form-check-label fs12 fw600" for="inlineRadio2">With KYC</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">First Name</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Last Name</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Phone</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Country</label>
+                        <select class="form-select form-select-sm">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm fs12" aria-label="Recipient's username"
+                            aria-describedby="button-addon2">
+                        <button class="btn btn-success fs12" type="button" id="button-addon2">Copy Link</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-success w-100 btn-shadow">Generate Link</button>
+                </div>
+            </div>
+
+        </div>
+
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Upload Kyc</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card00 mb-2">
+                        <p class="mb-1 fw600">{{changeDataObject?.First}} {{changeDataObject.Last}}</p>
+                        <p class="mb-1 fw600">{{changeDataObject?.Code}}</p>
+                        <div>
+                            <p class="fs12"><span class="me-3">{{changeDataObject?.Phone}}</span>
+                                <!-- <span>{{changeDataObject?.Email}}</span> -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-2">
+                        <div class="tymbody2 pt-2 pb-2">
+                            <div class="timeline">
+                                <!-- PAN Card -->
+                                <div class="timeline-item" [class.active-tl]="kyacStage === 1"
+                                    [class.passed]="kyacStage > 1">
+                                    <div class="timeline-icon" [class.active]="kyacStage > 0">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                    <div class="timeline-text">
+                                        <div>PAN</div> CARD
+                                    </div>
+                                </div>
+                                <!-- Aadhaar Card -->
+                                <div class="timeline-item" [class.active-tl]="kyacStage === 2"
+                                    [class.passed]="kyacStage > 2">
+                                    <div class="timeline-icon" [class.active]="kyacStage > 1">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="timeline-text">
+                                        <div>AADHAR</div> CARD
+                                    </div>
+                                </div>
+                                <!-- Selfie -->
+                                <div class="timeline-item" [class.active-tl]="kyacStage === 3"
+                                    [class.passed]="kyacStage > 3">
+                                    <div class="timeline-icon" [class.active]="kyacStage > 2">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                    <div class="timeline-text">
+                                        <div>TAKE</div>SELFIE
+                                    </div>
+                                </div>
+                                <!-- Shop Details -->
+                                <div class="timeline-item" [class.active-tl]="kyacStage === 4"
+                                    [class.passed]="kyacStage > 4">
+                                    <div class="timeline-icon" [class.active]="kyacStage >= 6">
+                                        <i class="fas fa-store"></i>
+                                    </div>
+                                    <div class="timeline-text">
+                                        <div>SHOP</div> DETAILS
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="row">
+                    <!-- <h5 class="card-title text-center0 fs14 fw700">
+                                @if (kyacStage==0) {
+                                Pan Card
+                                }
+                                @if (kyacStage==1) {
+                                Aadhar Card
+                                }
+
+                                @if (kyacStage==2) {
+                                Video
+                                }
+                                @if (kyacStage==3) {
+                                Shop detail
+                                }
+                            </h5> -->
+
+                    <div class="col-md-12 ">
+                        <div class="card updkyc p-2 border-0 shadow-sm">
+                            <div class="card-body border border-dashed border-success text-center p-2"
+                                *ngIf="kycImg ==''">
+                                <input type="file" class="form-control-file d-none" id="fileInput"
+                                    [disabled]='kyacStage ==6' (change)="onFileSelected($event)"
+                                    accept="image/jpeg, image/png">
+                                <label *ngIf='kyacStage !==6' for="fileInput" class="d-block">
+                                    <div class="p-4 updhight text-center border border-success rounded">
+                                        <div>
+                                            <i style="font-size: 40px; color: #59af3d;"
+                                                class="fa-solid fa-cloud-arrow-up"></i>
+
+                                            <p class="mb-0 mt-2 text-muted">Click to Upload</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label *ngIf='kyacStage ===6' for="fileInput" class="d-block">
+                                    <div class="p-4 updhight text-center border border-success rounded">
+                                        <div>
+                                            <!-- <i style="font-size: 30px; color: #bfb6f5;"
+                                                class="fa-solid fa-cloud-arrow-up"></i> -->
+
+                                            <p class="mb-0 mt-2 text-muted">Please ask User to complete Aggrement.</p>
+
+
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+
+                            <div class="card-body border border-dashed border-success text-center p-2"
+                                *ngIf="kycImg !=''">
+                                <div class="p-4 updhight text-center border border-success rounded position-relative">
+                                    <button style="position: absolute;  top: 0px; right: 0px;" class="btn "
+                                        (click)="removeImg()"><i
+                                            class="fa-solid fa-circle-xmark text-danger"></i></button>
+                                    <div>
+                                        <img [src]="kycImg">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <button (click)="uploadKYC(kyacStage)">
+                                                Save
+                                            </button> -->
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3 text-end">
+                                @if (kyacStage == 0) {
+                                <button (click)="uploadKYC(kyacStage, 1)" type="button" class="btn next-btn"
+                                    [disabled]="kycImg == ''">
+                                    <p class="ms-2">Next</p>
+                                    <div class="icobox ms-3"><i class="fa-solid fa-arrow-right"></i></div>
+                                </button>
+                                }
+                                @if (kyacStage == 1) {
+                                <button (click)="uploadKYC(kyacStage, 2)" type="button" class="btn next-btn"
+                                    [disabled]="kycImg == ''">
+                                    <p class="ms-2">Next</p>
+                                    <div class="icobox ms-3"><i class="fa-solid fa-arrow-right"></i></div>
+                                </button>
+                                }
+                                @if (kyacStage == 2) {
+                                <button (click)="uploadKYC(kyacStage, 3)" type="button" class="btn next-btn"
+                                    [disabled]="kycImg == ''">
+                                    <p class="ms-2">Next</p>
+                                    <div class="icobox ms-3"><i class="fa-solid fa-arrow-right"></i></div>
+                                </button>
+                                }
+                                @if (kyacStage == 3) {
+                                <button (click)="uploadKYC(kyacStage, 6)" type="button" class="btn next-btn"
+                                    [disabled]="kycImg == ''">
+                                    <p class="ms-2">Next</p>
+                                    <div class="icobox ms-3"><i class="fa-solid fa-arrow-right"></i></div>
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-12 mb-3">
+                        <div class="card p-2 border-0 shadow-sm">
+                            <h5 class="card-title text-center0 fs14 fw700">Upload Pan Card</h5>
+
+                            <div class="card-body border border-dashed border-success text-center p-2">
+                                <input type="file" class="form-control-file d-none" id="fileInput">
+                                <label for="fileInput" class="d-block">
+                                    <div class="p-4 text-center border border-success rounded">
+                                        <i style="font-size: 40px; color: #59af3d;"
+                                            class="fa-solid fa-cloud-arrow-up"></i>
+
+                                        <p class="mb-0 mt-2 text-muted">Drop your file here or Click to browse</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template #content3 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Advanced Search</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body pt-4 pb-3" style="background:#fff">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <div class="d-flex">
+                        <div class="cc-search2 me-2">
+                            <select class="form-select" (change)="selecAdType($event)" [(ngModel)]="advType">
+                                <option value="0" disabled>Select </option>
+                                <option value="1">By Name</option>
+                                <!-- <option value="2">By Email</option> -->
+                                <option value="7">By Phone</option>
+                                <option value="8">By Code</option>
+                            </select>
+                            <label>Search Type</label>
+                        </div>
+                        <!-- <div class="cc-search2 me-2">
+                            <input type="text" class="form-control" placeholder="Search" (input)="getAdvanceFil($event)" [(ngModel)]="advVal">
+                        </div> -->
+                        @if (advType != '0') {
+                        <div class="cc-search2 me-2">
+                            <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                class="form-control fs12" (input)="getAdvanceFil($event)" />
+                            <div *ngIf="mdAdList.length > 0" class="dropdown-menu show">
+                                <button class="dropdown-item fs12" *ngFor="let user of mdAdList"
+                                    (click)="onSelectUser(user)">
+                                    <!-- {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }} -->
+                                    {{user.Code}} - {{user.Name}} - {{ user.Phone }}
+                                </button>
+                            </div>
+                            <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</label>
+                        </div>
+                        }
+                        <!-- @if (advVal != '') {
+                        <div class="me-2">
+                            <button class="btn btn-success" (click)="advSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                        <div class="me-2">
+                            <button  class="btn btn-danger" (click)="advClear()"><i  class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    } -->
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    @if (selectedUser.length > 0) {
+                    <div class="search-result">
+                        <div class="showfiltertitle">
+                            @for (data of selectedUser; track $index) {
+                            <p class="filtertitle1"><span class="showtitle-f">User Name: </span> {{data.Name}}</p>
+                            <!-- <p class="filtertitle1"><span class="showtitle-f">Email: </span> {{data.Email}}</p> -->
+                            <p class="filtertitle1"><span class="showtitle-f">Phone No.: </span> {{data.Phone}}</p>
+                            <p class="filtertitle1"><span class="showtitle-f">User Code.: </span>{{data.Code}}</p>
+                            }
+                        </div>
+                    </div>
+                    }
+
+                </div>
+                @if (loader == true) {
+                <div class="col-md-12 mb-3">
+
+                    <div class="no-search-result">
+                        <div class="blog-post o-media">
+
+                            <div class="o-media__body">
+                                <!-- <div class="o-vertical-spacing">
+                                    <p class="d-block ">
+                                        <span class="skeleton-box me-3" style="width:30%;"></span>
+                                        <span class="skeleton-box" style="width:60%;"></span>
+                                    </p>
+                                    <p class="d-block ">
+                                        <span class="skeleton-box me-3" style="width:30%;"></span>
+                                        <span class="skeleton-box" style="width:60%;"></span>
+                                    </p>
+                                    <p class="d-block ">
+                                        <span class="skeleton-box me-3" style="width:30%;"></span>
+                                        <span class="skeleton-box" style="width:60%;"></span>
+                                    </p>
+                                </div> -->
+                                <div class="no-data-container text-center">
+                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                    <h5 class="no-data-text">Please apply filter.</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeModel()">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <fieldset [disabled]="selectedUser.length < 1">
+                        <button type="button" class="btn btn-success w-100 btn-sm0"
+                            (click)="advSubmit()">Submit</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #content4 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Full Address</h4>
+            <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p class="fs13 mb-1">User Name</p>
+                    <p class="mb-0 asform1">{{userData.First}} {{userData.Last}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p class="fs13 mb-1">User Type</p>
+                    @if (userData.UserType == 1) {
+                    <p class="mb-0 asform1">Master Distributor</p>
+                    }
+                    @if (userData.UserType == 2) {
+                    <p class="mb-0 asform1">Distributor</p>
+                    }
+                    @if (userData.UserType == 3) {
+                    <p class="mb-0 asform1">Retailer</p>
+                    }
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-12 mb-3">
+                    <p class="fs13 mb-1">Outlet Address</p>
+                    <p class="mb-0 asform1">{{newLocation}}</p>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12 mb-3">
+                    <p class="fs13 mb-1">Register Address</p>
+                    <p class="mb-0 asform1">{{userData.Addr.oUserAddr.Address}}</p>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <p class="fs13 mb-1">City</p>
+                    <p class="mb-0 asform1">{{userData.Addr.oUserAddr.City}}</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <p class="fs13 mb-1">State</p>
+                    <p class="mb-0 asform1">{{userData.Addr.oUserAddr.State}}</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <p class="fs13 mb-1">Zip Code</p>
+                    <p class="mb-0 asform1">{{userData.Addr.oUserAddr.Zipcode}}</p>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template #contentrole let-modal>
+        <div class="modal-header">
+            @if (assignSrc.UserType != 3){
+            <h4 class="modal-title">Assign MD in hierarchy</h4>
+            }
+            @if (assignSrc.UserType === 3){
+            <h4 class="modal-title">Assign MD or DI in hierarchy</h4>
+            }
+            <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="background: #fff;">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="tblone table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>Name</td>
+                                    <td>Code/Phone </td>
+                                    <td>City/State </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        @if (assignSrc.UserType == 2) {
+                                        <p class="mb-0 utypebdage">Distributor</p>
+                                        }
+                                        @if (assignSrc.UserType == 3) {
+                                        <p class="mb-0 utypebdage">Retailer</p>
+                                        }
+                                    </th>
+                                    <th>
+                                        <div class="d-flex align-items-center">
+                                            <div class="tbl-user-circle pending-color">
+                                                {{((assignSrc.First).charAt(0)).toUpperCase()}}{{(assignSrc.Last).charAt(0).toUpperCase()}}
+                                            </div>
+                                            <p class="tbl-user-name mb-0"> {{assignSrc.First}} {{assignSrc.Last}}</p>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0"><b>{{assignSrc.Code}}</b></p>
+                                        <p class="mb-0">{{assignSrc.Phone}}</p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0">{{assignSrc.Addr.oUserAddr.City}} </p>
+                                        <p class="mb-0 color-light">{{assignSrc.Addr.oUserAddr.State}} </p>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+
+                            <div class="cc-search2">
+                                <select class="form-select" (change)="selecAdType($event)" [(ngModel)]="mdType">
+                                    <option value="0" disabled>Select </option>
+                                    <option value="1">By Name</option>
+                                    <!-- <option value="2">By Email</option> -->
+                                    <option value="7">By Phone</option>
+                                    <option value="8">By Code</option>
+                                </select>
+                                <label>Type</label>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <!-- <label for="email" class="form-label">M. Distributor</label>
+                    <select class="form-select" (change)="selectMdDi($event, 'md')">
+                        <option value="0" disabled selected>Select</option>
+                        @for(list of mdList; track list.id) {
+                        <option [value]="list.Profile">{{list.First}} {{list.Last}}</option>
+                        }
+                      </select> -->
+                            <div class="cc-search2 me-2">
+                                <fieldset [disabled]="!mdType">
+                                    <input type="text" [(ngModel)]="mdVal" placeholder="Enter search value"
+                                        class="form-control fs12" (input)="getMd($event)" />
+                                </fieldset>
+                                <div *ngIf="mdList.length > 0" class="dropdown-menu show">
+                                    <button class="dropdown-item fs12" *ngFor="let user of mdList"
+                                        (click)="selectMdDi(user, 'md')">
+                                        <!-- {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }} -->
+                                        {{user.Code}} - {{user.Name}} - {{ user.Phone }}
+                                    </button>
+                                </div>
+                                @if (errorMessage != '') {
+                                <label class="text-danger ">{{ errorMessage }}</label>
+                                }
+                                @if (errorMessage === '') {
+                                <label>M. Distributor</label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- @if (assignSrc.UserType === 3 && mdVal != ''){
+           
+           <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    
+                  
+                      <div class="cc-search2">
+                        <select class="form-select" (change)="selecAdType($event, 'di')" [(ngModel)]="diType">
+                            <option value="0" disabled>Select </option>
+                            <option value="1">By Name</option>
+                            <option value="2">By Email</option>
+                            <option value="7">By Phone</option>
+                            <option value="8">By Code</option>
+                        </select>
+                        <label>Type</label>
+                      </div>
+
+                     
+                </div>
+                    <div class="col-md-8">
+                       
+                          <div class="cc-search2 me-2">
+                            <fieldset [disabled]="!diType">
+                            <input type="text" [(ngModel)]="diVal" placeholder="Enter search value"
+                                class="form-control fs12" (input)="getDi()" />
+                            </fieldset>
+                            <div *ngIf="diList.length > 0" class="dropdown-menu show">
+                                <button class="dropdown-item fs12" *ngFor="let user of diList"
+                                    (click)="selectMdDi(user, 'di')">
+                                    {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                </button>
+                            </div>
+                            @if (errorMessage1 != '') {
+                                <label  class="text-danger mt-2">{{ errorMessage1 }}</label>
+                                }
+                                @if (errorMessage1 === '') {
+                            <label>Distributor</label>
+                                }
+                        </div>
+                    </div>
+            </div>
+           </div>
+        } -->
+
+            </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeModel()">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <!-- @if (assignSrc.UserType != 3){ -->
+                    <button type="button" class="btn btn-success w-100 btn-sm0" [disabled]="!mdProfileId"
+                        (click)="assignMdDi()">Update</button>
+                    <!-- } -->
+                    <!-- @if (assignSrc.UserType === 3){
+                    <button  type="button" class="btn btn-success w-100 btn-sm0"  [disabled]="!diProfileId && !mdProfileId" (click)="assignMdDi()">Update</button>
+                    } -->
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+
+    <ng-template #contentPass let-modal>
+
+        <div class="add-class-for-show-and-hide amindiv">
+            <div class="card" style="height: 100%;">
+                <div class="modal-header">
+                    <h4 class="modal-title">Change Password</h4>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="closeModel()"></button>
+                </div>
+
+                <!-- <div class="card-header"><p class="mb-0 fw600">Change Password</p></div>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeModel()"></button> -->
+                <div class="card-body">
+                    <form [formGroup]="passForm">
+                        <div class="row align-items-end">
+                            <div class="col-md-12">
+                                <div class=" showfiltertitle">
+                                    <p class="filtertitle1 mb-0 me-2"><span class="showtitle-p">Name: </span> {{First}}
+                                        {{Last}}</p>
+                                    <p class="filtertitle2 mb-0"><span class="showtitle-p">Code: </span>{{Code}}</p>
+                                    <p class="filtertitle2 mb-0"><span class="showtitle-p">Phone: </span>{{Phone}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-5 mt-3">
+                                    <label for="email" class="form-label"> Password</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter password"
+                                        name="email" formControlName="NewPwd"
+                                        [ngClass]="{ 'is-invalid': submitted && fpass['NewPwd'].errors }"
+                                        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+
+                                    @if (submitted && fpass['NewPwd'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (fpass['NewPwd'].errors['required']) {
+                                        <div> password is required</div>
+                                        }
+                                        @if (fpass['NewPwd'].errors['pattern']) {
+                                        <div> Please enter password of min. 8 digits including uppercase, lowercase,
+                                            number and special characters</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+
+
+                    <div class="row ">
+
+                        <div class="col-md-12">
+                            <div>
+                                <button class="btn w-100 btn-success btn-sm" (click)="changePass()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+
+
+</section>

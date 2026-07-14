@@ -1,0 +1,74 @@
+.form-label {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.first-ele{
+    background: #e9e9e9;
+    padding:15px 0px;
+}
+
+.stactive{
+    background-color: #26bf941a !important;
+    color: #26bf94 !important;
+    font-size: 12px;
+    padding:0px 6px;
+    border-radius: 2px;
+    width: 78px;
+    display: block;
+    text-align: center;
+}
+
+.stdeactive{
+    background-color: #e6533c1a !important;
+    color: #e6533c !important;
+    font-size: 12px;
+    padding:0px 6px;
+    border-radius: 2px;
+}
+
+.sericon{
+    width:26px;
+    height: 26px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+
+.sericon-bg1{background-color: #26bf9440  !important;}
+.sericon-bg2{ background-color: #e6533c40  !important;}
+.sericon-bg3{ background-color: #0000ff40 !important;}
+
+.dropdown-toggle::after{
+    display: none;
+}
+
+.for-edit{
+    width:26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:solid 1px orange;
+    color:orange;
+    border-radius: 6px;
+    margin-right: 10px;
+    background: #f8a4001c;
+}
+
+.for-delete{
+    width:26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:solid 1px red;
+    color:red;
+    border-radius: 6px;
+    margin-right: 10px;
+    background: rgb(248 0 0 / 11%);
+}

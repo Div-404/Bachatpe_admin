@@ -1,0 +1,321 @@
+
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <p class="mb-0 fw600">User Ledger</p>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-2">
+                <div class="me-3 custom-select selected">
+                    <ng-select class="wid-20 " (change)="selectAcc($event)" [(ngModel)]="accNum">
+                    @for (item of accList; track $index) {
+                    <ng-option [value]= item.Account>{{item.Tag}}</ng-option>
+                    }
+                   
+                </ng-select>
+                <label >Wallet</label>
+                </div>
+            </div>
+           <div class="col-md-10 ">
+            <div class="row justify-content-end me-2">
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <!-- <div class="usercard uc-bg2">
+                        <div>
+                            <p class="lineone mb-1">Open Balance</p>
+                            <p class="linetwo mb-0"><b>{{OpenBalance | number:'1.2-2'}}</b></p>
+                        </div>
+                        <div>
+                            <div class="usercard-circle">
+                                <i class='fs20 bx bx-check-circle'></i>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+               
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <!-- <div class="usercard uc-bg3">
+                        <div>
+                            <p class="lineone mb-1">Pending Balance</p>
+                            <p class="linetwo mb-0"><b>{{OpenPending | number: '1.2-2'}}</b></p>
+                        </div>
+                        <div>
+                            <div class="usercard-circle">
+                                <i class='fs20 bx bx-minus-circle'></i>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+           </div>
+        </div>
+       <div class="row pe-3">
+           <div class="col-md-12">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class=" showfiltertitle">
+                        <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Name: </span> {{First}} {{Last}}</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Code: </span>{{Code}}</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Phone: </span>{{Phone}}</p>
+                    </div>
+                    <!-- <p class="mb-0 fw600">User Ledger</p> -->
+                    <div class="d-flex">
+                        <!-- <div class="me-3 custom-select selected">
+                            <ng-select class="wid-20 " (change)="selectAcc($event)" [(ngModel)]="accNum">
+                            @for (item of accList; track $index) {
+                            <ng-option [value]= item.Account>{{item.Tag}}</ng-option>
+                            }
+                           
+                        </ng-select>
+                        <label >Account</label>
+                        </div> -->
+
+                        <div class="me-3 cc-search2">
+                            <!-- <ng-select class="wid-20 " (change)="selectDate($event)">
+                            
+                            <ng-option [value]="7">Last 1 Week</ng-option>
+                            <ng-option [value]="31"> Last 1 Month</ng-option>
+                            <ng-option [value]="93">Last 3 Months</ng-option>
+                            <ng-option [value]="367">Last 1 Year</ng-option>
+                            <ng-option [value]="custom">Custom</ng-option>
+                        </ng-select> -->
+                        <select class="wid-20 form-select" (change)="selectDate($event)" [(ngModel)]="dateclear">
+                            <option selected disabled class="fs12">Select</option>
+                            <option value="7">Last 1 Week</option>
+                                      <option value="31">Last 1 Month</option>
+                                      <option value="93">Last 3 Months</option>
+                                      <option value="367">Last 1 Year</option>
+                                      <option value="custom">Custom</option>
+                          </select>
+                        <label >Date</label>
+                        </div>
+
+                        @if (customDate == 'custom' || customDate == '') {
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" [(ngModel)]="lastDaysDate" (change)="dateSelectFromTO($event, 'from')">
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" [(ngModel)]="updatedDate" (change)="dateSelectFromTO($event,'to')">
+                                        <label for="dtStart">To</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+    
+                       
+    
+    
+                        <!-- <div class="cc-search me-2">
+                            <input type="text" class="form-control" placeholder="Search" >
+                        </div> -->
+                        <!-- <div class="me-2">
+                            
+                            <button class="btn btn-success" ><i class="fa-solid fa-magnifying-glass"></i></button>
+                           
+                        </div>
+                        <div class="me-2">
+                           
+                            <button  class="btn btn-danger" ><i  class="fa-solid fa-xmark"></i></button>
+                            
+                        </div> -->
+                       
+                       </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                           <th>Reference</th>
+                                           <th>Credit</th>
+                                           <th>Debit</th>
+                                           <th>Balance</th>
+                                           <th>Remarks</th>
+                                          
+                                           <!-- <th>Status</th> -->
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (data of ledgerList; track $index){
+                                      <tr>
+                                        <td><p class="mb-0 color-light">{{data.CreatedOn.substring(0, 16)}}</p></td>
+                                        <td>
+                                          @if(data.Reference == '') {
+                                          <p class="mb-0 color-light0">-</p>
+                                        }
+                                        @if(data.Reference != '') {
+                                            <p class="mb-0 color-light0">{{data.Reference}}
+                                              <button  class="btn btn-soft-warning btn-sm ms-2" (click)="copyToClipboard(data.Reference)"><i  class="fa-regular fa-copy"></i></button>
+                                          </p>
+                                        
+                                        }
+                                    </td>
+                                        <td>
+                                            @if (data.Trans_type == 2) {
+                                            <p class="mb-0 "><b>{{data.Amount | number:'1.2-2'}}</b></p>
+                                            }
+                                            @if (data.Trans_type == 1) {
+                                                <p class="mb-0 "><b>--</b></p>
+                                                }
+                                        </td>
+                                        <td>
+                                            @if (data.Trans_type == 1) {
+                                            <p class="mb-0 "> <b>{{data.Amount | number:'1.2-2'}}</b></p>
+                                            }
+                                            @if (data.Trans_type == 2) {
+                                                <p class="mb-0 ">--</p>
+                                                }
+                                        </td>
+                                        <td><p class="mb-0 "><b class="text-success">{{data.Balance | number:'1.2-2'}}</b></p></td>
+                                        <td>
+                                            @if (data.Remarks_Trans === 'Opening Balance' || data.Remarks_Trans === 'Closing') {
+    <p class="mb-0 fw700">{{data.Remarks_Trans}}</p>
+}
+@if (data.Remarks_Trans !== 'Opening Balance' && data.Remarks_Trans !== 'Closing' && data.Remarks_Trans !== '') {
+    <p class="mb-0 fs12">{{data.Remarks_Trans}}</p>
+}
+@if (data.Remarks_Trans === '') {
+    <p class="mb-0 fs12">-</p>
+}
+                                        </td>
+                                       
+                                        <!-- <td>
+
+                                        @if (data.Status ==2) {
+                                            <div class="status-success">
+                                                <div><i  class="fa-solid fa-circle-check"></i></div>
+                                                <span>Success</span>
+                                            </div>
+                                        }
+                                        @if (data.Status ==3) {
+                                            <div class="status-cancel">
+                                                <div><i class="fa-solid fa-circle-xmark"></i></div>
+                                                <span>Reject</span>
+                                            </div>
+                                        }
+                                        </td> -->
+                                       
+                                     </tr>
+                                    }
+                                    @empty{
+
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="no-data-container text-center">
+                                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                    <h5 class="no-data-text">No Data Found.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+        
+                                        }
+                                     @if (ledgerList?.length != 0) {
+                                <tr>
+                                 <td style="background: #e2fff1 !important;" colspan="2" class="text-end"><p class="mb-0 fw600">
+                                    <!-- Opening Balance: ₹ {{ dataofleadger.OpenBalance?.toFixed(2) || '0.00' }} -->
+                                </p></td> 
+                                <!-- <td style="background: #e2fff1 !important;"><p class="mb-0 fw600" >Credit: {{totalCredit | number:'1.2-2'}}</p></td>
+                                
+                                <td style="background: #e2fff1 !important;"><p class="mb-0 fw600" >Debit: {{totalDebit | number:'1.2-2'}}</p></td> -->
+                                <td style="background: #e2fff1 !important;">
+  <p class="mb-0 fw600 d-flex align-items-center gap-2">
+    <span>Credit:</span>
+
+    <span *ngIf="!isLedgerTotalsLoading; else creditSpinner">
+      {{ totalCredit | number:'1.2-2' }}
+    </span>
+
+    <ng-template #creditSpinner>
+      <span class="spinner-border spinner-border-sm text-success" role="status" aria-hidden="true"></span>
+    </ng-template>
+  </p>
+</td>
+
+<td style="background: #e2fff1 !important;">
+  <p class="mb-0 fw600 d-flex align-items-center gap-2">
+    <span>Debit:</span>
+
+    <span *ngIf="!isLedgerTotalsLoading; else debitSpinner">
+      {{ totalDebit | number:'1.2-2' }}
+    </span>
+
+    <ng-template #debitSpinner>
+      <span class="spinner-border spinner-border-sm text-success" role="status" aria-hidden="true"></span>
+    </ng-template>
+  </p>
+</td>
+                                   <!-- <td style="background: #ECEDFF !important;" colspan="2"><p class="mb-0 fw600 " >Closing Balance: {{totalBalance | number:'1.2-2'}}</p></td> -->
+                                  <td style="background: #e2fff1 !important;" colspan="3"><p class="mb-0 fw600 " >
+                                    <!-- Closing Balance: ₹ {{ dataofleadger.CloseBalance?.toFixed(2) || '0.00' }} -->
+                                </p></td>
+                               </tr>
+                              }
+                                     
+                                    </tbody>
+                                  </table>
+
+                                  <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                    @if (Count > 0) {
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(1)">First</a>
+
+                                    </li>
+
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                    </li>
+
+                                    <li *ngFor="let page of pager.pages" class="page-item"
+                                        [ngClass]="{active:pager.currentPage === page}">
+                                        <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                        <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                    </li>
+
+                                    }
+                                
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</section>

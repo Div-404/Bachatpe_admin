@@ -1,0 +1,60 @@
+<div class="add-class-for-show-and-hide amindiv">
+    <div class="card">
+        <div class="card-header"><p class="mb-0 fw600">Shop Details</p></div>
+        <div class="card-body">
+            <div class="row">
+             <!-- nodata-start -->
+             <div class="col-md-12 text-center" *ngIf="geoData.length < 1">
+              <img style="width: 150px;" src="assets/images/noDoc.png">
+            </div>
+            <!-- nodata-end -->
+                <div class="col-md-12">
+                    <div ngbAccordion *ngIf="geoData.length > 0">
+                        <div *ngFor="let location of geoData; let i = index" ngbAccordionItem [collapsed]="expandedIndex !== i">
+                          <h2 ngbAccordionHeader>
+                            <button ngbAccordionButton (click)="toggleAccordion(i)">
+                              Location {{ i + 1 }}:  {{ getShortAddress(location.address) }}
+                            </button>
+                          </h2>
+                          <div ngbAccordionCollapse>
+                            <div ngbAccordionBody>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="shadow-sm">
+                                    <div class="border border-success rounded p-2">
+                                      <img class="img-fluid" [src]="location.staticMapUrl||'assets/images/noDoc.png'" alt="Static Map">
+                                      <!-- <iframe
+                                      [src]="mapUrl"
+                                      style="border:0; width:100%; height: 272px;" allowfullscreen="" loading="lazy"
+                                      referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <!-- <p class="mb-0">Latitude: {{ location.Latitude }}, Longitude: {{ location.Longitude }}</p> -->
+                               
+                                  <p class="mb-0">Timestamp: {{ location.Tm }}</p>
+                                  <div class="addressbox">
+                                    <p class="mb-0">Address: {{ location.address }}</p>
+                                  </div>
+                                </div>
+                                <div class="col-md-12">
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                     
+                      
+                      
+                      
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</div>

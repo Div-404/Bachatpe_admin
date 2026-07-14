@@ -1,0 +1,38 @@
+.for-view {
+   width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #2196F3;
+    color: #3f97f6;
+    border-radius: 6px;
+    margin-right: 10px;
+    background: rgb(208 234 255);
+}
+
+.for-edit {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px orange;
+    color: orange;
+    border-radius: 6px;
+    margin-right: 10px;
+    background: rgba(248, 164, 0, 0.1098039216);
+}
+
+.for-delete {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px red;
+    color: red;
+    border-radius: 6px;
+    margin-right: 10px;
+    background: rgba(248, 0, 0, 0.11);
+}

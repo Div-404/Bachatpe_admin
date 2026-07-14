@@ -1,0 +1,36 @@
+.no-data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust the height to fit your table structure */
+    text-align: center;
+  }
+  
+  .no-data-text {
+    margin-top: 10px;
+    font-size: 1.25rem;
+    color: #6c757d; /* Optional: Add some styling for the "No Data Found" text */
+  }
+
+    .cc-search{
+    width: 100%;
+    position: relative;
+    input{
+        height: 42px;
+        border-radius: 3px;
+      }
+      select{
+        height: 42px;
+        border-radius: 3px;
+      }
+    label{
+        position: absolute;
+    margin-top: -52px !important;
+    font-size: 12px;
+    padding: 1px 4px;
+    background: #fff;
+    margin-left: 4px;
+    font-size: 13px;
+    }
+}

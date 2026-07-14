@@ -1,0 +1,421 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 mb-2">
+            @if (profileId != ''){
+            <button class="btn" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="ocard">
+                <h1 class="fs13 fw600">Overall</h1>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="divsu1 asofcard">
+                                    <p class="divp1">Approve</p>
+                                    <p class="divp11">{{overAllHead?.CRE_Success | number:'1.2-2'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="divsu2 asofcard">
+                                    <p class="divp1">Pending</p>
+                                    <p class="divp11">{{overAllHead?.CRE_Pending | number:'1.2-2'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="divsu3 asofcard">
+                                    <p class="divp1">Rejected</p>
+                                    <p class="divp11">{{overAllHead?.CRE_Reject | number:'1.2-2'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="divsu1 asofcard">
+                                    <p class="divp1">Settled  </p>
+                                    <p class="divp11">{{overAllHead?.CRE_Settled | number:'1.2-2'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="divsu3 asofcard">
+                                    <p class="divp1">Unsettled</p>
+                                    <p class="divp11">{{overAllHead?.CRE_UnSettled | number:'1.2-2'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ocard">
+                <h1 class="fs13 fw600">Total</h1>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                        <div class="divsu1 asofcard">
+                            <p class="divp1">Approve</p>
+                            <p class="divp11">{{totalHead?.CRE_Success | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="divsu2 asofcard">
+                            <p class="divp1">Pending</p>
+                            <p class="divp11">{{totalHead?.CRE_Pending | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                     <div class="col-md-7">
+                        <div class="row">
+                             <div class="col-md-4">
+                        <div class="divsu3 asofcard">
+                            <p class="divp1">Rejected</p>
+                            <p class="divp11">{{totalHead?.CRE_Reject | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="divsu1 asofcard">
+                            <p class="divp1">Settled  </p>
+                            <p class="divp11">{{totalHead?.CRE_Settled | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="divsu3 asofcard">
+                            <p class="divp1">Unsettled</p>
+                            <p class="divp11">{{totalHead?.CRE_UnSettled | number:'1.2-2'}}</p>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="card" style="min-height: 50vh;">
+        <div class="card-header align-items-center d-none0">
+            <div class="row align-items-center">
+                <!-- <div class="col-md-4"> -->
+                <!-- <div class="d-flex align-items-center">
+                        <div class="overshow">
+                            <p class="mb-0"><span class="me-2">Overall GST:</span> <span class="fw600">2000.00</span></p>
+                        </div>
+                        <div class="mx-3">
+                            <p class="mb-0"><span class="me-2">|</span></p>
+                        </div>
+                        <div class="overshow">
+                            <p class="mb-0"><span class="me-2">Overall TDS:</span> <span class="fw600">2000.00</span></p>
+                        </div>
+                    </div> -->
+                <div class="row">
+                       <div class="col-md-12">
+                         <div class="row" style="align-items: baseline;">
+                                   
+                                </div>
+                    </div>
+                <!-- </div> -->
+               
+                <div class="col-md-4">
+                     @if(profileId != ''){
+                    <p class="mb-0">Name: <span class="fw600">{{userHeadDeatial?.Name}}</span></p>
+                    <p class="mb-0">Phone: <span class="fw600">{{userHeadDeatial?.Phone}}</span></p>
+                    <p class="mb-0">Code: <span class="fw600">{{userHeadDeatial?.Code}}</span></p>
+                       }
+                </div>
+         
+                <div class="col-md-8">
+                    <div class="row justify-content-end align-items-end">
+
+                        @if (profileId == ''){
+                       <div class="col-md-2">
+                                        <div class="cc-search mt-1">
+                                            <select class="form-select" (change)="selecAdType($event, 'tab2')"
+                                                [(ngModel)]="searchId">
+                                                <option value="0" selected disabled>Select</option>
+                                                <option value="1">Name</option>
+                                                <option value="2">Phone</option>
+                                                <option value="3">User Code</option>
+                                            </select>
+                                            <label>Filter By</label>
+                                        </div>
+                                    </div>
+                                    @if (advType != 0) {
+                                    <div class="col-md-2">
+                                        <div class="form-group cc-search mb-0 me-2">
+                                            <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                                class="form-control fs12" (input)="getAdvanceFil($event)" />
+                                            <div *ngIf="advList?.length > 0" class="dropdown-menu show">
+                                                <button class="dropdown-item fs12" *ngFor="let user of advList"
+                                                    (click)="onSelectUser(user, 2)">
+                                                    {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                                </button>
+                                            </div>
+                                            <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1
+                                                }}</label>
+                                        </div>
+                                    </div>
+                                    }
+                                    
+                                    @if (crossIcon){
+                                   <div class="col-md-1" style="width:60px !important">
+                                    <div  class="me-3" style="padding-top: 4px;">
+                                        <fieldset><button  type="submit" class="btn btn-danger align-items-right fw-500"(click)="clear()"><i
+                                            class="fa-solid fa-xmark"></i>
+                                        </button></fieldset>
+                                    </div>
+                                   </div>
+                                }
+                            }
+                               @if(profileId != ''){
+                        <div class="col-md-2">
+                            <div class="cc-search mt-1">
+                                <select class="form-select" (change)="selectDate($event)" [(ngModel)]="dateclear">
+                                    <option value="0" selected disabled class="fs12">Select</option>
+                                    <option value="7">Last 1 Week</option>
+                                    <option value="31">Last 1 Month</option>
+                                    <option value="93">Last 3 Months</option>
+                                    <option value="367">Last 1 Year</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <label>Date</label>
+                            </div>
+
+                        </div>
+                        @if (customDate == 'custom' || customDate == '') {
+                        <div class="col-md-2">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="date" class="pad-b form-control" [(ngModel)]="lastDaysDate"
+                                        (change)="dateSelectFromTO($event, 'from')">
+                                    <label for="dtStart">From</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="pt-1">
+                                <div class="form-group cc-search mb-0">
+                                    <input type="date" class="pad-b form-control" [(ngModel)]="updatedDate"
+                                        (change)="dateSelectFromTO($event,'to')">
+                                    <label for="dtStart">To</label>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
+
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Filter Type Dropdown -->
+
+        </div>
+       
+    </div>
+     <div class="card-body">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="tblone table-responsive">
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <!-- <th>Timestamp</th> -->
+                                    @if (profileId == '') {
+                                    <th>User Details</th>
+                                    }
+                                    @if (profileId != '') {
+                                    <th>Timestamp</th>
+                                    }
+                                    <th>Approve</th>
+                                    <th>Rejected</th>
+                                    <th>Pending</th>
+                                    
+                                    <th>Settled</th>
+                                    <th>Unsettled</th>
+                                    @if (profileId == '') {
+                                    <th>Action</th>
+                                    }
+                                </tr>
+                            </thead>
+                            @if (profileId == ''){
+                            @for (data of userList; track $index) {
+                            <tbody>
+                                <tr>
+                                    <!-- <td><p class="mb-0 ">{{data.oTm.Tm_Str | date: 'yyyy-MM-dd HH:mm'}}</p></td> -->
+                                    <td>
+                                        <p class="tbl-user-name mb-0">{{data.oUser.Name}}</p>
+                                        <p class="tbl-user-name mb-0">{{data.oUser.Phone}} /{{data.oUser.Code}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Success | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Reject | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Pending | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Settled | number:'1.2-2'}} </b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_UnSettled | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 " (click)="goToRoute(data)">View details</p>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            }@empty {
+                            <tbody>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            }
+                            }
+
+                            @if (profileId != ''){
+                            @for (data of userList; track $index) {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p class="mb-0 ">{{data.oTm.Tm_Str | date: 'yyyy-MM-dd HH:mm'}}</p>
+                                    </td>
+                                    <!-- <td>
+                                   <p class="tbl-user-name mb-0">{{data.oUser.Name}}</p>
+                                   <p class="tbl-user-name mb-0">{{data.oUser.Phone}} /{{data.oUser.Code}}</p>
+                               </td> -->
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Success | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Reject | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Pending | number:'1.2-2'}}</b></p>
+                                    </td>
+                                      <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_Settled | number:'1.2-2'}} </b></p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 "><b>{{data.oStat.CRE_UnSettled | number:'1.2-2'}}</b></p>
+                                    </td>
+                                    <!-- <td><p class="mb-0 " (click)="goToRoute(data)">View details</p></td> -->
+                                </tr>
+
+                            </tbody>
+                            }@empty {
+                            <tbody>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            }
+                            }
+
+                        </table>
+                        @if (profileId == ''){
+                        @if (userList?.length != 0) {
+                        <!-- <div class="col-md-12 d-flex justify-content-end " >
+                            <app-pagination [items]="userList" (changePage)="onChangePage2($event)"></app-pagination>
+                        </div> -->
+                        <ul class="pagination pagination-sm justify-content-end mt-2">
+                            @if (Count > 0) {
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="setPage(1)">First</a>
+
+                            </li>
+
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                            </li>
+
+                            <li *ngFor="let page of pager.pages" class="page-item"
+                                [ngClass]="{active:pager.currentPage === page}">
+                                <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                            </li>
+
+                            }
+                        </ul>
+                        }
+                        }
+
+                        @if (profileId != ''){
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                            @if (Count > 0) {
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="setPage(1)">First</a>
+
+                            </li>
+
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                            </li>
+
+                            <li *ngFor="let page of pager.pages" class="page-item"
+                                [ngClass]="{active:pager.currentPage === page}">
+                                <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                            </li>
+
+                            }
+                        
+                                </ul>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

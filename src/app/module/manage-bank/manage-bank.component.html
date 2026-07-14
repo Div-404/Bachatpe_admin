@@ -1,0 +1,386 @@
+
+<section class="page">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-md-6"><p class="mb-0 fw600">Manage Bank</p></div>
+            <div class="col-md-6 text-end"><button class="btn btn-sm btn-success pe-2 ps-2" (click)="openLg(content)"><i style="color:#F8E000" class="fa-solid fa-circle-plus me-2"></i> Bank </button></div>
+        </div>
+
+       
+        <div class="row">
+            @for (data of bankList; track $index;) {
+            <div class="col-md-4">
+                <div class="backcard">
+                    <div class="backcard-header">
+                        <div class="row">
+                            <div class="col-md-5">
+                               <div class="d-flex align-items-center">
+                                <div class="bankicon"><i class="fa-solid fa-building-columns"></i></div>
+                                <p class="mb-0 text-white">{{data.BankInfo.Bank}}</p>
+                               </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <div class="d-flex align-items-center">
+                                       <p class="fs12 mb-0 me-2" style="color:#d4d4d4">
+                                        {{ data.localStatus != undefined ? (data.localStatus ? 'Active' : 'Inactive') : (data.BankInfo.Status == 1 ? 'Active' : 'Inactive') }}
+                                       </p>
+                                        <div class="form-check form-switch me-2 mb-0">
+                                            <fieldset >
+                                           <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"  (change)="statusUpdate(data)" [checked]="data.localStatus != undefined ? data.localStatus : data.BankInfo.Status == 1">
+                                           
+                                        </fieldset>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-outline-warning btn-sm" ngbDropdownToggle style="padding: 4px 14px;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                           
+                                            <div ngbDropdownMenu>
+                                                <!-- <button ngbDropdownItem class="fs13"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Messages </button>
+                                                <div class="dropdown-divider"></div> -->
+                                                <button ngbDropdownItem class="fs13" (click)="delbankTran(data)"><i class="fa-solid fa-trash-can me-2"></i>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="backcard-body">
+                       <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <div class="row boderbottom">
+                                    <div class="col-md-5 color-light">Acc. Holder Name</div>
+                                    <div class="col-md-7">{{data.BankInfo.Account_Name}}</div>
+                                </div>
+                                <div class="row boderbottom">
+                                    <div class="col-md-5 color-light">Account No.</div>
+                                    <div class="col-md-7">{{data.BankInfo.Account_Number}}</div>
+                                </div>
+                                <div class="row boderbottom">
+                                    <div class="col-md-5 color-light">IFSC Code</div>
+                                    <div class="col-md-7">{{data.BankInfo.Account_IFSC}}</div>
+                                </div>
+                                <div class="row boderbottom">
+                                    <div class="col-md-5 color-light">Bank Address</div>
+                                    <div class="col-md-7">
+                                        <div class="bankcard-scroll">
+                                            {{data.BankInfo.Bank_Address}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-5 color-light">Admin Messages</div>
+                                    <div class="col-md-7">
+                                        <div class="bankcard-scroll">
+                                            {{data.BankInfo.Account_Name}}
+                                        </div>
+                                    </div>
+                                </div> -->
+                               </div>
+                        </div>
+                       </div>
+                    </div>
+                    
+                </div>
+            </div>
+        }@empty{
+                                        
+            <tr>
+                <td colspan="9">
+                    <div class="no-data-container text-center">
+                        <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                        <h5 class="no-data-text">No Data Found.</h5>
+                    </div>
+                </td>
+            </tr>
+           
+            }
+        </div>
+    
+        
+          
+          <!-- <div class="card">
+            <div class="card-header flex-center-between">
+                <p class="mb-0 fw600">Manage Bank</p>
+                 <div class="d-flex">
+                    <button class="btn btn-sm btn-success pe-2 ps-2" (click)="openLg(content)"><i style="color:#F8E000" class="fa-solid fa-circle-plus me-2"></i> Bank </button>
+                </div>
+            </div>
+
+          <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tblone table-responsive">
+                       
+                          <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th *ngIf="isColumnVisible('timestamp')">Timestamp</th>
+                                <th *ngIf="isColumnVisible('bankName')">Bank Name</th>
+                                <th *ngIf="isColumnVisible('bankAddress')">Bank Address</th>
+                                <th *ngIf="isColumnVisible('accountHolderName')">Acc. Holder Name</th>
+                                <th *ngIf="isColumnVisible('accountNumber')">Account No.</th>
+                                <th *ngIf="isColumnVisible('ifscCode')">IFSC Code</th>
+                                <th *ngIf="isColumnVisible('status')">Status</th>
+                                <th *ngIf="isColumnVisible('actions')">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngIf="showStatement == 1">
+                              <tr *ngFor="let data of bankList; trackBy: trackByIndex">
+                                <td *ngIf="isColumnVisible('timestamp')">{{ data.BankInfo.Timestamp }}</td>
+                                <td *ngIf="isColumnVisible('bankName')">{{ data.BankInfo.Bank }}</td>
+                                <td *ngIf="isColumnVisible('bankAddress')">{{ data.BankInfo.Bank_Address }}</td>
+                                <td *ngIf="isColumnVisible('accountHolderName')">{{ data.BankInfo.Account_Name }}</td>
+                                <td *ngIf="isColumnVisible('accountNumber')">{{ data.BankInfo.Account_Number }}</td>
+                                <td *ngIf="isColumnVisible('ifscCode')">{{ data.BankInfo.Account_IFSC }}</td>
+                                <td *ngIf="isColumnVisible('status')">
+                                    <div class="form-check form-switch">
+                                        <input 
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        [checked]="data.localStatus != undefined ? data.localStatus : data.BankInfo.Status == 1" 
+                                        (change)="statusUpdate(data)">
+                                      <label class="form-check-label">{{ data.localStatus != undefined ? (data.localStatus ? 'Active' : 'Deactive') : (data.BankInfo.Status == 1 ? 'Active' : 'Deactive') }}</label>
+                                      </div>
+                                </td>
+                                <td *ngIf="isColumnVisible('actions')">
+                                  <button class="btn btn-sm btn-danger" (click)="delbankTran(data)"><i class="fa-solid fa-x"></i></button>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tbody *ngIf="showStatement == 0">
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                          
+                        </div>
+                </div>
+               </div>
+          </div>
+        </div> -->
+    </div>
+
+   
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Add Bank</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+           <div class="row align-items-end">
+            <div class="col-md-12">
+                <form [formGroup]="bankForm">
+                <div class="mod-decor pt-5">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Bank Name</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" id="email" placeholder="Enter Bank Name" name="email" formControlName="Bank"  
+                            [ngClass]="{ 'is-invalid': submitted && f['Bank'].errors }">
+                            @if (submitted && f['Bank'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['Bank'].errors['required']) {
+                                    <div>Bank name  is required</div>
+                                    } 
+                                    @if (f['Bank'].errors['pattern']) {
+                                        <div>Enter correct name</div>
+                                        }
+                                </div>
+                                }
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Acc. Holder Name</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" id="email" placeholder="Enter Name" name="email" formControlName="Account_Name"  
+                            [ngClass]="{ 'is-invalid': submitted && f['Account_Name'].errors }">
+                            @if (submitted && f['Account_Name'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['Account_Name'].errors['required']) {
+                                    <div>Acc. Holder name  is required</div>
+                                    } 
+                                    @if (f['Account_Name'].errors['pattern']) {
+                                        <div>Enter correct name</div>
+                                        }
+                                </div>
+                                }
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Account No.</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" id="email" placeholder="" name="email" formControlName="Account_Number"  (keypress)="allowNumbersOnly($event)"
+                            [ngClass]="{ 'is-invalid': submitted && f['Account_Number'].errors }" minlength="9" maxlength="18" placeholder="Enter account no.">
+                            @if (submitted && f['Account_Number'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['Account_Number'].errors['required']) {
+                                    <div>Account No. is required</div>
+                                    } 
+                                    <!-- @if (f['Account_Number'].errors['pattern']) {
+                                        <div>Enter correct name</div>
+                                        } -->
+                                </div>
+                                }
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">IFSC Code</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="ifsc"
+                              placeholder="Enter IFSC Code"
+                              name="ifsc"
+                              formControlName="Account_IFSC"
+                              (keypress)="allowAlphanumericOnly($event)"
+                              (blur)="fetchIFSCDetails(bankForm.get('Account_IFSC')?.value)"
+                              [ngClass]="{ 'is-invalid': submitted && f['Account_IFSC'].errors || ifscError }"
+                              minlength="11"
+                              maxlength="11"
+                            />
+                          
+                            <!-- Display validation error for required field -->
+                            <div *ngIf="submitted && f['Account_IFSC'].errors" class="invalid-feedback">
+                              <div *ngIf="f['Account_IFSC'].errors['required']">
+                                IFSC Code is required
+                              </div>
+                            </div>
+                          
+                            <!-- Display custom error message for invalid IFSC code -->
+                            <div *ngIf="ifscError" class="invalid-feedback">
+                              {{ ifscError }}
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Bank Address</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="form-control" rows="3" id="bankAddress" placeholder="Bank Address" formControlName="Bank_Address" readonly
+                              [ngClass]="{ 'is-invalid': submitted && f['Bank_Address'].errors }"></textarea>
+                            <div *ngIf="submitted && f['Bank_Address'].errors" class="invalid-feedback">
+                              <div *ngIf="f['Bank_Address'].errors['required']">
+                                Bank Address is required
+                              </div>
+                              <!-- Uncomment if you have a pattern validation -->
+                              <!-- <div *ngIf="f['Bank_Address'].errors['pattern']">
+                                Enter correct address
+                              </div> -->
+                            </div>
+                          </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Admin Messages </label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="form-control" rows="3"  placeholder="Write a messages (if any)" ></textarea>
+                          </div>
+                    </div>
+                   
+                </div>
+            </form>
+            </div>
+           </div>
+         
+        </div>
+        <div class="modal-footer" style="display: block;">
+           <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="modal.close('Close click')">Close</button>
+            </div>
+            <div class="col-md-9">
+                <button type="button" class="btn btn-success w-100 btn-sm0" (click)="addBankDetail()">Submit</button>
+            </div>
+           </div>
+        </div>
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Edit Commission</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+           <div class="row align-items-end">
+            <div class="col-md-12">
+                <div class="mod-decor">
+                    <div class="row">
+                        <div class="first-ele00 position-relative mb-4" >
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="pwd" class="form-label">Min.</label>
+                                         <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                       </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="pwd" class="form-label">Min.</label>
+                                         <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                       </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <label for="pwd" class="form-label">Value</label>
+                                         <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                       </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                            <label class="form-check-label" for="inlineRadio1">Fixed</label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                            <label class="form-check-label" for="inlineRadio2">(%)</label>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm-del"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-sm-add">Add more</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+         
+        </div>
+        <div class="modal-footer" style="display: block;">
+           <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="modal.close('Close click')">Close</button>
+            </div>
+            <div class="col-md-9">
+                <button type="button" class="btn btn-success w-100 btn-sm0">Submit</button>
+            </div>
+           </div>
+        </div>
+    </ng-template>
+    
+
+</section>

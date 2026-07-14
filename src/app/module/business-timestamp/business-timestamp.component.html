@@ -1,0 +1,161 @@
+
+ <div class="row ">
+            <!-- <div class="col-md-12 mb-2">
+                @if (queryParam){
+                    <button class="btn" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    }
+            </div> -->
+           <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between pb-3">
+                <div><p class="mb-0 fw600">Business</p></div>
+               <div>
+                <div>
+
+                     <div class="calc-view">
+                                <input type="radio" class="btn-check" name="options-outlined" id="day-outlined"
+                                        autocomplete="off" [checked]="toggle == '1'" (click)="ChangeToggle('1')">
+                                <label class="btn btn-outline-success" for="day-outlined">Day Wise</label>
+ 
+                                <input type="radio" class="btn-check" name="options-outlined" id="range-outlined"
+                                        autocomplete="off" [checked]="toggle == '2'" (click)="ChangeToggle('2')">
+                                <label class="btn btn-outline-danger" for="range-outlined">Range Wise</label>
+                            </div>
+                </div>
+               </div>
+            </div>
+           </div>
+            
+        </div>
+       <div class="row">
+           <div class="col-md-12" >
+            <div class="card" style="min-height: 50vh;">
+                <div class="card-header align-items-center">
+                    <div class="row align-items-center">
+                      <div class="col-md-4">
+                        <div class="overshow"><span class="me-2">Overall business:</span> <span class="fw600">{{ovlBussiness}}</span></div>
+                      </div>
+                        <div class="col-md-8">
+                            <div class="row justify-content-end align-items-center">
+                                
+                               
+                                @if (toggle == 1) {
+                                    <div class="col-md-2">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="dateclk" (click)="changeDate('sub')" >
+                                                <i class="fa-solid fa-angle-left"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0 mx-3">{{ updatedDates |
+                                                    date:'dd/MM/yyyy' }}</p>
+                                            </div>
+                                            <div class="dateclk" (click)="changeDate('add')">
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                  @if (toggle == 3) {
+                                <div class="col-md-2">
+                                    <div class="cc-search mt-1">
+                                        <select class="form-select" (change)="selectDate($event)"
+                                        [(ngModel)]="dateclear">
+                                        <option value="0" selected disabled class="fs12">Select</option>
+                                        <option value="7">Last 1 Week</option>
+                                        <option value="15">Last 2 Week</option>
+                                        <option value="31">Last 1 Months</option>
+                                        <option value="custom">Custom</option>
+                                        </select>
+                                        <label>Date</label>
+                                    </div>
+                                  
+                                </div>
+                            }
+                                
+                                @if (toggle == 2) {
+                                    <div class="col-md-2">
+                                        <div class="cc-search mt-1">
+                                            <select class="form-select" (change)="selectDate($event)"
+                                            [(ngModel)]="dateclear">
+                                            <option value="0" selected disabled class="fs12">Select</option>
+                                            <option value="7">Last 1 Week</option>
+                                            <option value="31">Last 1 Month</option>
+                                            <option value="93">Last 3 Months</option>
+                                            <option value="367">Last 1 Year</option>
+                                            <option value="custom">Custom</option>
+                                            </select>
+                                            <label>Date</label>
+                                        </div>
+                                      
+                                    </div>
+                                }
+                                    @if (customDate == 'custom' || customDate == '') {
+                                    <div class="col-md-2">
+                                        <div class="pt-1">
+                                            <div class="form-group cc-search mb-0">
+                                                <input type="date"  class="pad-b form-control"  [(ngModel)]="lastDaysDate" (change)="dateSelectFromTO($event, 'from')">
+                                                <label for="dtStart">From</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="pt-1">
+                                            <div class="form-group cc-search mb-0">
+                                                <input type="date"  class="pad-b form-control" [(ngModel)]="updatedDate" (change)="dateSelectFromTO($event,'to')">
+                                                <label for="dtStart">To</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <!-- Filter Type Dropdown -->
+                    
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                    <div class="col-md-12">
+                        <div class="tblone table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Timestamp</th>
+                                    <th >Business</th>
+                                </tr>
+                                 </thead>
+                                <tbody>
+                                    @for (data of pageOfItems; track $index) {
+                                    <tr>
+                                        <td><p class="mb-0 ">{{data.oTm.Tm_Str | date:'yyyy-MM-dd  hh:mm'}}</p></td>
+                                        <td ><p class="mb-0 fw600">{{data.Amt | number:'1.2-2'}}</p> </td>
+                                    </tr>
+                            }@empty{
+                                 <!-- <tbody > -->
+                                      <td colspan="2">
+                                        <div class="no-data-container">
+                                          <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                          <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                      </td>
+                                  <!-- </tbody> -->
+                            }
+                               </tbody>
+                               
+                              </table>
+
+                              @if (tiemStampList?.length != 0) {
+                                <div class="col-md-12 d-flex justify-content-end " >
+                                    <app-pagination [items]="tiemStampList" (changePage)="onChangePage($event)"></app-pagination>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+
+   

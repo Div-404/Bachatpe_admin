@@ -1,0 +1,22 @@
+<div class="add-class-for-show-and-hide amindiv">
+    <div class="card">
+        <div class="card-header"><p class="mb-0 fw600">Selfie</p></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 m-auto">
+                    <div class="shadow-sm0">
+                        
+
+                        <div class="border0 border-success0 rounded0 p-2 text-center">
+                            <img *ngIf="aadharData?.Path; else defaultImage" class="img-fluid" [src]="aadharData?.Path" alt="User Image">
+                            <ng-template #defaultImage>
+                              <!-- <img class="img-fluid" src="assets/images/selfie-fake.png" alt="Default Image"> -->
+                              <img style="width: 150px;" src="assets/images/noDoc.png">
+                            </ng-template>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

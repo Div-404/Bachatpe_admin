@@ -1,0 +1,98 @@
+.filenameshow{
+    background: #0080002e;
+    width: fit-content;
+    padding: 2px 6px;
+    border-radius: 2px;
+    color: green;
+}
+
+thead{
+    tr{
+        text-wrap: nowrap;
+        font-size: 13px;
+    }
+    th{
+        font-size: 13px;   
+    }
+}
+tr{
+   
+    font-size: 13px;
+}
+.table-responsive::-webkit-scrollbar {
+	height: 5px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #f67312;
+	outline: 0px solid slategrey;
+}
+
+.table-responsive::-webkit-scrollbar:vertical {
+	display: none;
+}
+.no-data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust the height to fit your table structure */
+    text-align: center;
+  }
+  
+  .no-data-text {
+    margin-top: 10px;
+    font-size: 1.25rem;
+    color: #6c757d; /* Optional: Add some styling for the "No Data Found" text */
+  }
+  .status-success {
+    background-color: #26bf9440 !important;
+     border-radius: 50px;
+     padding:1px 6px;
+     display: flex;
+     align-items: center;
+     color:green;
+     width: 94px;
+     i{margin-right: 8px;}
+    //  <i class="fa-solid fa-circle-check"></i>
+    }
+.status-pending {
+    background-color: #ffeb3b4f!important;
+    border-radius: 50px;
+    padding:1px 6px;
+    display: flex;
+    align-items: center;
+    color:#e38905;
+    width: 94px;
+    i{margin-right: 8px;}
+    // <i class="fa-solid fa-circle-minus"></i>
+}
+.status-reject {
+    background-color: #e6533c40  !important;
+    border-radius: 50px;
+    padding:1px 6px;
+    display: flex;
+    align-items: center;
+    color:red;
+    width: 94px;
+    i{margin-right: 8px;}
+    // <i class="fa-solid fa-circle-xmark"></i>
+}
+
+.status-inprogress {
+    background-color: rgb(63 81 181 / 29%) !important;
+    border-radius: 50px;
+    padding: 1px 6px;
+    display: flex;
+    align-items: center;
+    color: #3F51B5;
+    width: 94px;
+    i{margin-right: 8px;}
+    // <i class="fa-regular fa-hourglass-half"></i>
+}

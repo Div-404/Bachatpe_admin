@@ -1,0 +1,255 @@
+<div class="page executives" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="nk-block-head-content">
+                        <h3 class="nk-block-title page-title">Sub Tabs </h3>
+                        <p>You can add sub tabs in this section. </p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-success" (click)="openVerticallyCentered(content,0)">
+                            <i  class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i> Add Sub Tab</button>
+                    </div>
+                </div>
+                <!-- <hr> -->
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="executives-card p-3 pb-0">
+                    <div class="row">
+                        <ng-container *ngIf="subMasterData && subMasterData.length; else noDataTemplate">
+                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mb-3" *ngFor="let data of subMasterData">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h4 class="pb-0 mb-0"><i class='bx bx-cube me-2'></i> {{data.Master}}</h4>
+                                            <div ngbDropdown class="d-inline-block">
+                                                <button type="button" class="btn btn-outline-primary drop" id="dropdownForm1" ngbDropdownToggle>
+                                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                                                    <button type="button" ngbDropdownItem (click)="openVerticallyCentered(content, data)">
+                                                        <i class='bx bxs-edit me-1'></i>Edit
+                                                    </button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button type="button" ngbDropdownItem (click)="deleteSubMaster(data.SubMasterID, data.SubMaster)">
+                                                        <i class='bx bx-trash me-1'></i>Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text"><i class='bx bx-folder-open me-2'></i> Sub Tab</div>
+                                            <div class="status-text-bold orang-col">
+                                                {{data.SubMaster}}
+                                            </div>
+                                        </div>
+                                        <hr class="mt-2 mb-2">
+                                        <p class="orang-col">Permission Allow</p>
+                                        <hr class="mt-2 mb-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text"><i class='bx bx-lock-open me-2'></i> Access All Tab</div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Access_All == 1">
+                                                Allowed
+                                            </div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Access_All == 0">
+                                                Not Allowed
+                                            </div>
+                                        </div>
+                                        <hr class="mt-2 mb-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text"><i class='bx bx-user-plus me-2'></i> Add Tab</div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Add == 1">
+                                                Allowed
+                                            </div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Add == 0">
+                                                Not Allowed
+                                            </div>
+                                        </div>
+                                        <hr class="mt-2 mb-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text"><i class='bx bx-trash me-2'></i> Delete Tab</div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Delete == 0">
+                                                Not Allowed
+                                            </div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Delete == 1">
+                                                Allowed
+                                            </div>
+                                        </div>
+                                        <hr class="mt-2 mb-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text"><i class='bx bx-lock-open me-2'></i> Access Tab</div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Access == 1">
+                                                Allowed
+                                            </div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Access == 0">
+                                                Not Allowed
+                                            </div>
+                                        </div>
+                                        <hr class="mt-2 mb-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="status-text"><i class='bx bx-edit me-2'></i> Edit Tab</div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Edit == 0">
+                                                Not Allowed
+                                            </div>
+                                            <div class="status-text-bold" *ngIf="data.oPermit.Edit == 1">
+                                                Allowed
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    
+                        <ng-template #noDataTemplate>
+                            <div class="no-data-container">
+                                <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                <h5 class="no-data-text">No Data Found.</h5>
+                            </div>
+                        </ng-template>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" *ngIf="!getEditData"> Add Sub Tab</h4>
+        <h4 class="modal-title" *ngIf="getEditData"> Update Sub Tab</h4>
+        <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body p-3">
+        <!-- <button type="button" aria-label="Close" (click)="modal.dismiss('Cross click')" class="btn-close-my"><img src="assets/images/close-svg.svg" width="13px"></button> -->
+        <div class="white-box p-3">
+            <!-- <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-start background-text">
+                        <h4 class="mb-1 modal-title-1 text-orange" *ngIf="!getEditData">Add Sub
+                            Tab</h4>
+                        <h4 class="mb-1 modal-title-1 text-orange" *ngIf="getEditData">Update
+                            Sub Tab</h4>
+                        <p class="tx-18 mb-0">Easily add sub tab with just a few details.</p>
+                    </div>
+            
+                    <hr class="mt-2 mb-3">
+                </div>
+            </div> -->
+            <form [formGroup]="subModuleForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Select Tab <span class="text-danger">*</span></label>
+                    <fieldset [disabled]="getEditData">
+                        <!-- <select class="form-select" name="source" formControlName="masterID" (change)="onSourceSelect($event)"
+                        [ngClass]="{ 'is-invalid': subModuleForm.get('masterID').touched && subModuleForm.get('masterID').invalid }">
+                        <option value="" disabled selected>Select Tab</option>
+                        <option *ngFor="let data of masterData" [value]="data.MasterID">
+                            {{ data.Master }}</option>
+                    </select> -->
+
+                        <select class="form-select" name="source" formControlName="masterID" (change)="onSourceSelect($event)"
+                            [ngClass]="{ 'is-invalid': subModuleForm.get('masterID').touched && subModuleForm.get('masterID').invalid }">
+                            <option value="" disabled selected>Select Tab</option>
+                            <option *ngFor="let data of masterData" [value]="data.MasterID">
+                                {{ data.Master }}</option>
+                        </select>
+                    </fieldset>
+                    <div *ngIf="subModuleForm.get('masterID').touched && subModuleForm.get('masterID').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="subModuleForm.get('masterID').errors.required">Value
+                            is Required.</div>
+                    </div>
+                </div>
+                <div>
+                    <label for="email" class="form-label"> Sub Tab  <span class="text-danger">*</span></label>
+
+                    <input class="form-control" type="text" id="email" [readonly]="getEditData" placeholder="Enter Sub Tab Name"
+                        formControlName="subMasName" required (keypress)="onKeyPress($event)"
+                        [ngClass]="{ 'is-invalid': subModuleForm.get('subMasName').touched && subModuleForm.get('subMasName').invalid }">
+                    <div *ngIf="subModuleForm.get('subMasName').touched && subModuleForm.get('subMasName').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="subModuleForm.get('subMasName').errors.required">Value
+                            is Required.</div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="sub-manager p-2 mt-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h3> Allow Permissions</h3>
+
+                    </div>
+                </div>
+                <div class="permission-box p-2 ">
+                    <div class="d-flex align-items-center justify-content-between">
+
+
+                        <div class="form-check me-2">
+                            <input class="form-check-input" formControlName="Access_All" type="checkbox" id="Access_All"
+                                (change)="acessCheckEvent1($event)">
+                            <label for="Access_All" class="form-check-label">
+                                <span></span> Access All
+                            </label>
+                        </div>
+                        <div class="form-check me-2">
+                            <input class="form-check-input" formControlName="access" type="checkbox" id="accpermission"
+                                (change)="acessCheckEvent($event)">
+                            <label for="radio_3" class="form-check-label">
+                                <span></span> Access
+                            </label>
+                        </div>
+                        <div class="form-check me-2">
+                            <input class="form-check-input" type="checkbox" formControlName="add" id="addPermission"
+                                (change)="changeEvent($event)">
+                            <label for="radio_1" class="form-check-label">
+                                <span></span> Add
+                            </label>
+                        </div>
+                        <div class="form-check me-2">
+                            <input class="form-check-input" formControlName="edit" type="checkbox" id="editpermission"
+                                (change)="changeEvent($event)">
+                            <label for="radio_2" class="form-check-label">
+                                <span></span> Edit
+                            </label>
+                        </div>
+
+                        <div class="form-check me-2">
+                            <input class="form-check-input" formControlName="delete" type="checkbox" id="delpermission"
+                                (change)="changeEvent($event)">
+                            <label for="radio_4" class="form-check-label">
+                                <span></span> Delete
+                            </label>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <div class="d-flex align-items-center justify-content-end mt-4 ">
+                    <button type="button" class="btn btn-success btn-sm px-5" *ngIf="!getEditData" [disabled]="subModuleForm.invalid"
+                    (click)="addSubModule()">Add permissions</button>
+                <button type="button" class="btn btn-success btn-sm px-5" *ngIf="getEditData" (click)="updateStatus()">Update permissions</button>
+                        <!-- <button type="button" class="btn close w-50 mx-auto" (click)="modal.close('Close click')">Close</button> -->
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-light add-button" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-light close-button" *ngIf="!getEditData" [disabled]="subModuleForm.invalid"
+            (click)="addSubModule()">Submit</button>
+        <button type="button" class="btn btn-light close-button" *ngIf="getEditData" (click)="updateStatus()">Update
+            Status</button>
+    </div> -->
+</ng-template>

@@ -1,0 +1,58 @@
+
+<section class="page">
+    <div class="container-fluid">
+        @if (!headerHide){
+        <div class="row ">
+           <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between pb-3">
+                <div>
+                    <ul class="tabnavc-ul ps-0 mb-0">
+                        <!-- <li  [ngClass]="{'active': selectedTab == 'report-overall'  || selectedTab == 'reportcredit-main' || selectedTab == 'reportcredit-main/report-overall'}"
+                         (click)="navigate('reportcredit-main/report-overall')">
+                            <div class="tabnavc-a ">
+                                <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span class="tabnavc-txt">Overall</span>
+                            </div>
+                        </li> -->
+                        <li [ngClass]="{'active': selectedTab == 'reportcredit-main' || selectedTab == 'reportcredit-main/report-user' }" (click)="navigate('report-user')">
+                            <div class="tabnavc-a">
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">User Wise</span>
+                            </div>
+                        </li>
+                         <li [ngClass]="{'active': selectedTab == 'reportcredit-main/credit-list' || selectedTab == 'credit-list' }" (click)="navigate('credit-list')">
+                            <div class="tabnavc-a">
+                                <span class="tbicon"><i class="fa-solid fa-users"></i></span><span class="tabnavc-txt">List</span>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+               <div>
+                <div *ngIf="selectedTab == 'tab2'" class="d-none">
+                    <div class="calc-view">
+                                      
+                        <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
+                            autocomplete="off" checked >
+                        <label class="btn btn-outline-success" for="success-outlined">Day Wise</label>
+        
+                        <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined"
+                            autocomplete="off">
+                        <label class="btn btn-outline-danger" for="danger-outlined" >Range Wise</label>
+                    </div>
+                </div>
+               </div>
+            </div>
+           </div>
+           
+       
+            <hr>
+        </div>
+    }
+       <div class="row">
+          
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>
+
+
+   

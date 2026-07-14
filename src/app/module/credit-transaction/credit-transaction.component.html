@@ -1,0 +1,428 @@
+
+<section class="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <p class="mb-0 fw600">Credit Statement</p>
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-md-12">
+            <div class="card" style="min-height: 50vh;">
+                <div class="card-header pt-3 flex-center-between">
+                    <div class="d-flex align-items-center justify-content-end">
+                      <!-- Filter Type Dropdown -->
+                      <div class="pos-re filter-width me-2">
+                        <select class="form-select" (change)="onFilterChange($event)" [(ngModel)]="selectedFilterType">
+                          <option [value]="0" selected disabled class="fs12">Search</option>
+                          <option [value]="1">By Name</option>
+                          <option [value]="7">By Phone</option>
+                          <option [value]="8">By User Code</option>
+                        </select>
+                        <label>Filter By</label>
+                      </div>
+                  
+                      <!-- Search Input -->
+                      <!-- <div *ngIf="selectedFilterType > 0" class="setfilter-width me-2">
+                        <div  class="dropdown-menu show">
+                          <button
+                            class="dropdown-item fs12"
+                            *ngFor="let user of filteredUsers1"
+                            (click)="onUserSelect1(user)"
+                          >
+                            {{ user.Code }} - {{ user.Name }} - {{ user.Phone }}
+                          </button>
+                        </div>
+                        
+                   
+                        <div *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</div>
+                     
+                      </div> -->
+                      <div *ngIf="selectedFilterType > 0" class="pos-re filter-width me-2">
+                        <input type="text" [(ngModel)]="searchVal" placeholder="Enter search value" 
+                               class="form-control fs12" (input)="loadFilteredUsers($event)" />
+                        <div *ngIf="filteredUsers1.length > 0" class="dropdown-menu show">
+                          <button class="dropdown-item fs12" *ngFor="let user of filteredUsers1" 
+                                  (click)="onUserSelect1(user)">
+                           {{user.Code}} -  {{ user.Name }} - {{ user.Phone }} 
+                          </button>
+                        </div>
+                        <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</label>
+                      </div>
+                      
+                      <!-- Search Button -->
+                     
+                  
+                      <!-- Date Range Selection Dropdown -->
+                      <div class=" me-2 custom-select selected">
+                        <ng-select class="wid-20" [(ngModel)]="oFilter" [clearOnBackspace]="false" (change)="showDateRange($event)">
+                          <ng-option [value]="1">Last 1 Week</ng-option>
+                          <ng-option [value]="2">Last 1 Month</ng-option>
+                          <ng-option [value]="3">Last 3 Months</ng-option>
+                          <ng-option [value]="4">Last 1 Year</ng-option>
+                          <ng-option [value]="5">Custom</ng-option>
+                        </ng-select>
+                        <label [class.selected]="oFilter">Date</label>
+                      </div>
+                  
+                      <!-- Custom Date Picker (visible when custom date range is selected) -->
+                      <div class="date" *ngIf="activeClass === 1">
+                        <form [formGroup]="transactionForm">
+                          <div class="d-flex">
+                            <!-- From Date -->
+                            <div class="wid-20 me-2">
+                              <div class="form-group pos-res mb-0">
+                                <input type="date" id="dtFrom" formControlName="dtFrom" class="pad-b form-control" />
+                                <label for="dtFrom">From</label>
+                              </div>
+                            </div>
+                            <!-- To Date -->
+                            <div class="wid-20">
+                              <div class="form-group pos-res mb-0">
+                                <input type="date" id="dtTo" formControlName="dtTo" class="pad-b form-control" />
+                                <label for="dtTo">To</label>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="ms-2">
+                        <fieldset [disabled]="(selectedFilterType == 0  || searchVal == '') && oFilter != '5' || transactionForm.value.dtFrom === '' || transactionForm.value.dtTo === ''">
+                          <!-- <fieldset [disabled]="transactionForm.value.dtFrom === ''"> -->
+                        <button
+                          type="submit"
+                          class="btn btn-success align-items-right fw-500"
+                          *ngIf="(searchVal && searchVal.trim() !== '') || activeClass === 1 || (oFilter && oFilter !== 0)"
+                          (click)="search()"
+                        >
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                      </fieldset>
+                      </div>
+                      <div class="ms-2">
+                        <button *ngIf="searchVal !== ''"
+                          type="submit"
+                          class="btn btn-danger align-items-right fw-500"
+                         (click)="resetFilters()"
+                        >
+                        <i class="fa-solid fa-xmark"></i>
+                        </button>
+                      </div>
+                     
+                      <!-- Custom Date Search Button -->
+                      <!-- <div class="ms-2" *ngIf="activeClass === 1">
+                        <button
+                          type="submit"
+                          class="btn btn-success align-items-right fw-500"
+                          [disabled]="transactionForm.invalid"
+                          (click)="GET_ADM_CREDIT_TRANS(1, 100)"
+                        >
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                      </div> -->
+                    </div>
+                    
+                  
+                  <!-- <div>
+                    <button class="btn btn-sm btn-success me-3" (click)="openDeposit(content)">Deposit</button>
+                    <button class="btn btn-sm btn-warning" (click)="openTransfer(content2)">Transfer</button>
+                  </div> -->
+                 
+                  </div>
+                 
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Timestamp</th>
+                                        <!-- <th>Type</th> -->
+                                        <!-- <th>Sender</th> -->
+                                        <th>Recipient/Code</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Settlement</th>
+                                        <th>Auto Debit</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let transaction of creditTransData">
+                                        <td><p class="mb-0">{{ transaction.Tm.Tm_Str | date: 'yyyy-MM-dd h:mm a' }}</p></td>
+                                        <!-- <td>
+                                          <p class="mb-0">{{ transaction.oTrans.oDebt_Credit === 1 ? 'Debit' : 'Credit' }}</p>
+                                        </td> -->
+                                        <!-- <td>
+                                          <div class="d-flex0 align-items-center">
+                                            <p class="tbl-user-name mb-0">{{ transaction.oExec.Exec }}</p>
+                                            <p class="tbl-user-name mb-0">{{transaction.oExec.Email}}</p>
+                                          </div>
+                                        </td> -->
+                                        <td>
+                                          <div class="d-flex0 align-items-center">
+                                            <p class="tbl-user-name mb-0">{{ transaction.oUser.Name }}</p>
+                                            <p class="tbl-user-name mb-0">{{transaction.oUser.Phone}} / {{transaction.oUser.Code}}</p>
+                                          </div>
+                                        </td>
+
+
+
+                                        <td>
+                                            <div *ngIf="transaction.oTrans.oDebt_Credit === 2">
+                                                <div class="d-flex align-items-center">
+                                                    <!-- <img src="assets/images/arrow-down-left-1.svg" class="me-2" alt="Debit Arrow" placement="top" ngbTooltip="Credit"/> -->
+                                                    <p class="mb-0 text-green fw600"  >{{transaction.oTrans.Amount | number: '1.2-2'}}</p>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="transaction.oTrans.oDebt_Credit === 1">
+                                                <div class="d-flex align-items-center">
+                                                    <!-- <img src="assets/images/arrow-up-right.svg" class="me-2" alt="Credit Arrow" placement="top" ngbTooltip="Debit"/> -->
+                                                    <p class="mb-0 text-green fw600" >{{transaction.oTrans.Amount | number: '1.2-2'}}</p>
+                                                </div>
+                                            </div>
+                                            <!-- <p class="mb-0 text-green">{{ transaction.oTrans.Amount | number: '1.2-2' }}</p></td> -->
+
+                                            <td class="">
+                                              @if (transaction.Status == 1) {
+                                                  <div style="cursor: pointer;" class="status-pending" >
+                                                    <div><i class="fa-solid fa-circle-minus"></i></div>
+                                                    <span>PENDING</span>
+                                                  </div>
+                                                  }
+                                                  @if (transaction.Status == 3) {
+                                                  <div class="status-cancel">
+                                                    <div><i class="fa-solid fa-circle-xmark"></i></div>
+                                                    <span>Rejected</span>
+                                                  </div>
+                                                  }
+                                                  @if (transaction.Status == 2) {
+                                                  <div class="status-success">
+                                                    <div><i class="fa-solid fa-circle-check"></i></div>
+                                                    <span>Success</span>
+                                                  </div>
+                                                  }
+                                                   @if (transaction.Status == 4) {
+                                                  <div class="status-success">
+                                                    <div><i class="fa-solid fa-circle-check"></i></div>
+                                                    <span>Settled</span>
+                                                  </div>
+                                                  }
+                                                  @if (transaction.Status == 5) {
+                                                  <div class="status-success">
+                                                    <div><i class="fa-solid fa-circle-check"></i></div>
+                                                    <span>Instant</span>
+                                                  </div>
+                                                  }
+                                          </td>
+                                          <td class=""><p class="mb-0">{{ transaction.oTrans.ValidTill | date:'yyyy-MM-dd' }}</p></td>
+                                        <td>
+                                          <div class="d-flex">
+                                            <div class="" placement="top" >
+                                              <div *ngIf="transaction.oTrans.Auto_Debit === 1">
+                                                <i class="fa-solid fa-circle-check text-success"></i>
+                                              </div>
+                                            </div>
+                                            <div *ngIf="transaction.oTrans.Auto_Debit === 2" placement="top" >
+                                              <div>
+                                                <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                    <tbody *ngIf="creditTransData.length == 0">
+                                        <tr>
+                                          <td colspan="7">
+                                            <div class="no-data-container">
+                                              <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                              <h5 class="no-data-text">No Data Found.</h5>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                  </table>
+
+                                  <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                    @if (Count > 0) {
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(1)">First</a>
+
+                                    </li>
+
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                    </li>
+
+                                    <li *ngFor="let page of pager.pages" class="page-item"
+                                        [ngClass]="{active:pager.currentPage === page}">
+                                        <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                        <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                    </li>
+
+                                    }
+                                
+                                </ul>
+                            </div>
+                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+
+
+  
+  
+    <ng-template #content let-modal>
+      <form [formGroup]="depositForm" >
+        <div class="modal-header">
+          <h4 class="modal-title">Deposit</h4>
+          <button type="button" class="btn btn-close2" aria-label="Close" (click)="closeDeposit()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="text" class="form-control form-control-sm" id="amount" formControlName="amount" placeholder="Enter Amount" (keypress)="allowNumbersOnly($event)"/>
+              </div>
+            </div>
+    
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="remarks" class="form-label">Note</label>
+                <textarea class="form-control" rows="5" id="remarks" formControlName="remarks" placeholder="Enter a Note"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+          <div class="row">
+            <div class="col-md-3">
+              <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeDeposit()">Close</button>
+            </div>
+            <div class="col-md-9">
+              <button type="submit" class="btn btn-success w-100 btn-sm0" [disabled]="!depositForm.valid" (click)="MAKE_CREDIT_TRANS_DEPT()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+      <form [formGroup]="transferForm" >
+        <div class="modal-header">
+          <h4 class="modal-title">Transfer</h4>
+          <span *ngIf="balance != null" class="modal-title">
+            Balance: {{ balance | number: '1.2-2' }}
+          </span>
+          <button type="button" class="btn btn-close2" aria-label="Close" (click)="closeTransfer()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="transferAmount" class="form-label">Amount</label>
+                <input type="text" class="form-control form-control-sm" id="transferAmount" formControlName="amount"  placeholder="Enter Amount" (keypress)="allowNumbersOnly($event)" />
+              </div>
+            </div>
+            <div class="col-md-12 mb-2">
+              <label for="searchType">Search Type</label>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+               
+                <select class="form-select" formControlName="searchType" (change)="onSearchTypeChange($event)">
+                  <option [value]="0" hidden selected class="fs12" > Search Type</option>
+                  <option [value]="7">By Phone</option>
+                  <option [value]="8">By User Code</option>
+                </select>
+              </div>
+             
+            </div>
+            <div class="col-md-8">
+              <div >
+                <input
+                  type="text"
+                  [(ngModel)]="searchValue"
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Enter search value"
+                  class="form-control form-control-sm fs12"
+                  (input)="onSearchInput($event)"
+                  [disabled]="transferForm.get('searchType').value <= 0"  
+                />
+                <div *ngIf="filteredUsers.length > 0" class="dropdown-menu show">
+                  <button
+                    class="dropdown-item fs12"
+                    *ngFor="let user of filteredUsers"
+                    (click)="onUserSelect(user)"
+                  >
+                    {{ user.Code }} - {{ user.Name }} - {{ user.Phone }}
+                  </button>
+                </div>
+                <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+              </div>
+            </div>
+    
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="transferRemarks" class="form-label">Note</label>
+                <textarea class="form-control" rows="3" id="transferRemarks" formControlName="remarks" placeholder="Enter a Note"></textarea>
+              </div>
+            </div>
+    
+            <div class="col-md-12">
+              <div class="form-check mb-3">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" formControlName="autoDebit" /> Auto debit from balance
+                  wallet
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+          <div class="row">
+            <div class="col-md-3">
+              <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="closeTransfer()">Close</button>
+            </div>
+            <div class="col-md-9">
+              <button type="submit" class="btn btn-success w-100 btn-sm0"  [disabled]="!isTransferFormValid || userSel == false"  (click)="MAKE_CREDIT_TRANS_TRANSFER()">Make Transfer</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+ 
+
+
+
+</section>

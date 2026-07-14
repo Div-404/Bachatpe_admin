@@ -1,0 +1,253 @@
+<section class="page" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 pb-4 mt-5">
+                <div class="card-header flex-center-between" style="background: #fff;">
+                    <p class="mb-0 fw600" style="color:#000">User Details</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card p-3" style="background: #F6F9FC; min-height: 70vh; margin-bottom: 50px;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="userimg-box">
+                                    <div class="text-center">
+                                        <!-- <img [src]='Profilepic' alt="assets/images/selfie-fake.jpg"> -->
+                                        <img
+  [src]="Profilepic || 'assets/images/selfie-fake.jpg'"
+  alt="Profile"
+>
+
+                                    </div>
+                                    <div class="pt-3 userdit text-center">
+                                        <p class="nametext">{{ userInfoData?.First }} {{ userInfoData?.Last }}</p>
+                                        <p class="numbertext fs12">{{ userInfoData?.Phone }}</p>
+                                        <p class="emailtext fs12 mb-0">{{ userInfoData?.Email }}</p>
+                                    </div>
+                                </div>
+                                <ul class="tabnavc-ul1">
+                                    @if(kycDocs[1]){
+                                    <li [ngClass]="{'active': currentTab === 'show-pan'}" (click)="navigate('show-pan')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir">
+                                                    <i class="fa-regular fa-id-card"></i>
+                                                </div>
+                                                <div class="tabnavc-txt">Pan Details 
+                                                    <!-- @if (userInfoData.Stage > 0) {
+                                                        <div class="suc-dag">Success</div>
+                                                        }
+                                                        @if (userInfoData.Stage < 1) {
+                                                            <div class="pad-dag">Pending</div>
+                                                            } -->
+                                                            <div class="suc-dag">Success</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                    @if(kycDocs[2]){
+                                    <li [ngClass]="{'active': currentTab === 'show-aadhar'}" (click)="navigate('show-aadhar')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir"><i class="fa-solid fa-id-card"></i></div>
+                                                <div class="tabnavc-txt">Aadhar Details 
+                                                    <!-- @if (userInfoData.Stage > 1) {
+                                                        <div class="suc-dag">Success</div>
+                                                        }
+                                                        @if (userInfoData.Stage < 2) {
+                                                            <div class="pad-dag">Pending</div>
+                                                            } -->
+                                                            <div class="suc-dag">Success</div>
+                                                </div>
+                                            </div>
+                                            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                        </div>
+                                    </li>
+                                }
+                                @if(kycDocs[6]){
+                                    <li [ngClass]="{'active': currentTab === 'show-selfie'}" (click)="navigate('show-selfie')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir"><i class="fa-solid fa-camera-retro"></i></div>
+                                                <div class="tabnavc-txt">Selfie 
+                                                    <!-- @if (userInfoData.Stage > 2) {
+                                                        <div class="suc-dag">Success</div>
+                                                        }
+                                                        @if (userInfoData.Stage < 3) {
+                                                            <div class="pad-dag">Pending</div>
+                                                            } -->
+                                                            <div class="suc-dag">Success</div>
+                                                </div>
+                                            </div>
+                                            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                        </div>
+                                    </li>
+                                }
+                                    @if(kycDocs[11]){
+                                    <li [ngClass]="{'active': currentTab === 'show-shop'}" (click)="navigate('show-shop')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir"><i class="fa-solid fa-signs-post"></i></div>
+                                                <div class="tabnavc-txt">Shop Details 
+                                                    <!-- @if (userInfoData.Stage === 9) {
+                                                        <div class="suc-dag">Success</div>
+                                                        }
+                                                        @if (userInfoData.Stage < 9) {
+                                                            <div class="pad-dag">Pending</div>
+                                                            } -->
+                                                            <div class="suc-dag">Success</div>
+
+                                                </div>
+                                            </div>
+                                            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                        </div>
+                                    </li>
+                                }
+                                    @if(kycDocs[8]){
+                                    <li [ngClass]="{'active': currentTab === 'show-gst'}" (click)="navigate('show-gst')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir"><i class="fa-solid fa-signs-post"></i></div>
+                                                <div class="tabnavc-txt">GST Details 
+                                                    <!-- @if (userInfoData.Stage === 9) {
+                                                        <div class="suc-dag">Success</div>
+                                                        }
+                                                        @if (userInfoData.Stage < 9) {
+                                                            <div class="pad-dag">Pending</div>
+                                                            } -->
+                                                            <div class="suc-dag">Success</div>
+                                                </div>
+                                            </div>
+                                            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                        </div>
+                                    </li>
+                                }
+                                    <!-- <li [ngClass]="{'active': currentTab === 'show-Changepass'}" (click)="navigate('show-Changepass')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir"><i class="fa-solid fa-key"></i></div>
+                                                <span class="tabnavc-txt">Change Password</span>
+                                            </div>
+                                            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                        </div>
+                                    </li> -->
+                                    @if(kycDocs[7]){
+                                    <li [ngClass]="{'active': currentTab === 'agreement'}"
+    (click)="openAgreement()">
+  <div class="tabnavc-a">
+    <div class="d-flex align-items-center">
+      <div class="tabcir">
+        <i class="fa-solid fa-file-contract"></i>
+      </div>
+
+      <div class="tabnavc-txt">
+        Agreement
+        <div class="suc-dag" *ngIf="isAgreementSigned">Success</div>
+        <!-- <div class="pad-dag" *ngIf="!isAgreementSigned">Pending</div> -->
+      </div>
+    </div>
+    <div><i class="fa fa-angle-right"></i></div>
+  </div>
+</li>
+                                    }
+
+                                    <li [ngClass]="{'active': currentTab === 'bank-detail'}" (click)="navigate('bank-detail')">
+                                        <div class="tabnavc-a">
+                                            <div class="d-flex align-items-center">
+                                                <div class="tabcir"><i class="fa-solid fa-key"></i></div>
+                                                <span class="tabnavc-txt">Bank Details</span>
+                                            </div>
+                                            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <!-- <div class="card0000">
+                                <div class="card00 mng-card-height">
+                                    <router-outlet></router-outlet> 
+                                </div>
+                            </div> -->
+                            <div class="card00 mng-card-height">
+
+  <!-- AGREEMENT VIEW -->
+  <div *ngIf="showAgreement" class="p-2 h-100">
+    <!-- <ng-container *ngIf="agreementUrl; else noAgreement">
+      <pdf-viewer
+        [src]="agreementUrl"
+        [render-text]="true"
+        [original-size]="false"
+        [zoom]="zoom"
+        style="width: 100%; height: 500px">
+      </pdf-viewer>
+
+      <div class="mt-2 text-center">
+        <button class="btn btn-sm btn-outline-secondary me-2"
+                (click)="incrementZoom(-0.1)">-</button>
+        <button class="btn btn-sm btn-outline-secondary"
+                (click)="incrementZoom(0.1)">+</button>
+      </div>
+    </ng-container> -->
+    <ng-container *ngIf="agreementUrl; else noAgreement">
+
+  <!-- PDF -->
+  <div *ngIf="isPdf">
+    <pdf-viewer
+      [src]="agreementUrl"
+      [render-text]="true"
+      [original-size]="false"
+      [zoom]="zoom"
+      style="width:100%;height:500px">
+    </pdf-viewer>
+
+    <button (click)="incrementZoom(-0.1)">-</button>
+    <button (click)="incrementZoom(0.1)">+</button>
+  </div>
+
+  <!-- IMAGE -->
+  <div *ngIf="isImage" class="text-center">
+    <img
+      [src]="agreementUrl"
+      class="img-fluid border rounded"
+      style="max-height:500px"
+    />
+
+    <!-- <div class="mt-3">
+      <a [href]="agreementUrl" target="_blank" class="btn btn-sm btn-primary">
+        View Full Image
+      </a>
+    </div> -->
+  </div>
+
+</ng-container>
+
+    <ng-template #noAgreement>
+      <div class="text-center text-muted mt-5">
+        Agreement not available
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- ROUTED VIEWS -->
+  <div *ngIf="!showAgreement">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

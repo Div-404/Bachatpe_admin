@@ -1,0 +1,27 @@
+[
+    {
+        "value": 1,
+        "name": "Money Transfer",
+        "flag": false
+    },
+    {
+        "value": 2,
+        "name": "Recharge",
+        "flag": false
+    },
+    {
+        "value": 3,
+        "name": "Booking",
+        "flag": false
+    },
+    {
+        "value": 4,
+        "name": "Utility",
+        "flag": false
+    },
+    {
+        "value": 5,
+        "name": "Miscellaneous",
+        "flag": false
+    }
+]

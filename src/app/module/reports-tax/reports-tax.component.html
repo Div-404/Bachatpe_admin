@@ -1,0 +1,638 @@
+
+<section class="page">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-md-12 mb-2">
+                @if (queryParam){
+                    <button class="btn" (click)="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    }
+            </div>
+           <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between pb-3">
+                <div>
+                    <ul class="tabnavc-ul ps-0 mb-0">
+                         @if (!queryParam){
+                        <li [ngClass]="{'active': SelectedTab == 'tab1'}" (click)="tabChange ('tab1')">
+                            <div class="tabnavc-a ">
+                                <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span class="tabnavc-txt">Overall</span>
+                            </div>
+                        </li>
+                       
+                        <li [ngClass]="{'active': SelectedTab == 'tab2'}" (click)="tabChange ('tab2')">
+                            <div class="tabnavc-a">
+                                <span class="tbicon"><i class="fa-regular fa-clock"></i></span><span class="tabnavc-txt">User wise</span>
+                            </div>
+                        </li>
+                        }
+                        
+                    </ul>
+                </div>
+               <div>
+                <div *ngIf="SelectedTab == 'tab2'">
+
+                     <!-- <div class="calc-view">
+                                <input type="radio" class="btn-check" name="options-outlined" id="list-outlined"
+                                        autocomplete="off" [checked]="toggle == '3'" (click)="ChangeToggle('3')">
+                                <label class="btn btn-outline-success px-4" for="list-outlined">List</label>
+ 
+                                <input type="radio" class="btn-check" name="options-outlined" id="day-outlined"
+                                        autocomplete="off" [checked]="toggle == '1'" (click)="ChangeToggle('1')">
+                                <label class="btn btn-outline-success" for="day-outlined">Day Wise</label>
+ 
+                                <input type="radio" class="btn-check" name="options-outlined" id="range-outlined"
+                                        autocomplete="off" [checked]="toggle == '2'" (click)="ChangeToggle('2')">
+                                <label class="btn btn-outline-danger" for="range-outlined">Range Wise</label>
+                            </div> -->
+
+                    <!-- <div class="calc-view">
+                                      
+                        <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
+                            autocomplete="off" [checked]="toggle == '1' " (click)="ChangeToggle('1')" >
+                        <label class="btn btn-outline-success" for="success-outlined">Day Wise</label>
+        
+                        <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined"
+                            autocomplete="off" [checked]="toggle == '2' "  (click)="ChangeToggle('2')">
+                        <label class="btn btn-outline-danger" for="danger-outlined" >Range Wise</label>
+                    </div> -->
+                </div>
+               </div>
+            </div>
+           </div>
+            <hr>
+        </div>
+       <div class="row">
+           <div class="col-md-12" *ngIf="SelectedTab == 'tab2' || queryParam">
+            <div class="card" style="min-height: 50vh;">
+                <div class="card-header align-items-center">
+                    <div class="row">
+                        
+                            <div class="col-md-3">
+                                @if (queryParam) {
+                                <p class="mb-0">Name: <span class="fw600">{{First}}</span></p>
+                            <p class="mb-0">Phone: <span class="fw600">{{Phone}}</span></p>
+                            <p class="mb-0">Code: <span class="fw600">{{Code}}</span></p>
+                        }
+                            </div>
+                        
+                        <div class="col-md-9">
+                            <div class="row justify-content-end align-items-center ">
+                               
+                                @if (!queryParam) {
+                                <div class="col-md-2">
+                                    <div class="cc-search mt-1">
+                                        <select class="form-select" (change)="selecAdType($event)" [(ngModel)]="searchId">
+                                            <option value="0" selected hidden>Select</option>
+                                            <option value="1">Name</option>
+                                            <option value="2">Phone</option>
+                                            <option value="3">User Code</option>
+                                        </select>
+                                        <label>Filter By</label>
+                                    </div>
+                                </div>
+                                @if (advType != '0') {
+                                    <div class="col-md-2">
+                                        <div class="form-group cc-search mb-0 me-2">
+                                            <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                                class="form-control fs12" (input)="getAdvanceFil($event)" />
+                                            <div *ngIf="advList?.length > 0" class="dropdown-menu show">
+                                                <button class="dropdown-item fs12" *ngFor="let user of advList"
+                                                    (click)="onSelectUser(user)">
+                                                    {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                                </button>
+                                            </div>
+                                            <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</label>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                                <!-- <div class="col-md-2">
+                                    <div class="pt-1">
+                                        <div class="form-group cc-search mb-0">
+                                            <input type="text"  class="pad-b form-control" >
+                                            <label for="dtStart">Search</label>
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="col-md-1">
+                                <div  class="me-3" style="padding-top: 4px;">
+                                    <fieldset><button  type="submit" class="btn btn-success align-items-right fw-500">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button></fieldset>
+                                </div>
+                               </div> -->
+                               @if (SelectedTab == 'tab1' || queryParam){
+                               <div class="col-md-2">
+                                <div class="cc-search mt-1">
+                                    <select class="form-select" (change)="selectDate($event, 'tab1')"
+                                    [(ngModel)]="dateclear">
+                                    <option value="0" selected disabled class="fs12">Select</option>
+                                       @if (!queryParam){
+                                    <option value="7">Last 1 Week</option>
+                                       }
+                                    @if (queryParam){
+                                     <option value="15">Last 15 days</option>
+                                    }
+                                    <option value="31">Last 1 Month</option>
+                                    <option value="93">Last 3 Months</option>
+                                    <option value="367">Last 1 Year</option>
+                                    <option value="custom">Custom</option>
+                                    </select>
+                                    <label>Date</label>
+                                </div>
+                              
+                            </div>
+                        
+                            @if (customDate == 'custom' || customDate == '') {
+                            <div class="col-md-2">
+                                <div class="pt-1">
+                                    <div class="form-group cc-search mb-0">
+                                        <input type="date"  class="pad-b form-control"  [(ngModel)]="lastDaysDate" (change)="dateSelectFromTO($event, 'from', 'tab1')">
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="pt-1">
+                                    <div class="form-group cc-search mb-0">
+                                        <input type="date"  class="pad-b form-control" [(ngModel)]="updatedDate" (change)="dateSelectFromTO($event,'to','tab1')">
+                                        <label for="dtStart">To</label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                         @if (crossIcon){
+                                   <div class="col-md-1">
+                                    <div  class="me-3" style="padding-top: 4px;">
+                                        <fieldset><button  type="submit" class="btn btn-success align-items-right fw-500"(click)="clear()"><i
+                                            class="fa-solid fa-xmark"></i>
+                                        </button></fieldset>
+                                    </div>
+                                   </div>
+                                }
+                             </div>
+
+                             
+                        </div>
+                        </div>
+
+                       
+                   
+                    <!-- Filter Type Dropdown -->
+                    
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                  @if (!queryParam) {
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                             @if (queryParam) {
+                                        <th>Timestamp</th>
+                                             }
+                                              @if (!queryParam) {
+                                        <th>User Name / Phone</th>
+                                        <th>User Code</th>
+                                              }
+                                       <th class="text-end">GST</th>
+                                        <th class="text-end">TDS</th>
+                                        @if (!queryParam) {
+                                        <th>Timeview</th>
+                                        }
+                                     </tr>
+                                     </thead>
+                                    
+                                    <tbody>
+                                        
+                                        @for (data of tiemStampList; track $index) {
+                                        <tr>
+                                               @if (queryParam) {
+                                            <td><p class="mb-0 ">{{data?.dtTm?.Tm_Str | date:'yyyy-MM-dd  hh:mm'}}</p></td>
+                                               }
+                                            @if (!queryParam){
+                                            <td><p class="mb-0 "> {{ data?.oUser?.Name  }}</p>
+                                            <p  class="mb-0 ">{{data?.oUser?.Phone}}</p></td>
+                                            <td><p class="mb-0 ">{{data?.oUser?.Code}}</p></td>
+                                            <!-- <td><p class="mb-0 ">{{data?.oUser?.Phone ?? selectedUser[0].Phone}}</p></td> -->
+                                            }
+                                            <!-- @if (queryParam){
+                                            <td><p class="mb-0 "> {{First}} {{Last}}</p></td>
+                                            <td><p class="mb-0 ">{{Code}}</p></td>
+                                            
+                                            } -->
+                                            <td class="text-end"><p class="mb-0 fw600">{{data.GST | number:'1.2-2'}}</p></td>
+                                            <td class="text-end"><p class="mb-0 fw600">{{data.TDS | number:'1.2-2'}}</p></td>
+                                               @if (!queryParam){
+                                            <td><p class="mb-0 text-primary pointer cursor-pointer" (click)="goToRoute(data)"> View</p></td>
+                                               }
+                                        </tr>
+                                    }
+                                    @if (tiemStampList.length != 0) {
+                                        <tr>
+                                               @if (queryParam) {
+                                            <!-- <td colspan="2"></td>
+                                               }
+                                                @if (queryParam) {
+                                            <td colspan="1"></td>
+                                               } -->
+                                            <td class="text-end bgtbl-green"><p class="mb-0 fw600"><span class="me-2">Total GST: </span>{{totalGst | number:'1.2-2'}}</p></td>
+                                            <td class="text-end bgtbl-green"><p class="mb-0 fw600"><span class="me-2">Total TDS: </span>{{totalTds | number:'1.2-2'}}</p></td>
+                                               }
+                                        </tr>
+                                    }
+                                    </tbody>
+
+                                    @if (tiemStampList.length == 0) {
+                                    <tbody>
+                                        <tr>
+                                          <td colspan="7">
+                                            <div class="no-data-container">
+                                              <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                              <h5 class="no-data-text">No Data Found.</h5>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    }
+                                  </table>
+                                }
+
+                                 @if (queryParam) {
+                                    <table class="table table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                             @if (queryParam) {
+                                        <th>Timestamp</th>
+                                             }
+                                              @if (!queryParam) {
+                                        <th>User Name / Phone</th>
+                                        <th>User Code</th>
+                                              }
+                                       <th class="text-end">GST</th>
+                                        <th class="text-end">TDS</th>
+                                        @if (!queryParam) {
+                                        <th>Timeview</th>
+                                        }
+                                     </tr>
+                                     </thead>
+                                    
+                                    <tbody>
+                                        
+                                        @for (data of pageOfItems2; track $index) {
+                                        <tr>
+                                               @if (queryParam) {
+                                            <td><p class="mb-0 ">{{data?.dtTm?.Tm_Str | date:'yyyy-MM-dd  hh:mm'}}</p></td>
+                                               }
+                                            @if (!queryParam){
+                                            <td><p class="mb-0 "> {{ data?.oUser?.Name  }}</p>
+                                            <p  class="mb-0 ">{{data?.oUser?.Phone}}</p></td>
+                                            <td><p class="mb-0 ">{{data?.oUser?.Code}}</p></td>
+                                            <!-- <td><p class="mb-0 ">{{data?.oUser?.Phone ?? selectedUser[0].Phone}}</p></td> -->
+                                            }
+                                            <!-- @if (queryParam){
+                                            <td><p class="mb-0 "> {{First}} {{Last}}</p></td>
+                                            <td><p class="mb-0 ">{{Code}}</p></td>
+                                            
+                                            } -->
+                                            <td class="text-end"><p class="mb-0 fw600">{{data.GST | number:'1.2-2'}}</p></td>
+                                            <td class="text-end"><p class="mb-0 fw600">{{data.TDS | number:'1.2-2'}}</p></td>
+                                               @if (!queryParam){
+                                            <td><p class="mb-0 text-primary pointer cursor-pointer" (click)="goToRoute(data)"> View</p></td>
+                                               }
+                                        </tr>
+                                    }
+                                    @if (tiemStampList.length != 0) {
+                                        <tr>
+                                               @if (!queryParam) {
+                                            <td colspan="2"></td>
+                                               }
+                                                @if (queryParam) {
+                                            <td colspan="1"></td>
+                                               }
+                                            <td class="text-end bgtbl-green"><p class="mb-0 fw600"><span class="me-2">Total GST: </span>{{totalGst | number:'1.2-2'}}</p></td>
+                                            <td class="text-end bgtbl-green"><p class="mb-0 fw600"><span class="me-2">Total TDS: </span>{{totalTds | number:'1.2-2'}}</p></td>
+                                            
+                                        </tr>
+                                    }
+                                    </tbody>
+
+                                    @if (tiemStampList.length == 0) {
+                                    <tbody>
+                                        <tr>
+                                          <td colspan="7">
+                                            <div class="no-data-container">
+                                              <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                              <h5 class="no-data-text">No Data Found.</h5>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    }
+                                  </table>
+                                }
+
+
+
+                                  @if (!queryParam) {
+
+                                          <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                    @if (Count > 0) {
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(1)">First</a>
+
+                                    </li>
+
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                    </li>
+
+                                    <li *ngFor="let page of pager.pages" class="page-item"
+                                        [ngClass]="{active:pager.currentPage === page}">
+                                        <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                        <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                    </li>
+
+                                    }
+                                
+                                </ul>
+                            </div>
+                            }
+                                  @if (queryParam) {
+                                 @if (tiemStampList?.length != 0) {
+                                <div class="col-md-12 d-flex justify-content-end " >
+                                    <app-pagination [items]="tiemStampList" (changePage)="onChangePage2($event)"></app-pagination>
+                                </div>
+                            }
+                        }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+           <div class="col-md-12" *ngIf="SelectedTab == 'tab1'">
+            <div class="card" style="min-height: 50vh;">
+                <div class="card-header align-items-center">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            @if (toggle != '3'){
+                            <div class="d-flex align-items-center">
+                                <div class="overshow">
+                                    <p class="mb-0"><span class="me-2">Overall GST:</span> <span class="fw600">{{overGst | number: '1.2-2'}}</span></p>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="mb-0"><span class="me-2">|</span></p>
+                                </div>
+                                <div class="overshow">
+                                    <p class="mb-0"><span class="me-2">Overall TDS:</span> <span class="fw600">{{overTds | number: '1.2-2'}}</span></p>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- @if(toggle == '3') {
+                            <div class="row align-items-end">
+                                 @if (!queryParam) {
+                                <div class="col-md-6">
+                                    <div class="cc-search mt-1">
+                                        <select class="form-select" (change)="selecAdType($event, 'tab1')" [(ngModel)]="searchId">
+                                            <option value="0" selected hidden>Select</option>
+                                            <option value="1">Name</option>
+                                            <option value="2">Phone</option>
+                                            <option value="3">User Code</option>
+                                        </select>
+                                        <label>Filter By..</label>
+                                    </div>
+                                </div>
+                                @if (advType != 0) {
+                                    <div class="col-md-5">
+                                        <div class="form-group cc-search mb-0 me-2">
+                                            <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                                class="form-control fs12" (input)="getAdvanceFil($event)" />
+                                            <div *ngIf="advList?.length > 0" class="dropdown-menu show">
+                                                <button class="dropdown-item fs12" *ngFor="let user of advList"
+                                                    (click)="onSelectUser(user, 2)">
+                                                    {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                                </button>
+                                            </div>
+                                            <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</label>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @if (crossIcon){
+                                   <div class="col-md-1">
+                                    <div  class="me-3" style="padding-top: 4px;">
+                                        <fieldset><button  type="submit" class="btn btn-danger align-items-right fw-500"(click)="clear()"><i
+                                            class="fa-solid fa-xmark"></i>
+                                        </button></fieldset>
+                                    </div>
+                                   </div>
+                                }
+                            </div>
+                             
+                        } -->
+
+                                                
+                            <!-- <div class="row">
+                                <div class="col-md-5">
+                                    <div class="cc-search mt-1">
+                                        <select class="form-select">
+                                            <option  disabled value="0">Select</option>
+                                            <option value="">Name</option>
+                                            <option value="">Phone </option>
+                                            <option value="">Code </option>
+                                        </select>
+                                        <label>Filter By</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="pt-1">
+                                        <div class="form-group cc-search mb-0">
+                                            <input type="text"  class="pad-b form-control" >
+                                            <label for="dtStart">Search</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div  class="me-3" style="padding-top: 4px;">
+                                        <fieldset><button  type="submit" class="btn btn-success align-items-right fw-500">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button></fieldset>
+                                    </div>
+                                   </div>
+                            </div> -->
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row justify-content-end align-items-center">
+                                
+                               
+                                <!-- @if (toggle == 1) {
+                                    <div class="col-md-3">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="dateclk" (click)="changeDate('sub')" >
+                                                <i class="fa-solid fa-angle-left"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0 mx-3">{{ updatedDates |
+                                                    date:'dd/MM/yyyy' }}</p>
+                                            </div>
+                                            <div class="dateclk" (click)="changeDate('add')">
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                } -->
+                                  @if (toggle == 3) {
+                                <div class="col-md-2">
+                                    <div class="cc-search mt-1">
+                                        <select class="form-select" (change)="selectDate($event, 'tab2')"
+                                        [(ngModel)]="dateclear">
+                                        <option value="0" selected disabled class="fs12">Select</option>
+                                        <option value="7">Last 1 Week</option>
+                                        <option value="15">Last 2 Week</option>
+                                        <option value="31">Last 1 Months</option>
+                                        <option value="custom">Custom</option>
+                                        </select>
+                                        <label>Date</label>
+                                    </div>
+                                  
+                                </div>
+                            }
+                                
+                                @if (SelectedTab == 'tab1') {
+                                    <div class="col-md-2">
+                                        <div class="cc-search mt-1">
+                                            <select class="form-select" (change)="selectDate($event, 'tab1')"
+                                            [(ngModel)]="dateclear">
+                                            <option value="0" selected disabled class="fs12">Select</option>
+                                            <option value="7">Last 1 Week</option>
+                                            <option value="31">Last 1 Month</option>
+                                            <option value="93">Last 3 Months</option>
+                                            <option value="367">Last 1 Year</option>
+                                            <option value="custom">Custom</option>
+                                            </select>
+                                            <label>Date</label>
+                                        </div>
+                                      
+                                    </div>
+                               
+                                    @if (customDate == 'custom' || customDate == '') {
+                                    <div class="col-md-2">
+                                        <div class="pt-1">
+                                            <div class="form-group cc-search mb-0">
+                                                <input type="date"  class="pad-b form-control"  [(ngModel)]="lastDaysDate" (change)="dateSelectFromTO($event, 'from', 'tab2')">
+                                                <label for="dtStart">From</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="pt-1">
+                                            <div class="form-group cc-search mb-0">
+                                                <input type="date"  class="pad-b form-control" [(ngModel)]="updatedDate" (change)="dateSelectFromTO($event,'to', 'tab2')">
+                                                <label for="dtStart">To</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                 }
+                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <!-- Filter Type Dropdown -->
+                    
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                    <div class="col-md-12">
+                        <div class="tblone table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Timestamp</th>
+                                    <th class="text-end">GST</th>
+                                    <th class="text-end">TDS</th>
+                                </tr>
+                                 </thead>
+                                <tbody>
+                                    @if (toggle != '3'){
+                                    @for (data of pageOfItems; track $index) {
+                                    <tr>
+                                        <td><p class="mb-0 ">{{data.oLast.Tm_Str | date:'yyyy-MM-dd  hh:mm'}}</p></td>
+                                        <td class="text-end"><p class="mb-0 fw600">{{data.GST | number:'1.2-2'}}</p> </td>
+                                        <td class="text-end"><p class="mb-0 fw600">{{data.TDS | number:'1.2-2'}}</td>
+
+                                           
+                                    </tr>
+                                }
+                            }
+                              @if (toggle == '3'){
+                                  @for (data of pageOfItems; track $index) {
+                                    <tr>
+                                        <td><p class="mb-0 ">{{data.dtTm.Tm_Str | date:'yyyy-MM-dd  hh:mm'}}</p></td>
+                                        <td class="text-end"><p class="mb-0 fw600">{{data.GST | number:'1.2-2'}}</p> </td>
+                                        <td class="text-end"><p class="mb-0 ">{{data.TDS | number:'1.2-2'}}</td>
+                                    </tr>
+                                }
+                            }
+                                @if (overAllList.length != 0) {
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-end bgtbl-green"><p class="mb-0 fw600"><span class="me-2">Total GST: </span>{{totalGst | number:'1.2-2'}}</p></td>
+                                        <td class="text-end bgtbl-green"><p class="mb-0 fw600"><span class="me-2">Total TDS: </span>{{totalTds | number:'1.2-2'}}</p></td>
+                                    </tr>
+                                }
+                               </tbody>
+                               <!-- @if (overAllList.length == 0) {
+                                <tbody >
+                                    <tr>
+                                      <td colspan="7">
+                                        <div class="no-data-container">
+                                          <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                          <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                } -->
+                              </table>
+
+                              @if (overAllList?.length != 0) {
+                                <div class="col-md-12 d-flex justify-content-end " >
+                                    <app-pagination [items]="overAllList" (changePage)="onChangePage($event)"></app-pagination>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</section>
+
+
+   

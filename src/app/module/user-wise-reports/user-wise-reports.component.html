@@ -1,0 +1,557 @@
+
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <p class="mb-0 fw600">Reports</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="tabnavc-ul">
+                    <li 
+                        [ngClass]="{'active': libuysellTab == 'tab1'}" (click)="libuysell ('tab1')">
+                        <div class="tabnavc-a ">
+                            <div><span class="tabnavc-txt">Business</span></div>
+                        </div>
+                    </li>
+                    <li 
+                        [ngClass]="{'active': libuysellTab == 'tab2'}" (click)="libuysell ('tab2')">
+                        <div class="tabnavc-a">
+                            <div><span class="tabnavc-txt">Transaction</span></div>
+                        </div>
+                    </li>
+                    <li 
+                        [ngClass]="{'active': libuysellTab == 'tab3'}" (click)="libuysell ('tab3')">
+                        <div class="tabnavc-a">
+                            <div><span class="tabnavc-txt">Statement</span></div>
+                        </div>
+                    </li>
+                    <li 
+                        [ngClass]="{'active': libuysellTab == 'tab4'}" (click)="libuysell ('tab4')">
+                        <div class="tabnavc-a">
+                            <div><span class="tabnavc-txt">Ledger</span></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+       <div class="row pe-3">
+           <div class="col-md-12" *ngIf="libuysellTab == 'tab1'">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class=" showfiltertitle">
+                        <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Name: </span> 4</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Code: </span>5</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Phone: </span>6</p>
+                    </div>
+                    <!-- <p class="mb-0 fw600">User Ledger</p> -->
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div><p class="mb-0 mx-3">25/04/2025</p></div>
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="me-3 cc-search2">
+                           
+                        <select class="wid-20 form-select" >
+                            <option selected disabled class="fs12">Select</option>
+                            <option value="7">Last 1 Week</option>
+                                      <option value="31">Last 1 Month</option>
+                                      <option value="93">Last 3 Months</option>
+                                      <option value="367">Last 1 Year</option>
+                                      <option value="custom">Custom</option>
+                          </select>
+                        <label >Date</label>
+                        </div>
+
+                       
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">TO</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                       
+                       </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                           <th>Deposit</th>
+                                           <th>Money Transfer</th>
+                                           <th>Recharge</th>
+                                           <th>Booking</th>
+                                           <th>Balance</th>
+                                          
+                                           <!-- <th>Status</th> -->
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                      <tr>
+                                        <td><p class="mb-0 color-light">21/02/2025</p></td>
+                                        <td><p class="mb-0 color-light">5000.00 </p></td>
+                                        <td><p class="mb-0 ">4000.00</p></td>
+                                        <td><p class="mb-0 ">3000.00</p></td>
+                                        <td><p class="mb-0 ">2000.00</td>
+                                        <td><p class="mb-0 "><b>15000.00</b></p> </td>
+                                    </tr>
+                                  
+                                 
+
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="no-data-container text-center">
+                                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                    <h5 class="no-data-text">No Data Found.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+        
+                                     
+                                    
+                                     
+                                    </tbody>
+                                  </table>
+
+                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+           <div class="col-md-12" *ngIf="libuysellTab == 'tab2'">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class=" showfiltertitle">
+                        <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Name: </span> 4</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Code: </span>5</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Phone: </span>6</p>
+                    </div>
+                    <!-- <p class="mb-0 fw600">User Ledger</p> -->
+                    <div class="d-flex align-items-center">
+                        <!-- <div class="me-3">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div><p class="mb-0 mx-3">25/04/2025</p></div>
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="me-3 cc-search2">
+                           
+                        <select class="wid-20 form-select" >
+                            <option selected disabled class="fs12">Select</option>
+                            <option value="7">Last 1 Week</option>
+                                      <option value="31">Last 1 Month</option>
+                                      <option value="93">Last 3 Months</option>
+                                      <option value="367">Last 1 Year</option>
+                                      <option value="custom">Custom</option>
+                          </select>
+                        <label >Date</label>
+                        </div>
+
+                       
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">TO</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                       
+                       </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                           <th>Reference</th>
+                                           <th>Services</th>
+                                           <th>Amount</th>
+                                           <th>Status</th>
+                                           <th>TDS</th>
+                                           <th>GST</th>
+                                          
+                                           <!-- <th>Status</th> -->
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                      <tr>
+                                        <td><p class="mb-0 color-light">21/02/2025</p></td>
+                                        <td><p class="mb-0 color-light">Reference
+                                            <button  class="btn btn-soft-warning btn-sm ms-2" ><i  class="fa-regular fa-copy"></i></button>
+                                        </p></td>
+                                        <td><p class="mb-0 ">AePS</p></td>
+                                        <td><p class="mb-0 "><b>3000.00</b></p></td>
+                                        <td>
+                                            <div class="status-success">
+                                                <div>
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                </div>
+                                                <span>Success</span>
+                                            </div> 
+
+                                            <div class="status-pending">
+                                                <div>
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                </div>
+                                                <span>Pending</span>
+                                            </div>
+
+                                            <div class="status-cancel">
+                                                <div>
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                </div>
+                                                <span>Rejected</span>
+                                            </div>
+                                        </td>
+                                        <td><p class="mb-0 ">8%</td>
+                                         <td><p class="mb-0 ">4%</td>
+                                    </tr>
+                                  
+                                 
+
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="no-data-container text-center">
+                                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                    <h5 class="no-data-text">No Data Found.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+        
+                                     
+                                    
+                                     
+                                    </tbody>
+                                  </table>
+
+                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+           <div class="col-md-12" *ngIf="libuysellTab == 'tab3'">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class=" showfiltertitle">
+                        <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Name: </span> 4</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Code: </span>5</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Phone: </span>6</p>
+                    </div>
+                    <!-- <p class="mb-0 fw600">User Ledger</p> -->
+                    <div class="d-flex align-items-center">
+                        <!-- <div class="me-3">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div><p class="mb-0 mx-3">25/04/2025</p></div>
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="me-3 cc-search2">
+                           
+                        <select class="wid-20 form-select" >
+                            <option selected disabled class="fs12">Select</option>
+                            <option value="7">Last 1 Week</option>
+                                      <option value="31">Last 1 Month</option>
+                                      <option value="93">Last 3 Months</option>
+                                      <option value="367">Last 1 Year</option>
+                                      <option value="custom">Custom</option>
+                          </select>
+                        <label >Date</label>
+                        </div>
+
+                       
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">TO</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                       
+                       </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                           <th>Reference</th>
+                                           <th>Type</th>
+                                           <th>Amount</th>
+                                           <th>Status</th>
+                                           <th>Remarks</th>
+                                           
+                                          
+                                           <!-- <th>Status</th> -->
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                      <tr>
+                                        <td><p class="mb-0 color-light">21/02/2025</p></td>
+                                        <td><p class="mb-0 color-light">Reference
+                                            <button  class="btn btn-soft-warning btn-sm ms-2" ><i  class="fa-regular fa-copy"></i></button>
+                                        </p></td>
+                                        <td><p class="mb-0 ">Tyoe here</p></td>
+                                        <td><p class="mb-0 "><b>3000.00</b></p></td>
+                                        <td>
+                                            <div class="status-success">
+                                                <div>
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                </div>
+                                                <span>Success</span>
+                                            </div> 
+
+                                            <div class="status-pending">
+                                                <div>
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                </div>
+                                                <span>Pending</span>
+                                            </div>
+
+                                            <div class="status-cancel">
+                                                <div>
+                                                    <i class="fa-solid fa-circle-check"></i>
+                                                </div>
+                                                <span>Rejected</span>
+                                            </div>
+                                        </td>
+                                        <td><p class="mb-0 fs12">remarks is here</td>
+                                        
+                                    </tr>
+                                  
+                                 
+
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="no-data-container text-center">
+                                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                    <h5 class="no-data-text">No Data Found.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+        
+                                     
+                                    
+                                     
+                                    </tbody>
+                                  </table>
+
+                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+           <div class="col-md-12" *ngIf="libuysellTab == 'tab4'">
+            <div class="card">
+                <div class="card-header flex-center-between pt-3">
+                    <div class=" showfiltertitle">
+                        <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Name: </span> 4</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Code: </span>5</p>
+                       <p class="filtertitle2 mb-0"><span class="showtitle-f ">Phone: </span>6</p>
+                    </div>
+                    <!-- <p class="mb-0 fw600">User Ledger</p> -->
+                    <div class="d-flex align-items-center">
+                        <!-- <div class="me-3">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div><p class="mb-0 mx-3">25/04/2025</p></div>
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="me-3 cc-search2">
+                           
+                        <select class="wid-20 form-select" >
+                            <option selected disabled class="fs12">Select</option>
+                            <option value="7">Last 1 Week</option>
+                                      <option value="31">Last 1 Month</option>
+                                      <option value="93">Last 3 Months</option>
+                                      <option value="367">Last 1 Year</option>
+                                      <option value="custom">Custom</option>
+                          </select>
+                        <label >Date</label>
+                        </div>
+
+                       
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">From</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wid-20 me-2">
+                            <div class="login-right">
+                                <div class="form">
+                                    <div class="form-group pos-res mb-0">
+                                        <input type="date"  class="pad-b form-control" >
+                                        <label for="dtStart">TO</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                       
+                       </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                           <th>Reference</th>
+                                           <th>Debit</th>
+                                           <th>Credit</th>
+                                           <th>Balance</th>
+                                           <th>Remarks</th>
+                                           
+                                          
+                                           <!-- <th>Status</th> -->
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                      <tr>
+                                        <td><p class="mb-0 color-light">21/02/2025</p></td>
+                                        <td><p class="mb-0 color-light">Reference
+                                            <button  class="btn btn-soft-warning btn-sm ms-2" ><i  class="fa-regular fa-copy"></i></button>
+                                        </p></td>
+                                        <td><p class="mb-0 text-danger"><b>3000.00</b></p></td>
+                                        <td><p class="mb-0 text-success"><b>2000.00</b></p></td>
+                                        <td><p class="mb-0 "><b>5000.00</b></p></td>
+                                        <td><p class="mb-0 fs12">remarks is here</td>
+                                        
+                                    </tr>
+                                  
+                                 
+
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="no-data-container text-center">
+                                                    <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                    <h5 class="no-data-text">No Data Found.</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+        
+                                     
+                                    
+                                     
+                                    </tbody>
+                                  </table>
+
+                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,352 @@
+<section class="page pt-4" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+
+    <div class="container-fluid">
+        <div class="row pe-3">
+            <div class="col-md-12 pb-4">
+                <div class="card-header flex-center-between">
+                    <p class="mb-0 fw600">Packages</p>
+                    <!-- <button class="btn btn-sm btn-success">Add</button> -->
+                    <button class="btn btn-sm btn-success" (click)="openLg(content)"><i
+                            class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Package</button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card" style="background: #F6F9FC; min-height: 70vh; margin-bottom: 50px;">
+
+                    <div class="card-body">
+                        <div class="row mngcard">
+                            @for(data of packageList; track data) {
+                            <div class="col-md-3 mb-3">
+                                <div class="card">
+                                    <div class="card-header greencard flex-center-between">
+                                        <p class="mb-0 fw600">{{data.oPkg.Commission}}</p>
+                                        <div class="d-flex align-items-center">
+                                            @if (data.oPkg.Default == 1) {
+                                            <p class="fs12 text-secondory mb-0 me-2">Default</p>
+                                            <div class="form-check form-switch me-2 mb-0">
+                                                <fieldset [disabled]="data.oPkg.Default == 1">
+                                               <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                            </fieldset>
+                                            </div>
+                                        }
+                                        @if (data.oPkg.Default == 0) {
+                                            <!-- <p class="fs12 text-secondory mb-0 me-2">Default</p> -->
+                                            <div class="form-check form-switch me-2 mb-0">
+                                               <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" (change)="packageDefault(data)" >
+                                            </div>
+                                            
+                                            <i class="fa-regular fa-trash-can" (click)="deletePackage(data)"></i>
+                                        }
+
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="card-body">
+                                        <ol class="ol-list">
+                                            @for (data1 of data.lstSource; track data1) {
+                                            <li>
+                                                @if (getMatchingItem(data1)) {
+                                                <div>
+                                                    <p>{{getMatchingItem(data1).name}}</p>
+                                                </div>
+                                                }
+                                                <div class="d-flex">
+                                                    
+                                                    <i class="fa-regular fa-eye" (click)="viewToNavigate(data, data1)"></i>
+                                                </div>
+                                            </li>
+                                            }
+                                            <!-- <li>
+                                            <div><p>AEPS</p></div>
+                                            <div class="d-flex">
+                                                <i class="fa-solid fa-pencil me-2"></i>
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </div>
+                                        </li> -->
+
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            }@empty {
+                                <tr>
+                                    <td class="d-flex align-items-center justify-content-center" style="height: 400px;" colspan="11">
+                                       <div class="text-center">
+                                        <img style="height: 170px; opacity: 0.5;" class="bg-img  mb-3" src="assets/images/nodata1.png" alt="">
+                                        <p class="p-img">No data found</p>
+                                       </div>
+                                    </td>
+                                </tr>
+                                }
+                            <!-- <div  class="col-md-3 mb-3" >
+                            <div class="card">
+                                <div class="card-header greencard flex-center-between">
+                                    <p class="mb-0 fw600">RCH-Package</p>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </div> 
+                                <div class="card-body" >
+                                   <ol class="ol-list">
+                                    <li>
+                                        <div><p>Airtel (Postpaid)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Airtel (Prepaid)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Vi (Postpaid)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Vi (Prepaid)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>TATASky</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                   
+                                   </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="col-md-3 mb-3" >
+                            <div class="card">
+                                <div class="card-header greencard flex-center-between">
+                                    <p class="mb-0 fw600">BookingPCK</p>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </div> 
+                                <div class="card-body">
+                                   <ol class="ol-list">
+                                    <li>
+                                        <div><p>Flight (Air india)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Flight (IndiGo)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Flight (Akasa Air)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Flight (Vistara)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Bus (FlixBus)</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                   
+                                   </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="col-md-3 mb-3" >
+                            <div class="card">
+                                <div class="card-header greencard flex-center-between">
+                                    <p class="mb-0 fw600">Utility Package One</p>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </div> 
+                                <div class="card-body" >
+                                   <ol class="ol-list">
+                                    <li>
+                                        <div><p>Water</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Electricity</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Gas Pipeline</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Water</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                   </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="col-md-3 mb-3" >
+                            <div class="card">
+                                <div class="card-header greencard flex-center-between">
+                                    <p class="mb-0 fw600">Miscellaneous</p>
+                                 </div> 
+                                <div class="card-body">
+                                   <ol class="ol-list">
+                                    <li>
+                                        <div><p>Health Insurance</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Car Insurance</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Bike Insurance</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div><p>Health Insurance</p></div>
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-pencil me-2"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </div>
+                                    </li>
+                                   </ol>
+                                </div>
+                            </div>
+                        </div> -->
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Add Package</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+            <div class="row align-items-end">
+                <div class="col-md-12">
+                    <div class="mod-decor">
+                        <form [formGroup]="addPackageForm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-2 apimng">
+                                    <label for="email" class="form-label">Package Name</label>
+                                    <input type="email" class="form-control" id="email" placeholder="" name="email" formControlName="oPkg"  
+                                    [ngClass]="{ 'is-invalid': submitted && f['oPkg'].errors }" (keypress)="allowAlphabetsOnly($event)">
+                                    @if (submitted && f['oPkg'].errors) {
+                                        <div class="invalid-feedback">
+                                            @if (f['oPkg'].errors['required']) {
+                                            <div>Package name  is required</div>
+                                            } 
+                                            @if (f['oPkg'].errors['pattern']) {
+                                                <div>Enter correct name</div>
+                                                }
+                                        </div>
+                                        }
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-2 apimng">
+                                    <label for="pwd" class="form-label">Services</label>
+                                    <!-- <ng-multiselect-dropdown
+                                [placeholder]="''"
+                                [settings]="dropdownSettings"
+                                [data]="dropDown"
+                                [(ngModel)]="selectedItems"
+                                (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)"
+                              >
+                              </ng-multiselect-dropdown> -->
+
+
+
+                                    <ng-multiselect-dropdown [placeholder]="''" [settings]="dropdownSettings"
+                                        [data]="dropdownList" [(ngModel)]="selectedItems"  [ngModelOptions]="{standalone: true}"
+                                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelect)="onDeSelect($event)"
+                                        (onDeSelectAll)="onDeSelectAll($event)"
+                                       >
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <!-- <div class="mb-2 apimng">
+                                    <label for="pwd" class="form-label">Sub Category</label>
+                                    <ng-multiselect-dropdown [placeholder]="''" [settings]="dropdownSettings"
+                                        [data]="dropdownList" [(ngModel)]="selectedItems"
+                                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                                    </ng-multiselect-dropdown>
+                                </div> -->
+                            </div>
+
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                        (click)="modal.close('Close click')">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <button type="button" class="btn btn-success w-100 btn-sm0" [disabled]="selectedItems.length == 0" (click)="addPackage()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</section>

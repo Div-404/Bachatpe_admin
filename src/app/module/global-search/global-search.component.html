@@ -1,0 +1,887 @@
+<div class="gs-wrapper">
+  <!-- ═══════════ LEFT PANEL – Search ═══════════ -->
+  <div class="gs-left" [class.collapsed]="selectedUser">
+    <div class="gs-search-header">
+      <h2 class="gs-title"><span class="icon">🔍</span> Outlet Search</h2>
+      <p class="gs-subtitle">Search users by Name, Phone or Code</p>
+      <div class="gs-input-wrap">
+        <div
+          style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex: 1;
+          "
+        >
+          <span class="gs-input-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </span>
+          <input
+            id="gs-search-input"
+            class="gs-input"
+            type="text"
+            [(ngModel)]="searchQuery"
+            (keydown.enter)="onSearchClick()"
+            placeholder="Name, Phone number or Code…"
+            autocomplete="off"
+          />
+          <button
+            *ngIf="searchQuery"
+            class="gs-clear-btn"
+            (click)="clearSearch()"
+            title="Clear"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <button class="gs-search-btn" (click)="onSearchClick()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 4px"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Search
+        </button>
+      </div>
+      <div class="gs-filter-hint" *ngIf="searchQuery.trim().length > 0">
+        <span class="hint-chip">
+          Searching as:
+          <strong>{{
+            detectFilterType(searchQuery.trim()) === 1
+              ? "Name"
+              : detectFilterType(searchQuery.trim()) === 2
+                ? "Phone"
+                : "Code"
+          }}</strong>
+        </span>
+      </div>
+    </div>
+
+    <!-- Loading bar -->
+    <div class="gs-loading-bar" *ngIf="loading.search">
+      <div class="gs-loading-inner"></div>
+    </div>
+
+    <!-- No results -->
+    <div class="gs-empty" *ngIf="noResults && !loading.search">
+      <div class="gs-empty-icon">🔎</div>
+      <p>
+        No users found for <strong>"{{ searchQuery }}"</strong>
+      </p>
+    </div>
+
+    <!-- Results List -->
+    <div class="gs-results" *ngIf="searchResults.length > 0">
+      <p class="gs-results-count">
+        {{ searchResults.length }} result{{
+          searchResults.length !== 1 ? "s" : ""
+        }}
+        found
+      </p>
+      <div
+        class="gs-result-card"
+        *ngFor="let r of searchResults; trackBy: trackByProfile"
+        [class.active]="selectedUser?.Profile === r.Profile"
+        (click)="selectUser(r)"
+      >
+        <div class="gs-avatar" [ngClass]="getUserTypeBadgeClass(r.Type)">
+          {{ getResultInitials(r) }}
+        </div>
+        <div class="gs-result-info">
+          <span class="gs-result-name">{{ r.Name }}</span>
+          <span class="gs-result-phone">📞 {{ r.Phone }}</span>
+          <span class="gs-result-code" *ngIf="r.Code">🔖 {{ r.Code }}</span>
+        </div>
+        <span class="gs-type-badge" [ngClass]="getUserTypeBadgeClass(r.Type)">{{
+          getUserTypeLabel(r.Type)
+        }}</span>
+      </div>
+    </div>
+
+    <!-- Initial placeholder -->
+    <div
+      class="gs-placeholder"
+      *ngIf="!searchQuery && searchResults.length === 0"
+    >
+      <div class="gs-ph-icon">👤</div>
+      <p>Start typing to search users…</p>
+    </div>
+  </div>
+<!-- <div class="no-search-div">
+  <div class="text-center py-5">
+        <img
+          style="width: 150px"
+          class="img-fluid"
+          src="assets/images/noDoc.gif"
+          width="100%"
+        />
+        <p class="text-muted mt-3">No GST document available</p>
+      </div>
+</div> -->
+  <!-- ═══════════ RIGHT PANEL – User Details ═══════════ -->
+  <div class="gs-right" *ngIf="selectedUser" [class.visible]="selectedUser">
+    <!-- Loading skeleton -->
+    <div class="gs-skeleton" *ngIf="loading.user && !selectedUser">
+      <div class="sk-header"></div>
+      <div class="sk-line"></div>
+      <div class="sk-line short"></div>
+      <div class="sk-line"></div>
+      <div class="sk-line short"></div>
+    </div>
+
+    <ng-container *ngIf="selectedUser">
+      <!-- ── User Hero (with balances in header) ── -->
+      <div class="gs-hero">
+        <div class="gs-hero-left">
+          <div class="gs-selfie-wrap">
+            <img
+              *ngIf="selfieUrl"
+              [src]="selfieUrl"
+              class="gs-selfie"
+              alt="Selfie"
+            />
+            <div *ngIf="!selfieUrl" class="gs-selfie-placeholder">
+              {{ getUserInitials(selectedUser) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="gs-hero-center">
+          <h3 class="gs-hero-name">{{ getUserFullName(selectedUser) }}</h3>
+          <div class="gs-hero-badges">
+            <span
+              class="gs-type-badge"
+              [ngClass]="getUserTypeBadgeClass(selectedUser.UserType)"
+              >{{ getUserTypeLabel(selectedUser.UserType) }}</span
+            >
+            <span
+              class="gs-status-badge"
+              [ngClass]="getKycStatusClass(selectedUser.KYC)"
+              >KYC: {{ getKycStatusLabel(selectedUser.KYC) }}</span
+            >
+            <span
+              class="gs-status-badge"
+              [ngClass]="getLoginStatusClass(selectedUser.Login)"
+              >{{ getLoginStatusLabel(selectedUser.Login) }}</span
+            >
+          </div>
+          <div class="gs-hero-meta">
+            <span *ngIf="rCode">🔖 {{ rCode }}</span>
+            <span>📞 {{ selectedUser.Phone }}</span>
+          </div>
+        </div>
+
+        <!-- ── Balances in Hero ── -->
+        <div class="gs-hero-balances">
+          <div class="gs-hbal-item gs-hbal-wallet">
+            <div class="gs-hbal-label">Wallet</div>
+            <div class="gs-hbal-amount">
+              ₹ {{ getBalanceByTag("BALANCE")?.Balance ?? 0 | number: "1.2-2" }}
+            </div>
+          </div>
+          <div class="gs-hbal-item gs-hbal-aeps">
+            <div class="gs-hbal-label">AEPS</div>
+            <div class="gs-hbal-amount">
+              ₹ {{ getBalanceByTag("AEPS")?.Balance ?? 0 | number: "1.2-2" }}
+            </div>
+          </div>
+          <div class="gs-hbal-item gs-hbal-credit">
+            <div class="gs-hbal-label">Credit</div>
+            <div class="gs-hbal-amount">
+              ₹ {{ getBalanceByTag("CREDIT")?.Balance ?? 0 | number: "1.2-2" }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Section Tabs ── -->
+      <div class="gs-tabs">
+        <button
+          class="gs-tab"
+          [class.active]="activeSection === 'info'"
+          (click)="setActiveSection('info')"
+        >
+          Info & KYC
+        </button>
+        <button
+          class="gs-tab"
+          [class.active]="activeSection === 'bank'"
+          (click)="setActiveSection('bank')"
+        >
+          Bank Details
+        </button>
+        <button
+          class="gs-tab"
+          [class.active]="activeSection === 'limits'"
+          (click)="setActiveSection('limits')"
+        >
+          Limits
+        </button>
+        <button
+          class="gs-tab"
+          [class.active]="activeSection === 'commission'"
+          (click)="setActiveSection('commission')"
+        >
+          Commission
+        </button>
+        <div style="flex: 1"></div>
+        <button
+          class="gs-capture-btn"
+          (click)="takeSnapshot()"
+          title="Take Snapshot"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+            ></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          Snapshot
+        </button>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           TAB: INFO & KYC (combined)
+           ══════════════════════════════════════════════ -->
+      <div class="gs-section" *ngIf="activeSection === 'info'">
+        <!-- User Info loading -->
+        <div class="gs-section-loading" *ngIf="loading.user">
+          <div class="sk-pulse">Loading user details…</div>
+        </div>
+
+        <div *ngIf="!loading.user">
+
+          <!-- ── PARTITION: PERSONAL DETAILS ── -->
+          <div class="gs-partition">
+            <span class="gs-partition-label">Personal Details</span>
+          </div>
+
+          <div class="gs-info-grid">
+            <!-- Personal Details -->
+            <div class="gs-info-card">
+              <h4 class="gs-card-title">Personal Details</h4>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Outlet Name</span
+                ><span class="gs-info-val">{{
+                  getUserFullName(selectedUser)
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Mobile</span
+                ><span class="gs-info-val">{{ selectedUser!.Phone || '—' }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Email</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Email || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">DOB</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Addr?.DOB || selectedUser!.DOB || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Master Distributor</span
+                ><span class="gs-info-val">{{
+                  getMdDiInfo(selectedUser!.MD_INFO)
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Distributor</span
+                ><span class="gs-info-val">{{
+                  getMdDiInfo(selectedUser!.DI_INFO)
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Last Login</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.LastLogin?.Tm_Str || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Registered On</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Created?.Tm_Str || "—"
+                }}</span>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="gs-info-card">
+              <h4 class="gs-card-title">Address</h4>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Address</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Addr?.oUserAddr?.Address || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">City</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Addr?.oUserAddr?.City || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">State</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Addr?.oUserAddr?.State || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Country</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Addr?.oUserAddr?.Country || "—"
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Zipcode</span
+                ><span class="gs-info-val">{{
+                  selectedUser!.Addr?.oUserAddr?.Zipcode || "—"
+                }}</span>
+              </div>
+            </div>
+
+            <!-- Primary Bank -->
+            <div class="gs-info-card" *ngIf="bankDetails.length > 0">
+              <h4 class="gs-card-title">Primary Bank</h4>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Bank</span>
+                <span class="gs-info-val">{{ bankDetails[0].Bank || '—' }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Account Name</span>
+                <span class="gs-info-val">{{
+                  bankDetails[0].Account_Name || '—'
+                }}</span>
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">Account No</span>
+                <span class="gs-info-val"
+                  ><code>{{ bankDetails[0].Account || '—' }}</code></span
+                >
+              </div>
+              <div class="gs-info-row">
+                <span class="gs-info-label">IFSC Code</span>
+                <span class="gs-info-val"
+                  ><code>{{ bankDetails[0].IFSC || '—' }}</code></span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PARTITION: KYC DOCUMENTS ── -->
+          <div class="gs-partition" style="margin-top: 28px">
+            <span class="gs-partition-label">KYC Documents</span>
+          </div>
+
+          <!-- ── KYC Documents ── -->
+          <div class="gs-kyc-section">
+            <div class="gs-section-loading" *ngIf="loading.kyc">
+              <div class="sk-pulse">Loading KYC documents…</div>
+            </div>
+            <div *ngIf="!loading.kyc">
+              <div class="gs-empty-state" *ngIf="kycDocs.length === 0">
+                <p>No KYC documents found.</p>
+              </div>
+              <div class="gs-kyc-grid" *ngIf="kycDocs.length > 0">
+                <div class="gs-kyc-card" *ngFor="let doc of kycDocs">
+                  <div class="gs-kyc-card-header">
+                    <span class="gs-kyc-icon">📄</span>
+                    <span class="gs-kyc-title">{{
+                      getKycTypeName(doc.oKYC_DOC?.oKYC_Type ?? 0)
+                    }}</span>
+                    <span
+                      class="badge-pill"
+                      *ngIf="doc.oKYC_DOC"
+                      [ngClass]="getKycDocStatusClass(doc.oKYC_DOC.oStatus)"
+                    >
+                      {{ getKycDocStatusLabel(doc.oKYC_DOC.oStatus) }}
+                    </span>
+                  </div>
+                  <!-- Selfie/Video doc: show download button only (no image preview) -->
+                  <ng-container *ngIf="doc.oKYC_DOC?.oKYC_Type === 6; else notSelfieDoc">
+                    <div class="gs-kyc-details">
+                      <span class="gs-info-label">Details:</span> Selfie / Video
+                    </div>
+                    <div class="gs-kyc-actions" *ngIf="selfieUrl || doc.Path">
+                      <button
+                        (click)="downloadAnyFile(selfieUrl || doc.Path!, 'selfie')"
+                        class="gs-download-btn"
+                      >⬇ Download</button>
+                    </div>
+                    <div class="gs-kyc-no-doc" *ngIf="!selfieUrl && !doc.Path">
+                      <span class="text-muted">No document uploaded</span>
+                    </div>
+                  </ng-container>
+                  <ng-template #notSelfieDoc>
+                    <!-- GST doc: show GSTIN + parsed details + PDF download -->
+                    <ng-container *ngIf="isGstDoc(doc); else normalDoc">
+                      <div class="gs-kyc-gst-num" style="margin-bottom: 12px">
+                        <span class="gs-info-label">GSTIN:</span>
+                        <code class="gst-code">{{ getGstNumber(doc.Path) }}</code>
+                      </div>
+                      <div class="gs-kyc-actions">
+                        <button
+                          class="gs-download-btn"
+                          (click)="downloadGstPdf(doc)"
+                        >
+                          ⬇ Download Data
+                        </button>
+                      </div>
+                    </ng-container>
+                    <ng-template #normalDoc>
+                      <div class="gs-kyc-details" *ngIf="doc.Details">
+                        <span class="gs-info-label">Details:</span>
+                        {{ doc.Details }}
+                      </div>
+                      <div class="gs-kyc-actions" *ngIf="doc.Path">
+                        <button
+                          (click)="downloadAnyFile(doc.Path, 'Document')"
+                          class="gs-download-btn"
+                        >
+                          ⬇ Download
+                        </button>
+                      </div>
+                      <div class="gs-kyc-no-doc" *ngIf="!doc.Path">
+                        <span class="text-muted">No document uploaded</span>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PARTITION: SERVICES ── -->
+          <div class="gs-partition" style="margin-top: 28px">
+            <span class="gs-partition-label">Services</span>
+          </div>
+
+          <!-- ── Services (individual package if assigned, else default) ── -->
+          <div class="gs-services-section" style="margin-top: 0">
+            <div class="gs-section-loading" *ngIf="loading.limits">
+              <div class="sk-pulse">Loading services…</div>
+            </div>
+            <div *ngIf="!loading.limits">
+              <div
+                class="gs-empty-state"
+                *ngIf="!customLimits && !defaultLimits"
+              >
+                <p>No service data found.</p>
+              </div>
+              <ng-container *ngIf="getActiveLimitsPkg() as activePkg">
+                <!-- Banking Services (MT) -->
+                <h4 class="gs-section-subtitle">Banking Services</h4>
+                <div class="gs-perm-svc-grid" *ngIf="getMtServices(activePkg).length > 0; else noMtSvc">
+                  <div
+                    class="gs-perm-svc-card"
+                    *ngFor="let svc of getMtServices(activePkg)"
+                  >
+                    <div class="gs-perm-svc-name">{{ svc.Serv }}</div>
+                    <span
+                      class="badge-pill"
+                      [ngClass]="getConfigStatus(svc.oConfig).cls"
+                      >{{ getConfigStatus(svc.oConfig).label }}</span
+                    >
+                  </div>
+                </div>
+                <ng-template #noMtSvc>
+                  <p class="gs-no-data-line">— No banking services assigned —</p>
+                </ng-template>
+                <!-- RBU Groups -->
+                <div *ngFor="let group of getRbuGroups(activePkg)">
+                  <h4 class="gs-section-subtitle" style="margin-top: 16px">
+                    {{ oTypeLabel(group.oType) }} Services
+                  </h4>
+                  <div class="gs-perm-svc-grid" *ngIf="group.lstSrvice?.length > 0; else noRbuSvc">
+                    <div
+                      class="gs-perm-svc-card"
+                      *ngFor="let svc of group.lstSrvice"
+                    >
+                      <div class="gs-perm-svc-name">{{ svc.Serv }}</div>
+                      <span
+                        class="badge-pill"
+                        [ngClass]="getConfigStatus(svc.oConfig).cls"
+                        >{{ getConfigStatus(svc.oConfig).label }}</span
+                      >
+                    </div>
+                  </div>
+                  <ng-template #noRbuSvc>
+                    <p class="gs-no-data-line">— No services in this category —</p>
+                  </ng-template>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           TAB: BANK DETAILS (all banks)
+           ══════════════════════════════════════════════ -->
+      <div class="gs-section" *ngIf="activeSection === 'bank'">
+        <div class="gs-section-loading" *ngIf="loading.bank">
+          <div class="sk-pulse">Loading bank details…</div>
+        </div>
+        <div *ngIf="!loading.bank">
+          <div class="gs-empty-state" *ngIf="bankDetails.length === 0">
+            <p>No bank details found.</p>
+          </div>
+          <div class="gs-bank-list" *ngIf="bankDetails.length > 0">
+            <div
+              class="gs-bank-card"
+              *ngFor="
+                let b of bankDetails;
+                trackBy: trackByBankId;
+                let i = index
+              "
+            >
+              <div class="gs-bank-header">
+                <span class="gs-bank-icon">🏦</span>
+                <div>
+                  <div class="gs-bank-name">{{ b.Bank || '—' }}</div>
+                  <div class="gs-bank-branch">{{ b.Bank_Addr || '—' }}</div>
+                </div>
+              </div>
+              <div class="gs-info-grid-2">
+                <div class="gs-info-row">
+                  <span class="gs-info-label">Account Name</span
+                  ><span class="gs-info-val">{{ b.Account_Name || '—' }}</span>
+                </div>
+                <div class="gs-info-row">
+                  <span class="gs-info-label">Account No</span>
+                  <span class="gs-info-val">
+                    <code *ngIf="b.Account">{{ b.Account }}</code>
+                    <span *ngIf="!b.Account">—</span>
+                  </span>
+                </div>
+                <div class="gs-info-row">
+                  <span class="gs-info-label">IFSC Code</span>
+                  <span class="gs-info-val">
+                    <code *ngIf="b.IFSC">{{ b.IFSC }}</code>
+                    <span *ngIf="!b.IFSC">—</span>
+                  </span>
+                </div>
+                <div class="gs-info-row">
+                  <span class="gs-info-label">Mobile</span
+                  ><span class="gs-info-val">{{ b.Phone || '—' }}</span>
+                </div>
+                <div class="gs-info-row">
+                  <span class="gs-info-label">Email</span
+                  ><span class="gs-info-val">{{ b.Email || '—' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: LIMITS -->
+      <div class="gs-section" *ngIf="activeSection === 'limits'">
+        <div class="gs-section-loading" *ngIf="loading.limits">
+          <div class="sk-pulse">Loading limits…</div>
+        </div>
+        <div *ngIf="!loading.limits">
+          <div class="gs-empty-state" *ngIf="!customLimits && !defaultLimits">
+            <p>No limits found.</p>
+          </div>
+          <ng-container *ngIf="customLimits || defaultLimits">
+            <!-- Payout Limit Header -->
+            <div class="gs-limits-block" style="margin-bottom: 20px">
+              <div class="gs-limits-header">
+                <span class="gs-limits-title"
+                  >Payout Limit :-
+                  <span
+                    *ngIf="hasCustomLimitData()"
+                    style="color: #34d399; margin-left: 8px"
+                    >Custom Mode Applied !</span
+                  >
+                  <span
+                    *ngIf="!hasCustomLimitData()"
+                    style="color: #fbbf24; margin-left: 8px"
+                    >Default Mode Applied !</span
+                  >
+                </span>
+              </div>
+              <div class="gs-limits-summary">
+                <div class="gs-lmt-pill">
+                  <div class="gs-lmt-label">Per Entry Limit</div>
+                  <div class="gs-lmt-val">
+                    ₹ {{ getQuickpayLimits().entry | number: "1.0-0" }}
+                  </div>
+                </div>
+                <div class="gs-lmt-pill">
+                  <div class="gs-lmt-label">Total Daily Limit</div>
+                  <div class="gs-lmt-val">
+                    ₹ {{ getQuickpayLimits().daily | number: "1.0-0" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- All Services Table -->
+            <div class="gs-limits-block">
+              <div class="gs-table-wrap">
+                <table class="gs-table">
+                  <thead>
+                    <tr>
+                      <th>S#</th>
+                      <th>Channel Name</th>
+                      <th>Status</th>
+                      <th>Default IMPS Limit (₹)</th>
+                      <th>Custom IMPS Limit (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of combinedLimits; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ row.Serv }}</td>
+                      <td>
+                        <span
+                          class="badge-pill"
+                          [ngClass]="getConfigStatus(row.oConfig).cls"
+                          >{{ getConfigStatus(row.oConfig).label }}</span
+                        >
+                      </td>
+                      <td>
+                        {{
+                          row.defLimit != null
+                            ? (row.defLimit | number: "1.0-0")
+                            : "—"
+                        }}
+                      </td>
+                      <td>
+                        {{
+                          row.cusLimit != null
+                            ? (row.cusLimit | number: "1.0-0")
+                            : "—"
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           TAB: COMMISSION
+           ══════════════════════════════════════════════ -->
+      <div class="gs-section" *ngIf="activeSection === 'commission'">
+        <div class="gs-section-loading" *ngIf="loading.commMaster">
+          <div class="sk-pulse">Loading commission packages…</div>
+        </div>
+        <div *ngIf="!loading.commMaster">
+          <div class="gs-empty-state" *ngIf="!selectedPkgMaster">
+            <p>No commission package assigned.</p>
+          </div>
+
+          <div *ngIf="selectedPkgMaster">
+            <!-- Header: Package badge + read-only service type selector -->
+            <div class="gs-comm-header">
+              <div class="gs-comm-pkg-info">
+                <span class="gs-comm-pkg-badge">{{ selectedPkgMaster!.oPkg?.Commission }}</span>
+              </div>
+              <div class="gs-comm-dropdown">
+                <label class="gs-info-label" for="comm-service-select">Service Type:</label>
+                <select
+                  id="comm-service-select"
+                  class="gs-select gs-select-readonly"
+                  (change)="onServiceTypeChange(+$any($event.target).value)"
+                >
+                  <option value="">— Select Service —</option>
+                  <option *ngFor="let st of getServiceTypeList()" [value]="st">
+                    {{ serviceTypeLabels[st] || 'Service ' + st }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Loading -->
+            <div class="gs-section-loading" *ngIf="loading.commDetail">
+              <div class="sk-pulse">Loading commission data…</div>
+            </div>
+
+            <!-- Hint -->
+            <div class="gs-comm-hint" *ngIf="!loading.commDetail && selectedServiceType === null">
+              <p>👆 Select a service type above to view commission structure.</p>
+            </div>
+
+            <!-- No data -->
+            <div class="gs-empty-state"
+              *ngIf="!loading.commDetail && selectedServiceType !== null && commServices.length === 0">
+              <p>No commission data for this service type.</p>
+            </div>
+
+            <!-- ── One block per service — matches admin/user-package layout ── -->
+            <div *ngIf="!loading.commDetail && commServices.length > 0">
+
+              <!-- Sub-filter pills: All + one per service -->
+              <div class="gs-comm-subfilter">
+                <button
+                  class="gs-svc-pill"
+                  [class.active]="selectedCommServiceId === null"
+                  (click)="selectedCommServiceId = null"
+                >All</button>
+                <button
+                  class="gs-svc-pill"
+                  *ngFor="let svc of commServices; trackBy: trackByServiceId"
+                  [class.active]="selectedCommServiceId === svc.ServiceID"
+                  (click)="selectedCommServiceId = svc.ServiceID"
+                >{{ getCommSvcName(svc) }}</button>
+              </div>
+
+              <!-- Commission blocks — filtered by selected pill -->
+              <div class="gs-comm-block"
+                *ngFor="let svc of displayedCommServices; trackBy: trackByServiceId">
+
+                <!-- Green service header bar -->
+                <div class="gs-comm-block-header">
+                  <span class="gs-comm-block-title">{{ getCommSvcName(svc) }}</span>
+                </div>
+
+                <!-- Commission table: DEDUCTION + DISTRIBUTION groups -->
+                <div class="gs-comm-table-wrap">
+                  <table class="gs-comm-admin-table">
+                    <thead>
+                      <!-- Group headers row -->
+                      <tr class="gs-comm-group-row">
+                        <th colspan="4" class="gs-comm-group-cell gs-comm-deduction">DEDUCTION</th>
+                        <th colspan="4" class="gs-comm-group-cell gs-comm-distribution">DISTRIBUTION</th>
+                      </tr>
+                      <!-- Column headers row -->
+                      <tr class="gs-comm-col-row">
+                        <th>Min.</th>
+                        <th>Max.</th>
+                        <th>Commission</th>
+                        <th>Type</th>
+                        <th>Type</th>
+                        <th>M. Distributor</th>
+                        <th>Distributor</th>
+                        <th>Retailer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of svc.lstComm; trackBy: trackByIndex">
+                        <!-- DEDUCTION columns -->
+                        <td>{{ row.Range_Min }}</td>
+                        <td>{{ row.Range_Max }}</td>
+                        <td><strong>{{ row.Commission_All ?? row.Fee ?? '—' }}</strong></td>
+                        <td>
+                          <span class="gs-comm-type-badge" [class.gs-comm-flat]="row.oType === 2">
+                            {{ row.oType === 1 ? '%' : (row.oType === 2 ? 'INR' : 'NA') }}
+                          </span>
+                        </td>
+                        <!-- DISTRIBUTION columns -->
+                        <td>
+                          <span class="gs-comm-type-badge">
+                            {{ row.oHierCommType === 1 ? '%' : (row.oHierCommType === 2 ? 'INR' : '%') }}
+                          </span>
+                        </td>
+                        <!-- M. Distributor -->
+                        <td class="gs-comm-dist-cell">
+                          <span *ngIf="row.Commission_MD != null; else dashMd">
+                            <span class="me-1">{{ row.Commission_MD }}</span>
+                            <span *ngIf="row.MD_Tds === 1" class="gs-comm-tds-badge">
+                              <i class="fa-solid fa-square-check" style="font-size:10px"></i> TDS
+                            </span>
+                          </span>
+                          <ng-template #dashMd>—</ng-template>
+                        </td>
+                        <!-- Distributor -->
+                        <td class="gs-comm-dist-cell">
+                          <span *ngIf="row.Commission_DI != null; else dashDi">
+                            <span class="me-1">{{ row.Commission_DI }}</span>
+                            <span *ngIf="row.DI_Tds === 1" class="gs-comm-tds-badge">
+                              <i class="fa-solid fa-square-check" style="font-size:10px"></i> TDS
+                            </span>
+                          </span>
+                          <ng-template #dashDi>—</ng-template>
+                        </td>
+                        <!-- Retailer -->
+                        <td class="gs-comm-dist-cell">
+                          <span *ngIf="row.Commission_RL != null; else dashRl">
+                            <span class="me-1">{{ row.Commission_RL }}</span>
+                            <span *ngIf="row.RL_Tds === 1" class="gs-comm-tds-badge">
+                              <i class="fa-solid fa-square-check" style="font-size:10px"></i> TDS
+                            </span>
+                          </span>
+                          <ng-template #dashRl>—</ng-template>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NO SNAPSHOT TAB ANYMORE -->
+    </ng-container>
+
+    <!-- Empty right panel -->
+    </div>
+    <div class="gs-right-empty" *ngIf="!!!selectedUser && !loading.user">
+      <div class="gs-right-empty-inner">
+        <div class="gs-right-empty-icon">🔍</div>
+        <h3 class="gs-right-empty-title">Search &amp; Explore</h3>
+        <p class="gs-right-empty-desc">Search for an outlet by <strong>Name</strong>, <strong>Phone</strong>, or <strong>Code</strong> on the left panel to view their complete profile — including KYC documents, bank details, limits, and commission structure.</p>
+        <div class="gs-right-empty-features">
+          <div class="gs-right-empty-feat"><span>📋</span> Info &amp; KYC Details</div>
+          <div class="gs-right-empty-feat"><span>🏦</span> Bank Details</div>
+          <div class="gs-right-empty-feat"><span>📊</span> Limits</div>
+          <div class="gs-right-empty-feat"><span>💰</span> Commission Structure</div>
+        </div>
+      </div>
+    </div>
+</div>

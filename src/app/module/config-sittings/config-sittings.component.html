@@ -1,0 +1,378 @@
+<section
+  class="page pt-4"
+  style="margin-top: 52px; background: #fff; min-height: 94vh"
+>
+  <div class="container-fluid">
+    <div class="row pe-3">
+      <div class="col-md-12 pb-4">
+        <div class="card-header flex-center-between">
+          <p class="mb-0 fw600">Settings</p>
+          <!-- <button class="btn btn-sm btn-success">Add "</button> -->
+          <!-- <button class="btn btn-sm btn-success" (click)="openLg(content)"><i
+                            class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i>Settings</button> -->
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div
+          class="card pt-4"
+          style="background: #f6f9fc; min-height: 70vh; margin-bottom: 50px"
+        >
+          <div class="card-body">
+            <div class="row mngcard">
+              <div class="col-md-5 m-auto">
+                <div class="card p-4">
+                  <!-- <div class="card-header greencard flex-center-between">
+                                        <p class="mb-0 fw600">RCH-Package</p>
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </div> -->
+                  <div class="card-body">
+                    <div class="row align-items-end">
+                      <div class="mod-decor">
+                        <form>
+                          <div class="row pt-3 mb-4">
+                            <div class="col-md-5">
+                              <label for="email" class="form-label"
+                                >Commission Settlement</label
+                              >
+                            </div>
+                            <div class="col-md-7">
+                              <select
+                                class="form-select"
+                                (change)="settDay($event)"
+                                [(ngModel)]="settDayValue"
+                                [ngModelOptions]="{ standalone: true }"
+                              >
+                                <option disabled>Select</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">3 Days</option>
+                                <option value="3">7 Days</option>
+                                <option value="4">15 Days</option>
+                                <option value="5">30 Days</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <form [formGroup]="settingForm">
+                              <div class="col-md-12">
+                                <div class="legendone">
+                                  <p class="legendone-text">Taxes</p>
+                                  <div class="row mb-4 mt-4">
+                                    <div class="col-md-2">
+                                      <label for="email" class="form-label"
+                                        >User</label
+                                      >
+                                    </div>
+                                    <div class="col-md-5">
+                                      <div class="float-ar">
+                                        <input
+                                          type="email"
+                                          class="form-control"
+                                          formControlName="TDS_Usr"
+                                          (keypress)="
+                                            oneDotAfterTwoDigit($event)
+                                          "
+                                          [ngClass]="{
+                                            'is-invalid':
+                                              submitted && f['TDS_Usr'].errors,
+                                          }"
+                                        />
+                                        @if (submitted && f["TDS_Usr"].errors) {
+                                          <div class="invalid-feedback">
+                                            @if (
+                                              f["TDS_Usr"].errors["required"]
+                                            ) {
+                                              <div>TDS is required</div>
+                                            }
+                                          </div>
+                                        }
+                                        <p class="float-lb">TDS</p>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                      <div class="float-ar">
+                                        <input
+                                          type="email"
+                                          class="form-control"
+                                          formControlName="GST_Usr"
+                                          (keypress)="
+                                            oneDotAfterTwoDigit($event)
+                                          "
+                                          [ngClass]="{
+                                            'is-invalid':
+                                              submitted && f['GST_Usr'].errors,
+                                          }"
+                                        />
+                                        @if (submitted && f["GST_Usr"].errors) {
+                                          <div class="invalid-feedback">
+                                            @if (
+                                              f["GST_Usr"].errors["required"]
+                                            ) {
+                                              <div>GST is required</div>
+                                            }
+                                          </div>
+                                        }
+                                        <p class="float-lb">GST</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                      <label for="email" class="form-label"
+                                        >Vendor</label
+                                      >
+                                    </div>
+                                    <div class="col-md-5">
+                                      <div class="float-ar">
+                                        <input
+                                          type="email"
+                                          class="form-control"
+                                          formControlName="TDS_Ven"
+                                          (keypress)="
+                                            oneDotAfterTwoDigit($event)
+                                          "
+                                          [ngClass]="{
+                                            'is-invalid':
+                                              submitted && f['TDS_Ven'].errors,
+                                          }"
+                                        />
+                                        @if (submitted && f["TDS_Ven"].errors) {
+                                          <div class="invalid-feedback">
+                                            @if (
+                                              f["TDS_Ven"].errors["required"]
+                                            ) {
+                                              <div>TDS is required</div>
+                                            }
+                                          </div>
+                                        }
+                                        <p class="float-lb">TDS</p>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                      <div class="float-ar">
+                                        <input
+                                          type="email"
+                                          class="form-control"
+                                          formControlName="GST_Ven"
+                                          (keypress)="
+                                            oneDotAfterTwoDigit($event)
+                                          "
+                                          [ngClass]="{
+                                            'is-invalid':
+                                              submitted && f['GST_Ven'].errors,
+                                          }"
+                                        />
+                                        @if (submitted && f["GST_Ven"].errors) {
+                                          <div class="invalid-feedback">
+                                            @if (
+                                              f["GST_Ven"].errors["required"]
+                                            ) {
+                                              <div>GST is required</div>
+                                            }
+                                          </div>
+                                        }
+                                        <p class="float-lb">GST</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="legendone mt-4">
+                                  <p class="legendone-text">
+                                    Bank Verification
+                                  </p>
+
+                                  <div class="row mb-4 mt-4">
+                                    <div class="col-md-2">
+                                      <label class="form-label">Charges</label>
+                                    </div>
+
+                                    <!-- Fee -->
+                                    <div class="col-md-5">
+                                      <div class="float-ar">
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          formControlName="BankVerify_Fee"
+                                          (keypress)="
+                                            oneDotAfterTwoDigit($event)
+                                          "
+                                          [ngClass]="{
+                                            'is-invalid':
+                                              submitted &&
+                                              f['BankVerify_Fee'].errors,
+                                          }"
+                                        />
+
+                                        <div
+                                          *ngIf="
+                                            submitted &&
+                                            f['BankVerify_Fee'].errors
+                                          "
+                                          class="invalid-feedback"
+                                        >
+                                          <div
+                                            *ngIf="
+                                              f['BankVerify_Fee'].errors[
+                                                'required'
+                                              ]
+                                            "
+                                          >
+                                            Fee is required
+                                          </div>
+                                        </div>
+
+                                        <p class="float-lb">Fee</p>
+                                      </div>
+                                    </div>
+
+                                    <!-- GST -->
+                                    <div class="col-md-5">
+                                      <div class="float-ar">
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          formControlName="BankVerify_GST"
+                                          (keypress)="
+                                            oneDotAfterTwoDigit($event)
+                                          "
+                                          [ngClass]="{
+                                            'is-invalid':
+                                              submitted &&
+                                              f['BankVerify_GST'].errors,
+                                          }"
+                                        />
+
+                                        <div
+                                          *ngIf="
+                                            submitted &&
+                                            f['BankVerify_GST'].errors
+                                          "
+                                          class="invalid-feedback"
+                                        >
+                                          <div
+                                            *ngIf="
+                                              f['BankVerify_GST'].errors[
+                                                'required'
+                                              ]
+                                            "
+                                          >
+                                            GST is required
+                                          </div>
+                                        </div>
+
+                                        <p class="float-lb">GST</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="row mt-4">
+                            <div class="col-md-3">
+                              <button
+                                type="button"
+                                class="btn btn-secondary w-100 btn-sm0"
+                                (click)="resetForm()"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                            <div class="col-md-9">
+                              <button
+                                type="button"
+                                class="btn btn-success w-100 btn-sm0"
+                                (click)="addSetting()"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Settings</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+            <div class="row align-items-end">
+                <div class="mod-decor">
+                    <form>
+                        <div class="row pt-3 mb-3">
+                            <div class="col-md-5">
+                                <label for="email" class="form-label">Commission Settlement</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="legendone">
+                                    <p class="legendone-text">Taxes</p>
+                                    <div class="row mb-3 mt-4">
+                                        <div class="col-md-2">
+                                            <label for="email" class="form-label">User</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="float-ar">
+                                                <input type="email" class="form-control">
+                                                <p class="float-lb">TDS</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="float-ar">
+                                                <input type="email" class="form-control">
+                                                <p class="float-lb">GST</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-2">
+                                            <label for="email" class="form-label">Vendor</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="float-ar">
+                                                <input type="email" class="form-control">
+                                                <p class="float-lb">TDS</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="float-ar">
+                                                <input type="email" class="form-control">
+                                                <p class="float-lb">GST</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                        (click)="modal.close('Close click')">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <button type="button" class="btn btn-success w-100 btn-sm0">Submit</button>
+                </div>
+            </div>
+        </div>
+    </ng-template> -->

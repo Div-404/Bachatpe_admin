@@ -1,0 +1,748 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import 'ngx-toastr/toastr';
+// @import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+body {
+  background-color: #f6f9fc !important;
+  // color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.fs10 {
+  font-size: 10px;
+}
+
+.fs11 {
+  font-size: 11px;
+}
+
+.fs12 {
+  font-size: 12px;
+}
+
+.fs13 {
+  font-size: 13px;
+}
+
+.fs14 {
+  font-size: 14px;
+}
+
+.fs15 {
+  font-size: 15px;
+}
+
+.fs16 {
+  font-size: 16px;
+}
+
+.fs17 {
+  font-size: 17px;
+}
+
+.fs18 {
+  font-size: 18px;
+}
+
+.fs19 {
+  font-size: 19px;
+}
+
+.fs20 {
+  font-size: 20px;
+}
+
+.fw400 {
+  font-weight: 400;
+}
+
+.fw500 {
+  font-weight: 500;
+}
+
+.fw600 {
+  font-weight: 600;
+}
+
+.fw700 {
+  font-weight: 700;
+}
+
+.fw800 {
+  font-weight: 800;
+}
+
+.text-green{
+  color: #4CAF50;
+}
+.color-light{
+  color:#6c757d
+}
+
+.form-check-input:checked {
+  background-color: #4baf44;
+  border-color: #4baf44;
+}
+
+sup {
+  color: red
+}
+
+.kyc-form-height {
+  height: 400px;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  background: #2d684e00;
+  border-radius: 0.9em;
+  color: #ffffff;
+  border: solid 1px #000;
+
+  p {
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: #000000;
+  }
+
+  .icobox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    width: 26px;
+    border-radius: 0.7em;
+    /* box-shadow: 0.1em 0.1em 0.6em 0.2em #59af3d; */
+    left: -10px;
+    transition: all 0.3s;
+    background: #000000;
+  }
+}
+
+.next-btn {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  background: #2d684e;
+
+  border-radius: 0.9em;
+  color: white;
+
+  p {
+    margin-bottom: 0px;
+    font-size: 14px;
+  }
+
+  .icobox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    width: 26px;
+    border-radius: 0.7em;
+    /* box-shadow: 0.1em 0.1em 0.6em 0.2em #59af3d; */
+    left: -10px;
+    transition: all 0.3s;
+    background: #59af3d;
+  }
+
+  &:hover {
+    background: #59af3d;
+  }
+}
+
+.page {
+  margin-top: 80px;
+  padding-left: 20px;
+}
+
+.card-header {
+  background: #fff;
+}
+
+.form-select,
+.form-control {
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+@keyframes flipIn {
+  0% {
+    transform: perspective(400px) rotateX(60deg);
+  }
+
+  70% {
+    transform: perspective(400px) rotateX(-15deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+@keyframes flipOut {
+  0% {
+    transform: perspective(400px) rotateX(60deg);
+  }
+
+  70% {
+    transform: perspective(400px) rotateX(-15deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+.flip-modal .modal-dialog {
+  animation: flipIn 0.6s forwards;
+}
+
+.flip-modal.ngb-fade.modal.show .modal-dialog {
+  animation: flipOut 0.6s forwards;
+}
+
+.modal-content {
+  border-radius: 8px;
+  background: #efefef;
+}
+
+.modal-header {
+  padding: 0.6rem 1.25rem;
+  background-color: #1B3E40;
+
+  .modal-title {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 300;
+  }
+}
+
+.modal-footer {
+  padding: 5px 15px
+}
+
+
+.btn-close2 {
+  background: #00000047 !important;
+  color: #ffffff;
+  border: solid 1px transparent;
+
+  &:hover {
+    background: #255638 !important;
+    color: #ffffff;
+    border: solid 1px #00000047
+  }
+  &:focus {
+    background: #255638;
+    color: #ffffff;
+    border: solid 1px #00000047
+  }
+}
+
+.offcanvas-header {
+  background: #2D684E;
+
+  .offcanvas-title {
+    font-size: 16px;
+    color: #fff
+  }
+}
+
+.offcanvas-header {
+  background: #2D684E;
+
+  .offcanvas-title {
+    font-size: 16px;
+    color: #fff
+  }
+}
+
+.offcanvas-footer {
+  padding: 15px;
+  background: #e9e9e9;
+}
+
+.nodata1 {
+  width: 150px;
+  height: 150px;
+  opacity: 0.5;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: #4CAF50;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #0d6efd00;
+}
+
+.flex-center-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  th {
+    font-weight: 500;
+    font-size: .85rem;
+  }
+
+  td {
+
+    font-size: .80rem;
+  }
+
+  .td-green {
+    background-color: #26bf941a !important;
+  }
+}
+
+.filterbox {
+  display: flex;
+  justify-content: end;
+
+  .form-select,
+  .form-control {
+    font-size: 12px;
+    background-color: #f9f9f9;
+  }
+
+  .form-control {
+    height: 28px;
+  }
+
+  .btn {
+    padding: 2px 10px;
+  }
+}
+
+
+
+.modal-open ::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.btn-shadow {
+  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px, rgba(45, 35, 66, 0.15) 0 7px 13px -3px, #59af3d 0 -3px 0 inset;
+  transition: box-shadow .15s, transform .15s;
+  will-change: box-shadow, transform;
+  position: relative;
+}
+
+.btn-shadow:hover {
+  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #dbff7a 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+
+
+
+
+@media (min-width: 992px) {
+  .modal600 {
+    --bs-modal-width: 650px;
+  }
+}
+
+.bg-info.offcanvas.offcanvas-end {
+  width: 560px;
+  background-color: #E9E9E9 !important;
+}
+
+.addpanel-scroll1 {
+  height: 48vh;
+  overflow: auto;
+}
+
+
+
+.tymbody2 {
+  position: relative;
+  z-index: 1;
+
+  .timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px auto;
+    // width: 80%;
+    // max-width: 800px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .timeline-item {
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .timeline-item::after {
+    content: '';
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    height: 3px;
+    width: 100%;
+    background-color: #6c757d;
+    z-index: -1;
+  }
+
+  .timeline-item:last-child::after {
+    display: none;
+  }
+
+  .timeline-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e9ecef;
+
+    margin-right: 8px;
+  }
+
+  .timeline-icon i {
+    font-size: 18px;
+    color: #495057;
+  }
+
+  .timeline-text {
+    font-size: 10px;
+    color: #6c757d;
+  }
+
+  hr {
+    position: absolute;
+    top: 40px
+  }
+}
+
+.updkyc {
+  img {
+    width: 280px;
+    height: 170px;
+  }
+
+  .updhight {
+    height: 216px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+
+}
+
+.ng-select .ng-select-container {
+	background-color: #F3F5F9;
+	border-radius: 4px;
+	border: 1px solid #c2c8d0;
+	min-height: 40px;
+	align-items: center;
+	border-radius: 3px;
+	color: #2E3346;
+	font-size: 13px;
+}
+
+
+.ng-select.ng-select-single .ng-select-container {
+	height: 40px;
+}
+
+// .ng-select .ng-select-container .ng-value-container .ng-input>input{
+// 	line-height: 36px;
+// }
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+	background-color: #fff;
+	color: rgba(0, 0, 0, 0.87);
+	padding: 8px 10px;
+	font-size: 13px;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+	background-color: #f3f5f9;
+	color: #2E3346;
+
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+	background-color: #f3f5f9;
+	color: #2E3346;
+
+}
+
+.ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+	border-color: transparent transparent #ed7200;
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+	border-color: #2f3347 transparent transparent;
+}
+
+.ng-select .ng-clear-wrapper {
+	color: #ed7200;
+}
+
+// .ng-select {
+//     z-index: 9;
+// }
+
+.ng-select.ng-select-opened>.ng-select-container {
+	background-color: #f3f5f9;
+	border-color: #b3b3b3 #ccc #d9d9d9;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected .ng-option-label,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked .ng-option-label {
+	font-weight: 400;
+}
+
+.ng-clear-wrapper {
+	display: none;
+}
+
+.ng-select.ng-select-opened .ng-select-container {
+	z-index: 99 !important;
+}
+.ng-value-label{
+  padding-left: 15px;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  border: 1px solid #308752 !important;
+  margin-right: 4px;
+  background: #308752 !important;
+  padding: 0 5px;
+  color: #fff;
+  border-radius: 2px;
+  float: left;
+  max-width: 100% !important;
+  margin-bottom: 2px;
+}
+
+@media (min-width: 992px) {
+  .modal-lg, .modal-xl {
+      --bs-modal-width: 1000px;
+  }
+}
+
+.imgmodalclose {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  background: #00000070 !important;
+  &:hover {
+    background: #00000070;
+}
+}
+
+thead {
+  tr{
+    background: #F5F8FF !important;
+    th{
+      background: #F5F8FF !important;
+    }
+   
+  }
+}
+
+.dashboard-section1 ::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent; // doesn't work. it just inherits color of body
+}
+
+.dashboard-section1 ::-webkit-scrollbar-track {
+  background: #b4b4b4;
+  border-radius: 6px;
+  // margin: 2rem 0;
+}
+
+.dashboard-section1 ::-webkit-scrollbar-thumb {
+  background: #297345;
+  border-radius: 6px;
+}
+
+.pagination {
+  margin-bottom: 0px;
+}
+
+
+@media (min-width: 576px) {
+  .md-big.modal-dialog.modal-dialog-centered.modal-md.modalone {
+    max-width: 750px;
+}
+}
+
+.status-refund{
+  background-color: #0d6efd !important;
+  border-radius: 50px;
+  padding: 1px 6px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  i{
+    margin-right: 8px;
+  }
+
+}
+
+button.dropdown-toggle.btn.tableshowt{
+  padding: 0px;
+  line-height: 0px;
+  margin: 0px;
+  text-align: end;
+  float: right;
+  i{
+    color:#8d8d8d
+  }
+}
+
+.btn:first-child:active{
+  border-color: transparent;
+}
+
+.legendone{
+  border: solid 1px #cfd4da;
+    border-radius: 6px;
+    position: relative;
+    padding: 15px;
+    .legendone-text{
+      position: absolute;
+    margin-top: -25px;
+    background: #efefef;
+    padding: 0px 8px;
+    }
+}
+
+.ngselect-badge{
+  .ng-value{
+    background: #59AF3D;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 4px;
+    padding: 0px 4px;
+  }
+}
+
+::ng-deep .custom-tooltip {
+  white-space: normal;
+  text-align: left;
+  max-width: 250px;
+}
+
+.tooltip-content {
+  text-align: left;
+}
+.calc-view {
+  border: solid 1px #bbbbbb;
+  padding: 2px;
+  border-radius: 6px;
+ 
+  .btn-check:checked + .btn {
+    background: linear-gradient(0deg, #348000, #348000) !important;
+    border: none !important;
+    color: #fff;
+  }
+ 
+  .btn {
+    font-size: 14px;
+    border: solid 1px #dedede;
+    color: #000;
+    background: #fff;
+ 
+    &:hover {
+      border-color: transparent;
+      color: #348000;
+      background: #fff;
+    }
+  }
+ 
+  // First child
+  label:first-of-type {
+    border-radius: 6px 0 0 6px;
+  }
+ 
+  // Middle child (no border-radius)
+  label:nth-of-type(2) {
+    border-radius: 0;
+  }
+ 
+  // Last child
+  label:last-of-type {
+    border-radius: 0 6px 6px 0;
+  }
+}
+.dateclk{
+  width: 20px;
+  height: 20px;
+  display: flex ;
+  align-items: center;
+  justify-content: center;
+ border-radius: 50px; 
+ background:#adcfa4;
+ cursor: pointer;
+ &:hover{
+  background:#348000;
+  color:#fff
+ }
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.sticky-table {
+  max-height: 260px; /* Scrollable height */
+  overflow-y: auto;  /* Vertical scroll */
+}
+
+.sticky-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2; /* Keeps header above rows */
+  background: #343a40; /* Same as .thead-dark background */
+  color: #000000; /* Same as .thead-dark text */
+}
+
+
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modal-dialog.modal-dialog-centered.modal-md.modal700{
+     max-width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+}
+
+.reqpage{
+  .ng-value{
+    padding-left: 10px !important;
+  }
+}

@@ -1,0 +1,449 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex w-100">
+                                <div class="ds-icon-div me-3"><img src="assets/images/ds-business.png"></div>
+                                <div>
+                                    <p class="mb-0 text-muted">Today's Deposit</p>
+                                    <p class="mb-0 fs20 fw600">{{ userVal?.oWLTSmr?.Dept | number }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex w-100">
+                                <div class="ds-icon-div me-3" style="background: #5FB0FF;"><img src="assets/images/ds-deposite.png"></div>
+                                <div>
+                                    <p class="mb-0 text-muted">Today's Business</p>
+                                    <p class="mb-0 fs20 fw600">{{ userVal?.Busi | number }}</p>
+                                    <p class="mb-0 fs13">Count: {{ userVal?.Count | number }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex w-100">
+                                <div class="ds-icon-div me-3" style="background: #F79225;"><img src="assets/images/ds-commission.png"></div>
+                                <div>
+                                    <p class="mb-0 text-muted">Today's Commission</p>
+                                    <p class="mb-0 fs20 fw600">{{ userVal?.Comm | number:'1.2-2' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex w-100">
+                                <div class="ds-icon-div me-3"><img src="assets/images/ds-active.png"></div>
+                                <div>
+                                    <p class="mb-0 text-muted">Active</p>
+                                    <p class="mb-0 fs20 fw600">{{ userVal?.User || 0 }}</p>
+                                    <!-- <p class="mb-0 fs13">{{ userVal?.lstUsr?.length || 'MD: 0, DL: 0, RL: 0' }}</p> -->
+                                    <!-- <p class="mb-0 fs13">MD: 101, DL: 201, RL: 16251</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <ul class="tabnavc-ul2">
+                                <li [ngClass]="{ 'active': businessTab == 'tab1' }" (click)="businessBody('tab1')">
+                                    <div class="tabnavc-a">
+                                        <div><span class="tabnavc-txt">BUSINESS</span></div>
+                                    </div>
+                                </li>
+                                <li [ngClass]="{ 'active': businessTab == 'tab2' }" (click)="businessBody('tab2')">
+                                    <div class="tabnavc-a">
+                                        <div><span class="tabnavc-txt">DEPOSIT</span></div>
+                                    </div>
+                                </li>
+                                <li [ngClass]="{ 'active': businessTab == 'tab3' }" (click)="businessBody('tab3')">
+                                    <div class="tabnavc-a">
+                                        <div><span class="tabnavc-txt">USERS</span></div>
+                                    </div>
+                                </li>
+                                <li [ngClass]="{ 'active': businessTab == 'tab4' }" (click)="businessBody('tab4')">
+                                    <div class="tabnavc-a">
+                                        <div><span class="tabnavc-txt">COMMISSION</span></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card p-2" >
+
+
+                            <div class="col-md-12">
+                                <div *ngIf="businessTab == 'tab1'">
+                                     <div class="table-responsive sticky-table">
+                                        <table class="table table-bordered table-striped mb-0">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Service Type</th>
+                                                    <th>Amount</th>
+                                                    <th>Transaction</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of userVal?.lstBusiness">
+                  <td>{{ item.oTM.Tm_Str }}</td>
+                  <td>{{ getServiceType(item.lstBusi[0].ServiceType) }}</td>
+                  <td class="fw600">₹ {{ item.lstBusi[0].Amt | number:'1.0-0' }}</td>
+                  <td>{{ item.lstBusi[0].Count }}</td>
+                </tr>
+                                                 <!-- Add more rows as needed -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div *ngIf="businessTab == 'tab2'">
+                                   <div class="table-responsive sticky-table">
+                                        <table class="table table-bordered table-striped mb-0">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Deposit Amount</th>
+                                                    <th>Withdraw Amount</th>
+                                                    <th>ITC</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of userVal?.lstDept">
+                  <td>{{ item.oTm.Tm_Str }}</td>
+                  <td class="fw600 text-success">₹ {{ item.oWLTSmr.Dept | number:'1.0-0' }}</td>
+                  <td class="fw600 text-danger">₹ {{ item.oWLTSmr.WDraw | number:'1.0-0' }}</td>
+                  <td>₹ {{ item.oWLTSmr.ITC | number:'1.0-0' }}</td>
+                </tr>
+                                                 <!-- Add more rows as needed -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- <div *ngIf="businessTab == 'tab3'">No Data</div> -->
+                                <div *ngIf="businessTab == 'tab3'">
+  <div class="table-responsive sticky-table">
+    <table class="table table-bordered table-striped mb-0">
+      <thead class="thead-dark">
+        <tr>
+          <th>Active Users</th>
+          <th>New Signup</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of userVal?.lstUsr">
+          <td>{{ item.Active }}</td>
+
+          <td class="fw600">
+            {{ item.NewSignup }}
+          </td>
+
+          <td class="fw600">
+            {{ item.Tm | date:'dd MMM yyyy' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+                                <div *ngIf="businessTab == 'tab4'">
+                                    <div class="table-responsive sticky-table">
+                                     <table class="table table-bordered table-striped mb-0">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Commission</th>
+                                                    <th>Commission Pending</th>
+                                                    <th>Commission Settled</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of userVal?.lstComm">
+                  <td>{{ item.oLast.Tm_Str }}</td>
+                  <td class="fw600">₹ {{ item.Comm | number:'1.0-0' }}</td>
+                  <td class="fw600 text-danger">₹ {{ item.Comm_Pending | number:'1.0-0' }}</td>
+                  <td class="fw600 text-success">₹ {{ item.Comm_Settle | number:'1.0-0' }}</td>
+                </tr>
+                                                 <!-- Add more rows as needed -->
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-2">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped mb-0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>API</th>
+                                            <th>Balance</th>
+                                            <th>Ratio</th>
+                                            <th>Success</th>
+                                            <th>Pending</th>
+                                            <th>Failed</th>
+                                            <th>Reject</th>
+                                            <th>Refund</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr *ngFor="let api of userVal?.lstAPI_Stat">
+                  <td>{{ api.API || mapVendorsToAPI(api.API_ID) }}</td>
+                  <td>₹{{ api.Curr_Amt | number:'1.0-0' }}</td>
+                  <td>{{ api.Ratio }}%</td>
+                  <td class="text-success">₹{{ api.oTrans.sAmt | number:'1.0-0' }} | ({{ api.oTrans.sTrans }})</td>
+                  <td class="text-warning">₹{{ api.oTrans.prAmt | number:'1.0-0' }} | ({{ api.oTrans.prTrans }})</td>
+                  <td class="text-danger">₹{{ api.oTrans.rfAmt | number:'1.0-0' }} | ({{ api.oTrans.rfTrans }})</td>
+                  <td class="text-danger">₹{{ api.oTrans.reAmt | number:'1.0-0' }} | ({{ api.oTrans.reTrans }})</td>
+                  <td class="text-success">₹{{ api.oTrans.faAmt | number:'1.0-0' }} | ({{ api.oTrans.faTrans }})</td>
+                </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+                <div class="card p-3 mb-3 ">
+                    <div class="">
+                        <ul class="tabnavc-ul ps-0" style="width:100%">
+                            <li style="width:50%" [ngClass]="{'active': libuysellTab == 'tab1'}"
+                                (click)="libuysell ('tab1')">
+                                <div class="tabnavc-a ">
+                                    <div><span class="tabnavc-txt">Balance</span></div>
+                                </div>
+                            </li>
+                            <li style="width:50%; margin-right: 0px !important;"
+                                [ngClass]="{'active': libuysellTab == 'tab2'}" (click)="libuysell ('tab2')">
+                                <div class="tabnavc-a">
+                                    <div><span class="tabnavc-txt">Credit </span></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div *ngIf="libuysellTab == 'tab1'">
+                            <div style="height: 365px; overflow:auto">
+                                <!-- <div class="scroll-350"> -->
+            <div *ngFor="let txn of userVal?.lstMiniBal; trackBy: $index" class="transdecor d-flex align-items-center justify-content-between mb-2">
+              <div class="d-flex align-items-center">
+                <div class="txnicon me-2" [ngClass]="{
+                  'my-success': txn.St === 2 || txn.St === 5,
+                  'my-warning': txn.St === 1,
+                  'my-danger': txn.St === 3
+                }">
+                  @if (txn.St === 2 || txn.St === 5) {
+                    <i class="fa-solid fa-check"></i>
+                  } @else if (txn.St === 1) {
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                  } @else if (txn.St === 3) {
+                    <i class="fa-solid fa-xmark"></i>
+                  } @else {
+                    <i class="fa-solid fa-question"></i>
+                  }
+                </div>
+                <div>
+                  <p class="mb-0">Account: {{ txn.Account }}</p>
+                  <p class="mb-0">Name: {{ txn.Name }}</p>
+                </div>
+              </div>
+              <div class="text-end">
+                <p class="mb-0 fw600">₹ {{ txn.Amt?.toFixed(2) }}</p>
+                <p class="mb-0 fs12 fw500"
+                   [ngClass]="{
+                     'text-warning': txn.St === 1,
+                     'text-success': txn.St === 2 || txn.St === 5,
+                     'text-danger': txn.St === 3
+                   }">
+                  {{
+                    txn.St === 2 ? 'Success' :
+                    txn.St === 1 ? 'Pending' :
+                    txn.St === 5 ? 'Instant' :
+                    txn.St === 3 ? 'Rejected' :
+                    'Unknown'
+                  }}
+                </p>
+              </div>
+            </div>
+            @if (!userVal?.lstMiniBal?.length) {
+              <p class="text-muted text-center">No balance transactions</p>
+            }
+          <!-- </div> -->
+                            </div>
+                        </div>
+                        <div *ngIf="libuysellTab == 'tab2'">
+                            <div style="height: 365px; overflow:auto">
+                                <!-- <div class="scroll-350"> -->
+            <div *ngFor="let txn of userVal?.lstMiniCre; trackBy: $index" class="transdecor d-flex align-items-center justify-content-between mb-2">
+              <div class="d-flex align-items-center">
+                <div class="txnicon me-2" [ngClass]="{
+                  'my-success': txn.St === 2 || txn.St === 5,
+                  'my-warning': txn.St === 1,
+                  'my-danger': txn.St === 3
+                }">
+                  @if (txn.St === 2 || txn.St === 5) {
+                    <i class="fa-solid fa-check"></i>
+                  } @else if (txn.St === 1) {
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                  } @else if (txn.St === 3) {
+                    <i class="fa-solid fa-xmark"></i>
+                  } @else {
+                    <i class="fa-solid fa-question"></i>
+                  }
+                </div>
+                <div>
+                  <!-- <p class="mb-0">Ref: {{ txn.Ref }}</p>
+                  <p class="mb-0 fs12">{{ txn.oTM?.Tm_Str }}</p> -->
+                  <p class="mb-0">Account: {{ txn.Account }}</p>
+                  <p class="mb-0">Name: {{ txn.Name }}</p>
+                </div>
+              </div>
+              <div class="text-end">
+                <p class="mb-0 fw600">₹ {{ txn.Amt?.toFixed(2) }}</p>
+                <p class="mb-0 fs12 fw500"
+                   [ngClass]="{
+                     'text-warning': txn.St === 1,
+                     'text-success': txn.St === 2 || txn.St === 5,
+                     'text-danger': txn.St === 3
+                   }">
+                  {{
+                    txn.St === 2 ? 'Success' :
+                    txn.St === 1 ? 'Pending' :
+                    txn.St === 5 ? 'Instant' :
+                    txn.St === 3 ? 'Rejected' :
+                    'Unknown'
+                  }}
+                </p>
+              </div>
+            </div>
+            @if (!userVal?.lstMiniCre?.length) {
+              <p class="text-muted text-center">No credit transactions</p>
+            }
+          <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="card p-3">
+                    <p>Messages</p>
+                    <div style="height: 275px; overflow: auto;">
+                        <div class="transdecor d-flex align-items-center justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="txnicon my-success"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Some Messages goes here</p>
+                                    <p class="mb-0 fs12">Mar 24, 2024</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-0  fw600"></p>
+                                <p class="mb-0 fs12 fw500 text-success">Read More</p>
+                            </div>
+                        </div>
+                        <div class="transdecor d-flex align-items-center justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="txnicon my-success"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Some Messages goes here</p>
+                                    <p class="mb-0 fs12">Mar 24, 2024</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-0  fw600"></p>
+                                <p class="mb-0 fs12 fw500 text-success">Read More</p>
+                            </div>
+                        </div>
+                        <div class="transdecor d-flex align-items-center justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="txnicon my-success"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Some Messages goes here</p>
+                                    <p class="mb-0 fs12">Mar 24, 2024</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-0  fw600"></p>
+                                <p class="mb-0 fs12 fw500 text-success">Read More</p>
+                            </div>
+                        </div>
+                        <div class="transdecor d-flex align-items-center justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="txnicon my-success"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Some Messages goes here</p>
+                                    <p class="mb-0 fs12">Mar 24, 2024</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-0  fw600"></p>
+                                <p class="mb-0 fs12 fw500 text-success">Read More</p>
+                            </div>
+                        </div>
+                        <div class="transdecor d-flex align-items-center justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="txnicon my-success"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Some Messages goes here</p>
+                                    <p class="mb-0 fs12">Mar 24, 2024</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-0  fw600"></p>
+                                <p class="mb-0 fs12 fw500 text-success">Read More</p>
+                            </div>
+                        </div>
+                        <div class="transdecor d-flex align-items-center justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="txnicon my-success"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Some Messages goes here</p>
+                                    <p class="mb-0 fs12">Mar 24, 2024</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-0  fw600"></p>
+                                <p class="mb-0 fs12 fw500 text-success">Read More</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</section>

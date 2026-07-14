@@ -1,0 +1,136 @@
+<div class="card">
+                    <div class="card-header flex-center-between w-100">
+                        <div class="row w-100 align-items-center">
+                            <div class="col-md-3">
+                                <div class="pos-re filter-width me-2">
+                                        <select class="form-select" (change)="changeCount($event)" [(ngModel)]="ttlCount" >
+                                        <option value="0" selected disabled class="fs12">Select</option>
+                                        <option value="9">Top 10</option>
+                                        <option value="19">Top 20</option>
+                                        <option value="49">Top 50</option>
+                                        <option value="99">Top 100</option>
+                                        </select>
+                                        <label>Top Performer</label>
+                                    </div>
+                            </div>
+                            
+                        </div>
+                       
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="tblone table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                               <th> Name/Phone</th>
+                                               <th>Code</th>
+                                               <th>Type </th>
+                                               @if (PrefNumber == 1){
+                                                <th>Credit</th>
+                                               }
+                                                @if (PrefNumber == 1) {
+                                               <th>Penalty</th>
+                                                }
+                                                  @if (PrefNumber == 2) {
+                                               <th>Balance</th>
+                                                }
+                                                  @if (PrefNumber == 3) {
+                                               <th>Deposit</th>
+                                                }
+                                                  @if (PrefNumber == 5) {
+                                               <th>Business</th>
+                                                }
+                                                  @if (PrefNumber == 4) {
+                                               <th>Commission</th>
+                                                }
+                                               
+                                            </tr>
+                                        </thead>
+                                        @for (data of pageOfItems; track $index) {
+                                        <tbody>
+                                           
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0">{{data.oUser.Name}}</p>
+                                                    <p class="mb-0">{{data.oUser.Phone}}</p>
+                                                </td>
+                                               <td>
+                                                    <p class="mb-0">{{data.oUser.Code}}</p>
+                                                </td>
+
+                                                <td>
+                                                    @if (data.Type == 1) {
+                                                    <p class="mb-0">Master Distributor</p>
+                                                    }
+                                                       @if (data.Type == 2) {
+                                                    <p class="mb-0">Distributor</p>
+                                                    }
+                                                       @if (data.Type == 3) {
+                                                    <p class="mb-0"> Retailer</p>
+                                                    }
+                                                </td>
+                                                  <!-- @if (PrefNumber == 1 ){ -->
+                                                <td>
+                                                    <p class="mb-0"><b>{{data.Reserve1 | number:'1.2-2'}}</b></p>
+                                                </td>
+                                            <!-- } -->
+                                             @if (PrefNumber == 1 ){
+                                                <td>
+                                                    <p class="mb-0"><b>0.00</b></p>
+                                                </td>
+                                            }
+                                               
+                                            </tr>
+
+                                        </tbody>
+                                    }@empty{
+                                        <tbody>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="no-data-container">
+                                            <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                            <h5 class="no-data-text">No Data Found.</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                                    }
+                                    </table>
+
+                                       <div class="col-md-12 d-flex justify-content-end " >
+                            <app-pagination [items]="prefList" (changePage)="onChangePage($event)"></app-pagination>
+                        </div>
+                                    <!-- <ul class="pagination pagination-sm justify-content-end mt-2">
+                                        @if (Count > 0 && rechargeList.length > 0) {
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(1)">First</a>
+
+                                        </li>
+
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                        </li>
+
+                                        <li *ngFor="let page of pager.pages" class="page-item"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                        </li>
+
+                                        }
+                                    </ul> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

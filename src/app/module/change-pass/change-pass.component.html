@@ -1,0 +1,73 @@
+<div class="add-class-for-show-and-hide amindiv">
+    <div class="card" style="height: 100%;">
+        <div class="card-header"><p class="mb-0 fw600">Change Password</p></div>
+        <div class="card-body">
+            <div class="row align-items-end">
+                <!-- <div class="col-md-4">
+                    <div class="mb-3 mt-3">
+                        <label for="email" class="form-label">New Password</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                      </div>
+                </div>
+                <div class="col-md-2 mb-3 mt-3">
+                    <button class="btn w-100 btn-magic btn-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate</button>
+                </div> -->
+            </div>
+            <div class="row">
+                <form [formGroup]="changePassForm">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="pwd" class="form-label">Old Password</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd"
+                        formControlName="OldPwd" [ngClass]="{ 'is-invalid': submitted && f['OldPwd'].errors }">
+                        @if (submitted && f['OldPwd'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['OldPwd'].errors['required']) {
+                                <div>Old password is required</div>
+                                } 
+                                <!-- @if (f['OldPwd'].errors['pattern']) {
+                                <div>OldPwd must be in correct format</div>
+                                } -->
+                            </div>
+                            }
+                      </div>
+                      <div class="mb-3">
+                        <label for="pwd" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd"
+                        formControlName="NewPwd" [ngClass]="{ 'is-invalid': submitted && f['NewPwd'].errors }">
+                        @if (submitted && f['NewPwd'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['NewPwd'].errors['required']) {
+                                <div>New password is required</div>
+                                } 
+                            </div>
+                            }
+                      </div>
+                      <div class="mb-3">
+                        <label for="pwd" class="form-label">Recheck Password</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd"
+                        formControlName="ReCheckPwd" [ngClass]="{ 'is-invalid': submitted && f['ReCheckPwd'].errors }">
+                        @if (submitted && f['ReCheckPwd'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['ReCheckPwd'].errors['required']) {
+                                <div>Recheck password is required</div>
+                                } 
+                            </div>
+                            }
+                      </div>
+                </div>
+            </form>
+            </div>
+            <div class="row ">
+                <div class="col-md-2">
+                    
+                </div>
+                <div class="col-md-2 text-end pe-0">
+                    <div>
+                        <button class="btn w-100 btn-success btn-sm " (click)="changePass()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

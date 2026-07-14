@@ -1,0 +1,22 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <button class="me-3 btn-sm btn btn-my-green" 
+                        [ngClass]="{'active': currentTab === 'aeps-transaction'}" 
+                        (click)="navigate('aeps-transaction')">
+                    <span><i class="fa-solid fa-building-columns"></i></span> Transaction
+                </button> -->
+                <button class="btn-sm btn btn-my-green" 
+                        [ngClass]="{'active': currentTab === 'aeps-ledger'}" 
+                        (click)="navigate('aeps-ledger')">
+                    <span><i class="fa-regular fa-file-lines"></i></span> Ledger
+                </button>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>

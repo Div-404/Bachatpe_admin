@@ -1,0 +1,303 @@
+
+<section class="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                 <p class="mb-0 fw600">Recent Transaction</p>
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-md-12">
+            <div class="card">
+                <div class="card-header flex-center-between">
+                    <div class="row w-100">
+                        <div class="col-md-3 pt-1">
+                           
+                            <div class="d-flex justify-content-start align-items-center">
+                                
+                                <div class=" showfiltertitle" *ngIf="selectedBankDetails">
+                                    <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Bank Name: </span>{{selectedBankDetails.bankName}}</p>
+                                   <p class="filtertitle2 mb-0"><span class="showtitle-f mngtit1">Acc No.: </span>{{selectedBankDetails.accountNumber}}</p>
+                                </div>
+                                <div class=" showfiltertitle" *ngIf="selectedFilterType == 2">
+                                    <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">User Name: </span>{{selectedUsername}}</p>
+                                    <p class="filtertitle2 mb-0"><span class="showtitle-f">Phone No.: </span>{{selecteduserPhone}}</p>
+                                    <p class="filtertitle2 mb-0"><span class="showtitle-f">User Code.: </span>{{selectedUserCode}}</p>
+                                </div>
+                                <div class=" showfiltertitle" *ngIf="selectedExecutiveDetails">
+                                    <p class="filtertitle1 mb-0 me-2"><span class="showtitle-f">Approver Name: </span>{{selectedExecutiveDetails.name}}</p>
+                                    <p class="filtertitle2 mb-0"><span class="showtitle-f">Approver Email: </span>{{selectedExecutiveDetails.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 pt-1">
+                            <div class="d-flex align-items-center justify-content-end">
+                               
+                                <div class="pos-re filter-width me-2">
+                                    <select class="form-select" (change)="onFilterChange($event)" [(ngModel)]="selectedFilterType">
+                                        <option [value]="0" selected disabled class="fs12">Search</option>
+                                        <option [value]="3">By Approver</option>
+                                        <option [value]="1">By Bank</option>
+                                        <option [value]="2">By User</option>
+                                    </select>
+                                    <label>Filter Type</label>
+                                   </div>
+    
+                                   <div *ngIf="selectedFilterType == 3" class="pos-re filter-width me-2">
+                                    <select class="form-select" [(ngModel)]="selectedExecutive" (change)="onExecutiveSelect($event)" [disabled]="isLoadingExecutives">
+                                      <option selected hidden [value]="0">Select Approver</option>
+                                      
+                                      <!-- Loader -->
+                                      <option *ngIf="isLoadingExecutives" disabled>
+                                        <div class="d-flex align-items-center">
+                                          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                          Loading executives...
+                                        </div>
+                                      </option>
+                                  
+                                      <!-- Executive Options -->
+                                      <option *ngFor="let executive of executiveList" [value]="executive.ExecID">
+                                        {{ executive.Name }} <br/>
+                                        <span class="text-muted">{{ executive.Email }}</span>
+                                      </option>
+                                    </select>
+                                    <label>Approver</label>
+                                  </div>
+
+                                                               
+                                <!-- Dropdown for Bank -->
+                                <div *ngIf="selectedFilterType == 1" class="pos-re filter-width me-2">
+                                    <select class="form-select" [(ngModel)]="selectedBank"  (change)="onBankSelect($event)">
+                                        <option selected hidden [value]="0">Select Bank</option>
+
+                                         <!-- Loader -->
+                                      <option *ngIf="isLoadingBank" disabled>
+                                        <div class="d-flex align-items-center">
+                                          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                          Loading banks...
+                                        </div>
+                                      </option>
+                                        <option *ngFor="let bank of bankList" [value]="bank.BankInfo.BankID">
+                                            {{ maskAccountNumber(bank.BankInfo.Account_Number) }} - {{ bank.BankInfo.Bank }}
+                                        </option>
+                                    </select>
+                                    <label>Banks</label>
+                                   
+                                   
+                                </div>
+                                
+                                <!-- Dropdown for User -->
+                                <div *ngIf="selectedFilterType == 2" class="pos-re filter-width me-2">
+                                    <select class="form-select" (change)="onSearchTypeChange($event)" [(ngModel)]="selectedSearchType">
+                                      <option [value]="0" selected hidden class="fs12">Select Search Type</option>
+                                      <option [value]="1">By Name</option>
+                                      <!-- <option [value]="2">By Email</option> -->
+                                      <option [value]="7">By Phone</option>
+                                      <option [value]="8">By User Code</option>
+                                    </select>
+                                    <label>Search Type</label>
+                                  </div>
+                                  
+                                  <!-- Input for search value -->
+                                  <!-- <div *ngIf="selectedSearchType > 0" class="pos-re filter-width me-2">
+                                    <input type="text" [(ngModel)]="searchValue" placeholder="Enter search value" class="form-control" />
+                                  </div> -->
+                                  <div *ngIf="selectedSearchType > 0" class="pos-re filter-width me-2">
+                                    <input type="text" [(ngModel)]="searchValue" placeholder="Enter search value" 
+                                           class="form-control fs12" (input)="onSearchInput($event)" />
+                                    <div *ngIf="filteredUsers.length > 0" class="dropdown-menu show">
+                                      <button class="dropdown-item fs12" *ngFor="let user of filteredUsers" 
+                                              (click)="onUserSelect(user)">
+                                       {{user.Code}} -  {{ user.Name }} - {{ user.Phone }} 
+                                      </button>
+                                    </div>
+                                   
+                                    @if (errMsg != '') {
+                                      <label class="text-danger">{{errMsg}}</label>
+                                      }
+                                  </div>
+                                  
+                                  <!-- Button to trigger the search -->
+                                  <!-- <button *ngIf="selectedFilterType == 2" (click)="fetchUsers()" class="btn btn-success me-2"><i class="fa-solid fa-magnifying-glass"></i></button> -->
+
+                                <div *ngIf="selectedFilterType == 1 || selectedFilterType == 2 || selectedFilterType == 3" class="  me-2">
+                                    <button class="btn  btn-danger" (click)="resetFilters()"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                 
+                                <div class="date" *ngIf="activeClass == 1">
+                                    <form [formGroup]="transactionForm">
+                                        <div class="d-flex">
+                                            <div class="wid-20 me-2">
+                                                <div class="login-right">
+                                                    <div class="form">
+                                                        <div class="form-group pos-res mb-0">
+                                                            <input type="date"  id="dtFrom" formControlName="dtFrom"
+                                                                class="pad-b form-control">
+                                                            <label for="dtStart">From</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wid-20">
+                                                <div class="login-right">
+                                                    <div class="form">
+                                                        <div class="form-group pos-res mb-0">
+                                                            <input type="date"  id="dtTo" formControlName="dtTo"
+                                                                class="pad-b form-control">
+                                                            <label for="dtEnd">To</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                                <div class="ms-2" *ngIf="activeClass == 1">
+                                    <button type="submit"
+                                        class="btn btn-success align-items-right  fw-500"
+                                        [disabled]="transactionForm.invalid"
+                                        (click)="callTransactionApi(selectedFilterType)"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                                <div class="ms-2 custom-select selected">
+                                    <ng-select class="wid-20 " [(ngModel)]="oFilter" [clearOnBackspace]="false"
+                                    (change)="showDateRange($event)">
+                                    
+                                    <ng-option [value]="1">Last 1 Week</ng-option>
+                                    <ng-option [value]="2">Last 1 Month</ng-option>
+                                    <ng-option [value]="3">Last 3 Months</ng-option>
+                                    <ng-option [value]="4">Last 1 Year</ng-option>
+                                    <ng-option [value]="5">Custom</ng-option>
+                                </ng-select>
+                                <label [class.selected]="oFilter">Date</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                              <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                  <tr>
+                                    <!-- Common Headers -->
+                                    <th>Timestamp</th>
+                                    <th class="text-center">Amount</th>
+                                    <th class="text-center">Fee</th>
+                                    <th>Ref. No</th>
+                              
+                                    <!-- Conditional Headers Based on Filter Type -->
+                                    <th *ngIf="selectedFilterType == 0 || selectedFilterType == 1 || selectedFilterType == 2">Approver Details</th>
+                                    <th *ngIf="selectedFilterType == 0 || selectedFilterType == 3 || selectedFilterType == 1">User Details</th>
+                                    <th *ngIf="selectedFilterType == 0 || selectedFilterType == 3 || selectedFilterType == 2">Bank Details</th>
+                                    <!-- <th *ngIf="selectedFilterType == 0 || selectedFilterType == 3 || selectedFilterType == 2">Bank Account No.</th> -->
+                                  </tr>
+                                </thead>
+                              
+                                <tbody *ngIf="showStatement == 1">
+                                  <tr *ngFor="let item of transactionData">
+                                    <!-- Common Columns -->
+                                    <td><p class="mb-0 color-light">{{ item.CreatedOn | date: 'yyyy-MM-dd HH:mm'}}</p></td>
+                                    <td><p class="mb-0 fw600 text-green text-center">{{ item.Amount | number:'1.2-2'}}</p></td>
+                                    <td><p class="mb-0 fw600 text-center">{{ item.Fee }}</p></td>
+                                    <td><p class="mb-0 color-light">{{ item.Reference }}</p></td>
+                              
+                                    <!-- Agent Details (Visible for All Filters except Agent filter) -->
+                                    <td *ngIf="selectedFilterType == 0 || selectedFilterType == 1 || selectedFilterType == 2">
+                                      <p class="mb-0">{{ item.oExecSnap?.Exec }}</p>
+                                      <p class="mb-0">{{ item.oExecSnap?.Email }}</p>
+                                    </td>
+                              
+                                    <!-- User Details (Visible for All Filters except User filter) -->
+                                    <td *ngIf="selectedFilterType == 0 || selectedFilterType == 3 || selectedFilterType == 1" >
+                                      <p class="mb-0" ngbTooltip="{{item.oUserSnap?.Code}}" placement="top">{{ item.oUserSnap?.Name }}</p>
+                                      <p class="mb-0">{{ item.oUserSnap?.Phone }}</p>
+                                    </td>
+                              
+                                    <!-- Bank Details (Visible for All Filters except Bank filter) -->
+                                    <td *ngIf="selectedFilterType == 0 || selectedFilterType == 3 || selectedFilterType == 2">
+                                      <p class="mb-0">{{ item.oBankSnap?.Bank }}</p>
+                                      <p class="mb-0">{{ item.oBankSnap?.Account }}</p>
+                                    </td>
+                                    <!-- <td *ngIf="selectedFilterType == 0 || selectedFilterType == 3 || selectedFilterType == 2">
+                                      <p class="mb-0">{{ item.oBankSnap?.Account }}</p>
+                                    </td> -->
+                                  </tr>
+                                </tbody>
+                              
+                                <tbody *ngIf="showStatement == 0">
+                                  <tr>
+                                    <td colspan="7">
+                                      <div class="no-data-container">
+                                        <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                        <h5 class="no-data-text">No Data Found.</h5>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              
+                              
+                              <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                @if (Count > 0 && transactionData.length != 0) {
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a class="page-link" (click)="setPage(1)">First</a>
+
+                                </li>
+
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                </li>
+
+                                <li *ngFor="let page of pager.pages" class="page-item"
+                                    [ngClass]="{active:pager.currentPage === page}">
+                                    <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                    <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                </li>
+
+                                }
+                            
+                                </ul>
+                            </div>
+                                  
+                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+
+  
+  
+
+ 
+
+
+
+</section>

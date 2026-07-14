@@ -1,0 +1,717 @@
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+              @if (!idRoute) {
+            <ul class="tabnavc-ul">
+              
+                <li [ngClass]="{'active': selectedTab == 'tab1'}" (click)="selectTab ('tab1')">
+                    <div class="tabnavc-a ">
+                        <span class="tbicon"><i class="fa-regular fa-file-lines"></i></span><span class="tabnavc-txt">Summary</span>
+                    </div>
+                </li>
+                <!-- <li [ngClass]="{'active': selectedTab == 'tab2'}" (click)="selectTab ('tab2')">
+                    <div class="tabnavc-a">
+                        <span class="tbicon"><i class="fa-solid fa-chart-line"></i></span><span class="tabnavc-txt">Statistics</span>
+                    </div>
+                </li> -->
+
+                <li [ngClass]="{'active': selectedTab == 'tab3'}" (click)="selectTab ('tab3')">
+                    <div class="tabnavc-a">
+                        <span class="tbicon"><i class="fa-regular fa-paste"></i></span><span class="tabnavc-txt">Details</span>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+        }
+        </div>
+        <div class="row pe-3">
+
+               <div class="col-md-12" *ngIf="selectedTab == 'tab1'">
+                <div class="card">
+                    <div class="card-header flex-center-between w-100">
+                        <div class="row w-100 align-items-center">
+                            <div class="col-md-3">
+                              <p class="mb-0 fw600">{{activeName}}</p>
+                            
+                            </div>
+                            <div class="col-md-9 pt-2">
+                                
+                                
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="tblone table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Success</th>
+                                                <th>Failed</th>
+                                                <th>Reject</th>
+                                                <th>Refund</th>
+                                                <th>Inprogress</th>
+                                                <th>MD</th>
+                                                <th>DI</th>
+                                                <th>RL</th>
+                                                <th>Charges</th>
+                                                <th>Fee</th>
+                                                <th>GST</th>
+                                                <th>TDS</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        @for (data of summList; track $index) {
+                                        <tbody>
+                                           
+                                            <tr>
+                                               <td><p class="mb-0 fw600">{{data.oStat.sAmt | number: '1.2-2'}} <span class="mx-1 color-light fw500">|</span> <span class="text-success">({{data.oStat.sTrans}})</span></p></td>
+                                              <td><p class="mb-0 fw600">{{data.oStat.faAmt | number: '1.2-2'}} <span class="mx-1 color-light fw500">|</span> <span class="text-danger">({{data.oStat.faTrans}})</span></p></td>
+                                              <td><p class="mb-0 fw600">{{data.oStat.reAmt | number: '1.2-2'}} <span class="mx-1 color-light fw500">|</span> <span class="text-danger">({{data.oStat.reTrans}})</span></p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.rfAmt | number: '1.2-2'}} <span class="mx-1 color-light fw500">|</span> <span class="text-success">({{data.oStat.rfTrans}})</span></p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.prAmt | number: '1.2-2'}} <span class="mx-1 color-light fw500">|</span> <span class="text-warning">({{data.oStat.prTrans}})</span></p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.MD | number: '1.2-2'}}</p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.DL | number: '1.2-2'}}</p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.RL | number: '1.2-2'}}</p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.Ch | number: '1.2-2'}}</p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.Fee | number: '1.2-2'}}</p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.GST | number: '1.2-2'}}</p></td>
+                                               <td><p class="mb-0 fw600">{{data.oStat.TDS | number: '1.2-2'}}</p></td>
+                                              
+                                            </tr>
+                                          
+
+                                           
+
+                                          
+                                        </tbody>
+                                    } @empty {
+                                         <tr>
+                                                <td colspan="14">
+                                                    <div class="no-data-container text-center">
+                                                        <img src="assets/images/nodata1.png" class="img-fluid"
+                                                            width="180px">
+                                                        <h5 class="no-data-text">No Data Found.</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                    }
+                                    </table>
+                                    <!-- <ul class="pagination pagination-sm justify-content-end mt-2">
+                                        @if (Count > 0 && moneyTransList?.length > 0) {
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(1)">First</a>
+
+                                        </li>
+
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                        </li>
+
+                                        <li *ngFor="let page of pager.pages" class="page-item"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                        </li>
+
+                                        }
+                                    </ul> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" *ngIf="selectedTab == 'tab3'">
+                <div class="card">
+                    <div class="card-header flex-center-between w-100">
+                        <div class="row w-100 align-items-center">
+                            <div class="col-md-3"><p class="mb-0 fw600">{{activeName}}</p></div>
+                            <div class="col-md-9 pt-2">
+                                <div class="d-flex align-items-center justify-content-end ">
+
+                                    <!-- <div class="pos-re filter-width me-2">
+                                        <select class="form-select">
+                                            <option value="0" selected disabled class="fs12"></option>
+                                            <option value="3">MD - UserName</option>
+                                            <option value="1">DL - UserName</option>
+                                            <option value="2">RI - UserNameUsserName UserName</option>
+                                        </select>
+                                        <input type="text" class="form-control" id="email" placeholder="Search" name="email" [(ngModel)]="searchVal">
+                                        <label>Search</label>
+                                    </div> -->
+                                    @if (!idRoute) {
+                                    <div class="pos-re filter-width me-2">
+                                        <select class="form-select" (change)="SelectService($event)"
+                                        [(ngModel)]="ServiceId">
+                                        <option value="0" selected>All</option>
+                                        @for (service of Money; track $index) {
+                                        <option [value]="service.SourceId">{{service.Source}}</option>
+                                        }
+                                        </select>
+                                        <label>Service</label>
+                                    </div>
+                                }
+                                    <div class="pos-re filter-width me-2">
+                                        <select class="form-select" (change)="selecAdType($event)" [(ngModel)]="searchId">
+                                            <option value="0" selected hidden>Select</option>
+                                            <option value="1">Name</option>
+                                            <option value="2">Phone</option>
+                                            <option value="3">User Code</option>
+                                        </select>
+                                        <label>Filter By</label>
+                                    </div>
+
+                                    @if (advType != 0) {
+                                        <div class="pos-re filter-width me-2">
+                                            <input type="text" [(ngModel)]="advVal" placeholder="Enter search value"
+                                                class="form-control fs12" (input)="getAdvanceFil($event)" />
+                                            <div *ngIf="advList?.length > 0" class="dropdown-menu show">
+                                                <button class="dropdown-item fs12" *ngFor="let user of advList"
+                                                    (click)="onSelectUser(user)">
+                                                    {{user.Code}} - {{user.Name}} - {{ user.Email }} - {{ user.Phone }}
+                                                </button>
+                                            </div>
+                                            <label *ngIf="errorMessage1" class="text-danger mt-2">{{ errorMessage1 }}</label>
+                                        </div>
+                                    }
+                                    
+                                    <div class="pos-re filter-width me-2">
+                                        <select class="form-select" (change)="selectSataus($event)"
+                                        [(ngModel)]="statusVal">
+                                        <option value="0"  class="fs12">All</option>
+                                        <!-- <option value="1">Pending</option> -->
+                                         <option value="7">Processing</option>
+                                        <option value="2">Success</option>
+                                        <option value="3">Refund</option>
+                                        <option value="4">Reject</option>
+                                        <option value="5">Failed</option>
+                                         <option value="8">Reject Refunded</option>
+                                                    <option value="9">Failed Refunded</option>
+                                                    <option value="10">Timeout Refunded</option>
+                                          <option value="6">Submit</option>
+                                        </select>
+                                        <label>Status</label>
+                                    </div>
+                                    <div class="pos-re filter-width me-2">
+                                        <select class="form-select"  (change)="selectDate($event)"
+                                        [(ngModel)]="dateclear">
+                                        <option value="0" selected disabled class="fs12">Select</option>
+                                        <option value="7">Last 1 Week</option>
+                                        <option value="31">Last 1 Month</option>
+                                        <option value="93">Last 3 Months</option>
+                                        <option value="367">Last 1 Year</option>
+                                        <option value="custom">Custom</option>
+                                        </select>
+                                        <label>Date</label>
+                                    </div>
+                                    @if (customDate == 'custom' || customDate == '') {
+                                    <div class="pos-re filter-width me-2">
+                                        <input  type="date" class=" form-control fs12"   [(ngModel)]="lastDaysDate" (change)="dateSelectFromTO($event, 'from')">
+                                        <label>From</label>
+                                    </div>
+                                    <div class="pos-re filter-width me-2">
+                                        <input  type="date" class="form-control fs12" [(ngModel)]="updatedDate" (change)="dateSelectFromTO($event,'to')">
+                                        <label>To</label>
+                                    </div>
+                                }
+                                <div class="col-md-1">
+                                    <div class="">
+                                        <fieldset>
+                                            @if (searchVal != '' && searchIcon ){
+                                            <button class="btn btn-sm btn-success me-md-3" (click)="search()"><i
+                                                    class="fa-solid fa-magnifying-glass"></i></button>
+                                            }
+                                            @if (crossIcon){
+                                            <button class="btn btn-sm btn-danger" (click)="clear()"><i
+                                                    class="fa-solid fa-xmark"></i></button>
+                                            }
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="tblone table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Timestamp</th>
+                                                <th>Reference</th>
+                                                <th *ngIf="!idRoute">Service</th>
+                                                <th>Sender Details</th>
+                                                <!-- <th>Bank Details</th> -->
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                                <th>Transaction OutRef</th>
+                                                <!-- <th>Receipt Info</th> -->
+                                                <th>MD</th>
+                                                <th>DI</th>
+                                                <th>RL</th>
+                                                <th>Fee</th>
+                                                <th>TDS</th>
+                                                <th>GST</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                        @if (detailApi){
+                                            @for (data of bookingList;; track $index) {
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0 color-light">{{data.tmC.Tm_Str | date: 'yyyy-MM-dd
+                                                        HH:mm'}}</p>
+                                                </td>
+                                                <td>
+                                                    <div class="mng-copy">
+                                                        <p class="mb-0 color-light">{{data.oTrans.TrF}}</p>
+                                                        <button class="btn btn-soft-warning btn-sm ms-2"
+                                                            (click)="copyToClipboard(data.oTrans.TrF)"><i
+                                                                class="fa-regular fa-copy"></i></button>
+                                                    </div>
+                                                </td>
+                                                <td  *ngIf="!idRoute">
+                                                    <p class="mb-0" >{{data.oTrans.Service ? data.oTrans.Service: "NA"}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0"> {{data.oUserSnap.Name}}</p>
+                                                    <p class="mb-0">
+                                                        <span>{{data.oUserSnap.Code}}</span><span
+                                                            class="px-1">|</span><span>{{data.oUserSnap.Phone}}</span>
+                                                    </p>
+                                                </td>
+                                               
+                                                <td>
+                                                    <p class="mb-0 bamount fw600 text-success">{{data.oTrans.Am |
+                                                        number:'1.2-2' }}</p>
+                                                </td>
+                                                <td>
+                                                      <div class="d-flex">
+                                                        @if (data.oTrans.St == 2) {
+                                                        <div class="status-success">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-check"></i>
+                                                            </div>
+                                                            <span>Success</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.oTrans.St == 1) {
+                                                        <div class="status-pending">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-minus"></i>
+                                                            </div>
+                                                            <span>Pending</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.oTrans.St == 3) {
+                                                        <div class="status-refund">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-check"></i>
+                                                            </div>
+                                                            <span>Refund</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.oTrans.St == 4) {
+                                                            <div class="status-cancel">
+                                                                <div>
+                                                                    <i class="fa-solid fa-circle-xmark"></i>
+                                                                </div>
+                                                                <span>Rejected</span>
+                                                            </div>
+                                                            }
+                                                              @if (data.oTrans.St == 5) {
+                                                        <div class="status-failed">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-check"></i>
+                                                            </div>
+                                                            <span>Failed</span>
+                                                        </div>
+                                                        }
+                                                             @if (data.oTrans.St === 6) {
+                                                            <div class="status-success">
+                                                                <div>
+                                                                    <i class="fa-solid fa-circle-check"></i>
+                                                                </div>
+                                                                <span>Submit</span>
+                                                            </div>
+                                                            }
+                                                            @if (data.oTrans.St == 7) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Processing</span>
+  </div>
+}
+@if (data.oTrans.St == 8) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Reject Refunded</span>
+  </div>
+}
+                                                                      @if (data.oTrans.St == 9) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Failed Refunded</span>
+  </div>
+}
+                                                                      @if (data.oTrans.St == 10) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Timeout Refunded</span>
+  </div>
+}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="mng-copy">
+                                                        <p class="mb-0 color-light">{{data.oTrans.TrFO}}</p>
+                                                        <!-- <button  class="btn btn-soft-warning btn-sm ms-2"><i  class="fa-regular fa-copy"></i></button> -->
+                                                    </div>
+                                                </td>
+                                                <!-- <td><p class="mb-0 color-light">--</p></td> -->
+                                                <td>
+                                                    <p class="mb-0">{{data.oTrans.MD | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0">{{data.oTrans.DI | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0">{{data.oTrans.RL | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 bfree">{{data.oTrans.Fe | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 btds">{{data.oTrans.td | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 bgst">{{data.oTrans.Gs | number:'1.2-2'}}</p>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+
+                                         @if (!detailApi){
+                                            @for (data of pageOfItems;; track $index) {
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0 color-light">{{data.tmC.Tm_Str | date: 'yyyy-MM-dd
+                                                        HH:mm'}}</p>
+                                                </td>
+                                                <td>
+                                                    <div class="mng-copy">
+                                                        <p class="mb-0 color-light">{{data.oTrans.TrF}}</p>
+                                                        <button class="btn btn-soft-warning btn-sm ms-2"
+                                                            (click)="copyToClipboard(data.oTrans.TrF)"><i
+                                                                class="fa-regular fa-copy"></i></button>
+                                                    </div>
+                                                </td>
+                                                <td  *ngIf="!idRoute">
+                                                    <p class="mb-0" >{{data.oTrans.Service ? data.oTrans.Service: "NA"}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0"> {{data.oUserSnap.Name}}</p>
+                                                    <p class="mb-0">
+                                                        <span>{{data.oUserSnap.Code}}</span><span
+                                                            class="px-1">|</span><span>{{data.oUserSnap.Phone}}</span>
+                                                    </p>
+                                                </td>
+                                               
+                                                <td>
+                                                    <p class="mb-0 bamount fw600 text-success">{{data.oTrans.Am |
+                                                        number:'1.2-2' }}</p>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        @if (data.oTrans.St == 2) {
+                                                        <div class="status-success">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-check"></i>
+                                                            </div>
+                                                            <span>Success</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.oTrans.St == 1) {
+                                                        <div class="status-pending">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-minus"></i>
+                                                            </div>
+                                                            <span>Pending</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.oTrans.St == 3) {
+                                                        <div class="status-refund">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-check"></i>
+                                                            </div>
+                                                            <span>Refund</span>
+                                                        </div>
+                                                        }
+                                                        @if (data.oTrans.St == 4) {
+                                                            <div class="status-cancel">
+                                                                <div>
+                                                                    <i class="fa-solid fa-circle-xmark"></i>
+                                                                </div>
+                                                                <span>Rejected</span>
+                                                            </div>
+                                                            }
+                                                              @if (data.oTrans.St == 5) {
+                                                        <div class="status-failed">
+                                                            <div>
+                                                                <i class="fa-solid fa-circle-check"></i>
+                                                            </div>
+                                                            <span>Failed</span>
+                                                        </div>
+                                                        }
+                                                             @if (data.oTrans.St === 6) {
+                                                            <div class="status-success">
+                                                                <div>
+                                                                    <i class="fa-solid fa-circle-check"></i>
+                                                                </div>
+                                                                <span>Submit</span>
+                                                            </div>
+                                                            }
+                                                            @if (data.oTrans.St == 7) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Processing</span>
+  </div>
+}
+@if (data.oTrans.St == 8) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Reject Refunded</span>
+  </div>
+}
+                                                                      @if (data.oTrans.St == 9) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Failed Refunded</span>
+  </div>
+}
+                                                                      @if (data.oTrans.St == 10) {
+  <div class="bg-warning bg-opacity-25 text-dark border"
+       style="
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         padding: 1px 6px;
+         border-radius: 50px;
+         width: 109px;
+         font-size: 0.875rem;
+         color: #997400 !important; /* Dark yellow/brown for better readability */
+         border-color: #ffeaa7 !important;
+         font-weight: 500;
+       ">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Timeout Refunded</span>
+  </div>
+}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="mng-copy">
+                                                        <p class="mb-0 color-light">{{data.oTrans.TrFO}}</p>
+                                                        <!-- <button  class="btn btn-soft-warning btn-sm ms-2"><i  class="fa-regular fa-copy"></i></button> -->
+                                                    </div>
+                                                </td>
+                                                <!-- <td><p class="mb-0 color-light">--</p></td> -->
+                                                <td>
+                                                    <p class="mb-0">{{data.oTrans.MD | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0">{{data.oTrans.DI | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0">{{data.oTrans.RL | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 bfree">{{data.oTrans.Fe | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 btds">{{data.oTrans.td | number:'1.2-2'}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 bgst">{{data.oTrans.Gs | number:'1.2-2'}}</p>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+
+                                            @if (bookingList.length == 0){
+
+                                            <tr>
+                                                <td colspan="14">
+                                                    <div class="no-data-container text-center">
+                                                        <img src="assets/images/nodata1.png" class="img-fluid"
+                                                            width="180px">
+                                                        <h5 class="no-data-text">No Data Found.</h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                   
+                                    @if(detailApi){
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
+                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                        <option [ngValue]="10">10</option>
+                                        <option [ngValue]="20">20</option>
+                                        <option [ngValue]="30">30</option>
+                                        <option [ngValue]="50">50</option>
+                                        <option [ngValue]="100">100</option>
+                                    </select>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+
+                                        @if (Count > 0 && bookingList.length > 0) {
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(1)">First</a>
+
+                                        </li>
+
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
+
+                                        </li>
+
+                                        <li *ngFor="let page of pager.pages" class="page-item"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
+
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
+                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
+                                        </li>
+
+                                        }
+                                    
+                                </ul>
+                            </div>
+                                }
+
+                                        @if (!detailApi && bookingList?.length != 0) {
+                        <div class="col-md-12 d-flex justify-content-end " >
+                            <app-pagination [items]="bookingList" (changePage)="onChangePage($event)"></app-pagination>
+                        </div>
+                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,290 @@
+
+<section class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <p class="mb-0 fw600">By Executive</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="tabnavc-ul">
+                    <li 
+                        [ngClass]="{'active': libuysellTab == 'tab1'}" (click)="libuysell ('tab1')">
+                        <div class="tabnavc-a ">
+                            <div><span class="tabnavc-txt">Statement</span></div>
+                        </div>
+                    </li>
+                    <li 
+                        [ngClass]="{'active': libuysellTab == 'tab2'}" (click)="libuysell ('tab2')">
+                        <div class="tabnavc-a">
+                            <div><span class="tabnavc-txt">Summary</span></div>
+                        </div>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-md-12">
+            <div class="card" style="min-height: 50vh;" *ngIf="libuysellTab == 'tab1'">
+                <div class="card-header flex-center-between">
+                    <div>
+                        <p class="mb-0 fw600">Statement</p>
+                    </div>
+                    <!-- Filter Type Dropdown -->
+                    <div class="d-flex align-items-center">
+                        <div class="cc-search mt-1 me-3">
+                            <select class="form-select">
+                                <option  disabled value="0">Select Excutive</option>
+                                <option value="8">Executive</option>
+                                <option value="7">User</option>
+                            </select>
+                            <label>Filter By</label>
+                        </div>
+                        <div class="cc-search mt-1 me-3">
+                            <input type="text"  class="pad-b form-control" >
+                            <label>Search</label>
+                        </div>
+                        <div  class="me-3" style="padding-top: 4px;">
+                            <fieldset><button  type="submit" class="btn btn-success align-items-right fw-500">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button></fieldset>
+                        </div>
+                        <div class="cc-search mt-1 me-3">
+                            <select class="form-select">
+                                <option selected disabled class="fs12">Select</option>
+                                                <option value="7">Last 1 Week</option>
+                                                <option value="31">Last 1 Month</option>
+                                                <option value="93">Last 3 Months</option>
+                                                <option value="367">Last 1 Year</option>
+                                                <option value="custom">Custom</option>
+                            </select>
+                            <label>Date</label>
+                        </div>
+                        <div class="cc-search mt-1 me-3">
+                            <input type="text"  class="pad-b form-control" >
+                            <label>From</label>
+                        </div>
+                        <div class="cc-search mt-1 me-3">
+                            <input type="text"  class="pad-b form-control" >
+                            <label>To</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Timestamp</th>
+                                        <th>Executive </th>
+                                        <th>User</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Source</th>
+                                        <th>Reference</th>
+                                        <th>Remarks</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td><p class="mb-0 color-light">2024-10-25 08:22</p></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <!-- <div class="tbl-user-circle pending-color">RM</div> -->
+                                                <div>
+                                                    <p class="mb-0 me-2"> rajat maurya</p>
+                                                    <p class="mb-0 color-light"> email id</p>
+                                                    <p class="mb-0 color-light"> +91-4578451254</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <!-- <div class="tbl-user-circle pending-color">RM</div> -->
+                                                <div>
+                                                    <p class="mb-0 me-2"> User  maurya</p>
+                                                    <p class="mb-0 color-light"> email id</p>
+                                                    <p class="mb-0 color-light"> +91-4578451254</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 bamount fw600 text-success">50000.00</p>
+                                        </td>
+                                    
+                                       <td>
+                                            <div class="d-flex">
+                                                <div class="status-success">
+                                                    <div>
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                    </div>
+                                                    <span>Success</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="status-pending">
+                                                    <div>
+                                                        <i class="fa-solid fa-circle-minus"></i>
+                                                    </div>
+                                                    <span>Pending</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="status-cancel">
+                                                    <div>
+                                                        <i class="fa-solid fa-circle-xmark"></i>
+                                                    </div>
+                                                    <span>Rejected</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><p class="mb-0">Money Transfer</p></td>
+                                        <td><p class="mb-0">Ref:54545454</p></td>
+                                        <td><p class="mb-0 color-light">Some remarks</p></td>
+                                      </tr>
+                                     </tbody>
+                                    <!-- <tbody *ngIf="creditTransData.length == 0">
+                                        <tr>
+                                          <td colspan="7">
+                                            <div class="no-data-container">
+                                              <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                              <h5 class="no-data-text">No Data Found.</h5>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody> -->
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="min-height: 50vh;" *ngIf="libuysellTab == 'tab2'">
+                <div class="card-header flex-center-between">
+                    <div>
+                        <p class="mb-0 fw600">Statement</p>
+                    </div>
+                    <!-- Filter Type Dropdown -->
+                    <div class="d-flex align-items-center">
+                        
+                        <div class="me-3">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </div>
+                                <div><p class="mb-0 mx-3">25/04/2025</p></div>
+                                <div class="dateclk">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cc-search mt-1 me-3">
+                            <select class="form-select">
+                                <option selected disabled class="fs12">Select</option>
+                                                <option value="7">Last 1 Week</option>
+                                                <option value="31">Last 1 Month</option>
+                                                <option value="93">Last 3 Months</option>
+                                                <option value="367">Last 1 Year</option>
+                                                <option value="custom">Custom</option>
+                            </select>
+                            <label>Date</label>
+                        </div>
+                        <div class="cc-search mt-1 me-3">
+                            <input type="text"  class="pad-b form-control" >
+                            <label>From</label>
+                        </div>
+                        <div class="cc-search mt-1 me-3">
+                            <input type="text"  class="pad-b form-control" >
+                            <label>To</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                   <div class="row ">
+                        <div class="col-md-12">
+                            <div class="tblone table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Timestamp</th>
+                                        <th>Executive </th>
+                                        <th>Deposit</th>
+                                        <th>Approve</th>
+                                        <th>Rejected</th>
+                                        <th>On Hold</th>
+                                        <th>User</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td><p class="mb-0 color-light">2024-10-25 08:22</p></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <!-- <div class="tbl-user-circle pending-color">RM</div> -->
+                                                <div>
+                                                    <p class="mb-0 me-2"> rajat maurya</p>
+                                                    <p class="mb-0 color-light"> email id</p>
+                                                    <p class="mb-0 color-light"> +91-4578451254</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td><p class="mb-0 bamount fw600 text-primary"><i class="fa-solid fa-arrow-right me-2" style="rotate: 40deg;"></i> 50000.00</p></td>
+                                        <td><p class="mb-0 bamount fw600 text-success">Approve</p></td>
+                                        <td><p class="mb-0 bamount fw600 text-danger">Rejected</p></td>
+                                        <td><p class="mb-0 bamount fw600 text-warning">On Hold</p></td>
+                                        <td><p class="mb-0 bamount ">Ashwani Yadav</p></td>
+                                       <!-- <td>
+                                            <div class="d-flex">
+                                                <div class="status-success">
+                                                    <div>
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                    </div>
+                                                    <span>Success</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="status-pending">
+                                                    <div>
+                                                        <i class="fa-solid fa-circle-minus"></i>
+                                                    </div>
+                                                    <span>Pending</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="status-cancel">
+                                                    <div>
+                                                        <i class="fa-solid fa-circle-xmark"></i>
+                                                    </div>
+                                                    <span>Rejected</span>
+                                                </div>
+                                            </div>
+                                        </td> -->
+                                        
+                                      </tr>
+                                     </tbody>
+                                    <!-- <tbody *ngIf="creditTransData.length == 0">
+                                        <tr>
+                                          <td colspan="7">
+                                            <div class="no-data-container">
+                                              <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                              <h5 class="no-data-text">No Data Found.</h5>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody> -->
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</section>

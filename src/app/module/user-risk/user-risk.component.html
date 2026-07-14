@@ -1,0 +1,893 @@
+<div class="container-fluid page">
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+                <div class="nk-block-head-content">
+                    <p class="mb-0 fw600">{{First}} {{Last}}<span class="black-color"> (Risk Module)</span></p>
+                    <p><span style="font-weight: 500;">Code: {{Code}}</span> </p>
+                    <!-- <p><span style="font-weight: 500;">Email Id: {{Email}}</span> </p> -->
+                  
+                </div>
+               
+                        <!-- <div>
+                            <div class="d-flex align-items-center justify-content-between">
+                               
+                                <div class="search">
+                                    <form role="search" action="#" method="get" class="me-0 me-md-3 mb-3 mb-md-0 search-width">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="main-header-center ml-3 me-1">
+                                                <input type="text" name="email" class="form-control " [(ngModel)]="searchEmail"
+                                                    placeholder="Please enter search value">
+                                                <button class="btn search-icon" (click)="search(0, 10)"><i
+                                                        class='bx bx-search-alt btn-size'></i></button>
+                                            </div>
+                                           
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            
+                        </div> -->
+                   
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4" *ngIf="!showStatement">
+            <div ngbAccordion [closeOthers]="true">
+
+                <div ngbAccordionItem [collapsed]="i !== 0" *ngFor="let form of currencyForms; let i = index">
+                    <div>
+                        <h2 ngbAccordionHeader>
+                            <button ngbAccordionButton>Account Type :  {{getUserRisk[i]?.Tag}} || {{ getUserRisk[i]?.AccountID }} || Balance :
+                                {{getUserRisk[i]?.Balance}}</button>
+                        </h2>
+                        <div ngbAccordionCollapse>
+                            <div ngbAccordionBody>
+                                <ng-template>
+                                    <div class="row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card card-no">
+                                                <div class="card-header fw-500"
+                                                    style="background-color: #308752; color: #fff; font-size: 14px;">
+                                                    Configure Risk Limits.
+                                                </div>
+                                                <div class="card-body white-bg">
+                                                    <div class="row">
+                                                        <div
+                                                            class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                            <form [formGroup]="currencyForms[i]">
+                                                                <div class="card white-bg mb-3">
+                                                                    <div class="card-header">
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between ">
+                                                                            Send Amount
+                                                                            <div>
+                                                                                <div
+                                                                                    class="form-check form-switch d-flex align-items-center">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox" id="mySwitch"
+                                                                                        formControlName="send_Status"
+                                                                                        name="darkmode"
+                                                                                        (change)="sendStatusToggle($event,1)"
+                                                                                        [checked]="statusToggleUpdate(form?.oSend?.Lmt_Stat?.Status)">
+                                                                                    <div
+                                                                                        *ngIf="this.currencyForms[i].value.send_Status ">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Enable</label>
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        *ngIf="!this.currencyForms[i].value.send_Status ">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Disable</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <fieldset
+                                                                        [disabled]="!this.currencyForms[i].value.send_Status ">
+                                                                        <div class="card-body form "
+                                                                            [ngClass]="{ 'opacity-4':!this.currencyForms[i].value.send_Status }">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Daily
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content ">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="send_Current_daily"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="send_Daily"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Per
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                               
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="send_PerTrans"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span
+                                                                                        class="fw-500 text-size">Overall
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="send_Current_Overall"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="send_Overall"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div
+                                                            class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                            <form [formGroup]="currencyForms[i]">
+                                                                <div class="card white-bg mb-3">
+                                                                    <div class="card-header">
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between ">
+                                                                            Receive Amount
+                                                                            <div>
+                                                                                <div
+                                                                                    class="form-check form-switch d-flex align-items-center">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox" id="mySwitch"
+                                                                                        formControlName="rec_Status"
+                                                                                        name="darkmode"
+                                                                                        (change)="sendStatusToggle($event,2)"
+                                                                                        [checked]="statusToggleUpdate(form?.oRecv?.Lmt_Stat?.Status)">
+                                                                                    <div
+                                                                                        *ngIf="this.currencyForms[i].value.rec_Status">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Enable</label>
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        *ngIf="!this.currencyForms[i].value.rec_Status">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Disable</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <fieldset
+                                                                        [disabled]="!this.currencyForms[i].value.rec_Status ">
+                                                                        <div class="card-body form"
+                                                                            [ngClass]="{ 'opacity-4': !this.currencyForms[i].value.rec_Status  }">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Daily
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="rec_Current_daily"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="rec_Daily"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Per
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                           
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="rec_PerTrans"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span
+                                                                                        class="fw-500 text-size">Overall
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="rec_Current_Overall"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="rec_Overall"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div
+                                                            class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                            <form [formGroup]="currencyForms[i]">
+                                                                <div class="card white-bg mb-3">
+                                                                    <div class="card-header">
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between ">
+                                                                            Deposit Amount
+                                                                            <div>
+                                                                                <div
+                                                                                    class="form-check form-switch d-flex align-items-center">
+
+
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox" id="mySwitch"
+                                                                                        formControlName="dep_Status"
+                                                                                        name="darkmode"
+                                                                                        (change)="depStatusToggle($event,3)"
+                                                                                        [checked]="statusToggleUpdate(form?.oDeposit?.Lmt_Stat?.Status)">
+                                                                                    <div
+                                                                                        *ngIf="this.currencyForms[i].value.dep_Status">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Enable</label>
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        *ngIf="!this.currencyForms[i].value.dep_Status">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Disable</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <fieldset
+                                                                        [disabled]="!this.currencyForms[i].value.dep_Status">
+                                                                        <div class="card-body form"
+                                                                            [ngClass]="{ 'opacity-4': !this.currencyForms[i].value.dep_Status }">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Daily
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="dep_Current_daily"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="dep_Daily"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Per
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                             
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="dep_PerTrans"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span
+                                                                                        class="fw-500 text-size">Overall
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="dep_Current_Overall"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="dep_Overall"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div
+                                                            class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                            <form [formGroup]="currencyForms[i]">
+                                                                <div class="card white-bg mb-3">
+                                                                    <div class="card-header">
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between ">
+                                                                            Withdraw Amount
+                                                                            <div>
+                                                                                <div
+                                                                                    class="form-check form-switch d-flex align-items-center">
+
+
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox" id="mySwitch"
+                                                                                        formControlName="with_Status"
+                                                                                        name="darkmode"
+                                                                                        (change)="withStatusToggle($event,4)"
+                                                                                        [checked]="statusToggleUpdate(form?.oWithdraw?.Lmt_Stat?.Status)">
+                                                                                    <div
+                                                                                        *ngIf="this.currencyForms[i].value.with_Status">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Enable</label>
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        *ngIf="!this.currencyForms[i].value.with_Status">
+                                                                                        <label
+                                                                                            class="form-check-label ms-2 mt-1"
+                                                                                            for="ICOnotify">Disable</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <fieldset
+                                                                        [disabled]="!this.currencyForms[i].value.with_Status">
+                                                                        <div class="card-body form"
+                                                                            [ngClass]="{ 'opacity-4': !this.currencyForms[i].value.with_Status }">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Daily
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="with_Current_daily"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="with_Daily"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span class="fw-500 text-size">Per
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                             
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="with_PerTrans"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <span
+                                                                                        class="fw-500 text-size">Overall
+                                                                                        Transaction</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row login-right">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="with_Current_Overall"
+                                                                                            readonly>
+                                                                                        <label
+                                                                                            class="did-floating-label">Current
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div
+                                                                                        class="did-floating-label-content mt-3 mt-md-0">
+                                                                                        <input
+                                                                                            class="did-floating-input"
+                                                                                            type="text"
+                                                                                            formControlName="with_Overall"
+                                                                                            (keypress)="handleInput($event)">
+                                                                                        <label
+                                                                                            class="did-floating-label">Max
+                                                                                            Limit</label>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div
+                                                        class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-3">
+
+
+                                                        <div class="row">
+                                                            <form [formGroup]="currencyForms[i]">
+                                                                <div
+                                                                    class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="currency-set p-4">
+                                                                        <div class="row">
+                                                                            <div
+                                                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <label class="mb-2 text"> Fee
+                                                                                    Structure*</label>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+
+                                                                                <div class="login-right mt-3 mt-md-0">
+                                                                                    <div class="form">
+                                                                                        <div class="form-group posre">
+                                                                                            <input class="form-control" type="text"
+                                                                                                formControlName="send_Fee"
+                                                                                                (keypress)="handleFeeInput($event)">
+                                                                                            <label for="email">Send
+                                                                                                Transaction</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr class="mb-2 mt-3">
+
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between">
+                                                                                    <div class="text">Send Status </div>
+                                                                                    <div
+                                                                                        class="form-check form-switch d-flex align-items-center">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            id="mySwitch"
+                                                                                            name="darkmode"
+                                                                                            (change)="ToggleChangeSend($event)"
+                                                                                            formControlName="sendFeeMode">
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.sendFeeMode == true">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Auto</label>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.sendFeeMode == false">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Manual</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+
+
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                                                <div class="login-right mt-3 mt-md-0">
+                                                                                    <div class="form">
+                                                                                        <div class="form-group posre">
+                                                                                            <input type="text" class="form-control"
+                                                                                                formControlName="rec_Fee"
+                                                                                                (keypress)="handleFeeInput($event)">
+                                                                                            <label for="email">Receive
+                                                                                                Transaction</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr class="mb-2 mt-3">
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between">
+                                                                                    <div class="text">Receive Status
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="form-check form-switch d-flex align-items-center">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            id="mySwitch"
+                                                                                            formControlName="recFeeMode"
+                                                                                            name="darkmode"
+                                                                                            (change)="ToggleChangeRec($event)">
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.recFeeMode == true">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Auto</label>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.recFeeMode == false">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Manual</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                                                <div class="login-right mt-3 mt-md-0">
+                                                                                    <div class="form">
+                                                                                        <div class="form-group posre">
+                                                                                            <input type="text" class="form-control"
+                                                                                                formControlName="dep_Fee"
+                                                                                                (keypress)="handleFeeInput($event)">
+                                                                                            <label for="email">Deposit
+                                                                                                Transaction</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr class="mb-2 mt-3">
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between">
+                                                                                    <div class="text">Deposit Status
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="form-check form-switch d-flex align-items-center">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            id="mySwitch"
+                                                                                            name="darkmode"
+                                                                                            (change)="ToggleChangeDep($event)"
+                                                                                            formControlName="depFeeMode">
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.depFeeMode == true">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Auto</label>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.depFeeMode == false">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Manual</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                                                <div class="login-right mt-3 mt-md-0">
+                                                                                    <div class="form">
+                                                                                        <div class="form-group posre">
+                                                                                            <input type="text" class="form-control"
+                                                                                                formControlName="with_Fee"
+                                                                                                (keypress)="handleFeeInput($event)">
+                                                                                            <label for="email">Withdraw
+                                                                                                Transaction</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr class="mb-2 mt-3">
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between">
+                                                                                    <div class="text">Withdraw Status
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="form-check form-switch d-flex align-items-center">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            id="mySwitch"
+                                                                                            name="darkmode"
+                                                                                            (change)="ToggleChangeWith($event)"
+                                                                                            formControlName="withFeeMode">
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.withFeeMode == true">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Auto</label>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            *ngIf="currencyForms[i].value.withFeeMode == false">
+                                                                                            <label
+                                                                                                class="form-check-label ms-2 mt-1"
+                                                                                                for="ICOnotify">Manual</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div
+                                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 text-end">
+                                                                <hr class="m-0">
+                                                                <a href="javascript:;"
+                                                                    class="btn btn-secondary ps-6 pe-6 pt-2 pb-2 mx-auto rounded-6 mt-4 wid-100"
+                                                                    (click)="ADD_EDIT_USER_RISK(i)">CURRENCY
+                                                                    PACKAGES
+                                                                    SET NOW</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div *ngIf="showStatement" class="statment-bg">
+            <div >
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div> <img src="assets/images/no-data.png" class="img-fluid" width="180px"></div>
+                        <h2 class="no-data-text">
+                            Risk Module Details
+                        </h2>
+                        <p class="mb-1">A Fee Schedule is a list when user adds a fee schedule for the clients. </p>
+                      
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>

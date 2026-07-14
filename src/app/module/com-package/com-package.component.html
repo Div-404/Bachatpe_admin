@@ -1,0 +1,969 @@
+<div class="container-fluid page" style="background: #fff; margin-top: 52px;">
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Packages </h3>
+                    <p>You can easily modify the limit for packages within this section.</p>
+                </div>
+                <a class="btn btn-outline-light bg-white d-none d-sm-inline-flex orange-button" (click)="openForm()"
+                    ><i class='bx bx-add-to-queue icon' ></i><span>Add New
+                        Package</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="row slide-down" *ngIf="openPkgForm">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card p-3 mb-3">
+
+                <div class="currency-set p-3 pb-2">
+                    <form [formGroup]="commonForm">
+                        <div class="row">
+
+                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <label for="test2" class="mb-2 text"> Package Type*</label>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-group pos-r">
+                                       
+                                     
+                                          
+                                          <!-- <ng-select name="currency" formControlName="currency" [ngClass]="{ 'is-invalid': commonForm.get('currency').touched && commonForm.get('currency').invalid,
+                            'is-valid': commonForm.get('currency').touched && commonForm.get('currency').valid }" [readonly]="editEnable"
+                               >
+                                <ng-option *ngFor="let curr of exchangeData" [value]="curr.BaseCurr">{{ curr.BaseCurr }}</ng-option>
+                            </ng-select> -->
+                          
+                            <input class="form-control" formControlName="currency" readonly>
+                            <label for="currency" [class.selected]="commonForm.get('currency').value">Currency Set</label>
+                           
+                            <div *ngIf="commonForm.get('currency').touched && commonForm.get('currency').invalid" class="invalid-feedback">
+                                <div *ngIf="commonForm.get('currency').errors.required">Please Select the Currency.</div>
+                                </div>
+                           </div>
+                                    </div>
+                                
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-group pos-r">
+                                        <input type="text" class="form-control" formControlName="verPkgName" (keypress)="aplhaSpaceOnly($event)"
+                                         [ngClass]="{ 'is-invalid': commonForm.get('verPkgName').touched && commonForm.get('verPkgName').invalid }">
+                                        <label for="email">Package Name</label>
+                                        <div *ngIf="commonForm.get('verPkgName').touched && commonForm.get('verPkgName').invalid" class="invalid-feedback">
+                                            <div *ngIf="commonForm.get('verPkgName').errors.required">Package Name is Required.</div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                               formControlName="multipleAccountEnable"
+                                               (change)="onToggleChange()">
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">
+                                            Multiple Account: {{ commonForm.get('multipleAccountEnable').value === 1 ? 'Enable' : 'Disable' }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <hr class="mt-0 pt-0 mb-2">
+                            <div class="row">
+                                <div
+                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <label for="test2" class="mb-2 text"> Transaction Fee*</label>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-group pos-r">
+                                        <input type="text" class="form-control" formControlName="sendFee"
+                                            (keypress)="handleFeeInput($event)" [ngClass]="{ 'is-invalid': commonForm.get('sendFee').touched && commonForm.get('sendFee').invalid }">
+                                        <label for="email">Send Transaction</label>
+                                        <div *ngIf="commonForm.get('sendFee').touched && commonForm.get('sendFee').invalid" class="invalid-feedback">
+                                            <div *ngIf="commonForm.get('sendFee').errors.required">Value is Required.</div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-group pos-r">
+                                        <input type="text" class="form-control" formControlName="recieveFee"
+                                            (keypress)="handleFeeInput($event)" [ngClass]="{ 'is-invalid': commonForm.get('recieveFee').touched && commonForm.get('recieveFee').invalid }">
+                                        <label for="email">Receive Transaction</label>
+                                        <div *ngIf="commonForm.get('recieveFee').touched && commonForm.get('recieveFee').invalid" class="invalid-feedback">
+                                            <div *ngIf="commonForm.get('recieveFee').errors.required">Value is Required.</div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-group pos-r">
+                                        <input type="text" class="form-control" formControlName="depositFee"
+                                            (keypress)="handleFeeInput($event)" [ngClass]="{ 'is-invalid': commonForm.get('depositFee').touched && commonForm.get('depositFee').invalid }">
+                                        <label for="email">Deposit Transaction</label>
+                                        <div *ngIf="commonForm.get('depositFee').touched && commonForm.get('depositFee').invalid" class="invalid-feedback">
+                                            <div *ngIf="commonForm.get('depositFee').errors.required">Value is Required.</div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form mb-3">
+                                    <div class="form-group pos-r">
+                                        <input type="text" class="form-control" formControlName="withdrawFee"
+                                            (keypress)="handleFeeInput($event)" [ngClass]="{ 'is-invalid': commonForm.get('withdrawFee').touched && commonForm.get('withdrawFee').invalid }">
+                                        <label for="email">Withdraw Transaction</label>
+                                        <div *ngIf="commonForm.get('withdrawFee').touched && commonForm.get('withdrawFee').invalid" class="invalid-feedback">
+                                            <div *ngIf="commonForm.get('withdrawFee').errors.required">Value is Required.</div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 mt-0">
+
+                        <div class="verified-packages" *ngIf="checked==1">
+                            <form [formGroup]="verifiedForm">
+                                <div class="card pt-0  card-1 mt-3 ">
+                                    <div class="card-body pb-1">
+                                        <div class="row">
+                                            <div
+                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                <label for="test2" class="mb-2 text"> Transaction Configuration* <span class="colr-text">(For Verified Users)</span></label>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Send Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="sendVerDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('sendVerDaily').touched && verifiedForm.get('sendVerDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('sendVerDaily').touched && verifiedForm.get('sendVerDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('sendVerDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="sendVerSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('sendVerSingle').touched && verifiedForm.get('sendVerSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('sendVerSingle').touched && verifiedForm.get('sendVerSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('sendVerSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="sendVerOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('sendVerOverall').touched && verifiedForm.get('sendVerOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('sendVerOverall').touched && verifiedForm.get('sendVerOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('sendVerOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                               
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div class="text">Send Status</div>
+                                                        <div class="form-check form-switch d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" id="mySwitch"
+                                                                name="darkmode" (change)="ToggleChangeSend($event)" [checked]="toggleUpdate(getObj?.Info_Send?.Type)" >
+                                                                <div *ngIf="send_Fee_Mode === 1">
+                                                                    <label class="form-check-label ms-2 mt-1" for="ICOnotify">Auto</label>
+                                                                  </div>
+                                                                  <div *ngIf="send_Fee_Mode === 2">
+                                                                    <label class="form-check-label ms-2 mt-1" for="ICOnotify">Manual</label>
+                                                                  </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Receive Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="recVerDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('recVerDaily').touched && verifiedForm.get('recVerDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('recVerDaily').touched && verifiedForm.get('recVerDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('recVerDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="recVerSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('recVerSingle').touched && verifiedForm.get('recVerSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('recVerSingle').touched && verifiedForm.get('recVerSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('recVerSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="recVerOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('recVerOverall').touched && verifiedForm.get('recVerOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('recVerOverall').touched && verifiedForm.get('recVerOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('recVerOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+
+
+                                                            </div>
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div class="text">Receive Status</div>
+                                                            <div class="form-check form-switch d-flex align-items-center">
+                                                                <input class="form-check-input" type="checkbox" id="mySwitch"
+                                                                    name="darkmode" (change)="ToggleChangeRec($event)" [checked]="toggleUpdate(getObj?.Info_Recv?.Type)">
+                                                                    <div *ngIf="rec_Fee_Mode === 1">
+                                                                        <label class="form-check-label ms-2 mt-1" for="ICOnotify">Auto</label>
+                                                                      </div>
+                                                                      <div *ngIf="rec_Fee_Mode === 2">
+                                                                        <label class="form-check-label ms-2 mt-1" for="ICOnotify">Manual</label>
+                                                                      </div>
+                                                            </div>
+</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Deposit Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="depVerDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('depVerDaily').touched && verifiedForm.get('depVerDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('depVerDaily').touched && verifiedForm.get('depVerDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('depVerDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="depVerSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('depVerSingle').touched && verifiedForm.get('depVerSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('depVerSingle').touched && verifiedForm.get('depVerSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('depVerSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="depVerOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('depVerOverall').touched && verifiedForm.get('depVerOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('depVerOverall').touched && verifiedForm.get('depVerOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('depVerOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+
+                                                                <hr class="my-0 mb-2">
+                                                            </div>
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div class="text">Deposit Status</div>
+
+                                                            <div class="form-check form-switch d-flex align-items-center">
+                                                                <input class="form-check-input" type="checkbox" id="mySwitch"
+                                                                    name="darkmode" (change)="ToggleChangeDep($event)" [checked]="toggleUpdate(getObj?.Info_Dept?.Type)" >
+                                                                    <div *ngIf="dep_Fee_Mode === 1">
+                                                                        <label class="form-check-label ms-2 mt-1" for="ICOnotify">Auto</label>
+                                                                      </div>
+                                                                      <div *ngIf="dep_Fee_Mode === 2">
+                                                                        <label class="form-check-label ms-2 mt-1" for="ICOnotify">Manual</label>
+                                                                      </div>
+                                                            </div>
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Withdraw Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="withdVerDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('withdVerDaily').touched && verifiedForm.get('withdVerDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('withdVerDaily').touched && verifiedForm.get('withdVerDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('withdVerDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="withdVerSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('withdVerSingle').touched && verifiedForm.get('withdVerSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('withdVerSingle').touched && verifiedForm.get('withdVerSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('withdVerSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input type="text" class="form-control" formControlName="withdVerOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('withdVerOverall').touched && verifiedForm.get('withdVerOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="verifiedForm.get('withdVerOverall').touched && verifiedForm.get('withdVerOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="verifiedForm.get('withdVerOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+
+                                                            </div>
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div class="text"> Withdraw Status</div>
+                                                                <div class="form-check form-switch d-flex align-items-center">
+                                                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                                                        (change)="ToggleChangeWith($event)" [checked]="toggleUpdate(getObj?.Info_WDraw?.Type)">
+                                                                    <div *ngIf="with_Fee_Mode === 1">
+                                                                        <label class="form-check-label ms-2 mt-1" for="ICOnotify">Auto</label>
+                                                                    </div>
+                                                                    <div *ngIf="with_Fee_Mode === 2">
+                                                                        <label class="form-check-label ms-2 mt-1" for="ICOnotify">Manual</label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="row mt-3 align-items-center">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="currency-set p-3 pb-0">
+                                            <div
+                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                <label for="test2" class="mb-2 text"> Turnover Type*</label>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form">
+                                                        <div class="form-group pos-r">
+                                                            <input type="text" class="form-control" formControlName="overallTurnover"
+                                                                (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('overallTurnover').touched && verifiedForm.get('overallTurnover').invalid }">
+                                                            <label for="email">Over All Turnover</label>
+                                                            <div *ngIf="verifiedForm.get('overallTurnover').touched && verifiedForm.get('overallTurnover').invalid" class="invalid-feedback">
+                                                                <div *ngIf="verifiedForm.get('overallTurnover').errors.required">Value is Required.</div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form mb-3">
+                                                        <div class="form-group pos-r">
+                                                            <input type="text" class="form-control" formControlName="dailyTurnover"
+                                                                (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': verifiedForm.get('dailyTurnover').touched && verifiedForm.get('dailyTurnover').invalid }">
+                                                            <label for="email">Daily Turnover</label>
+                                                            <div *ngIf="verifiedForm.get('dailyTurnover').touched && verifiedForm.get('dailyTurnover').invalid" class="invalid-feedback">
+                                                                <div *ngIf="verifiedForm.get('dailyTurnover').errors.required">Value is Required.</div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 text-end" >
+                                        <button type="button" class="btn btn-secondary ps-6 pe-6 pt-2 pb-2 mx-auto rounded-6" 
+                                            (click)="select()" [disabled]="verifiedForm.invalid || commonForm.invalid">PROCEED TO NEXT</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+
+
+                        <div *ngIf="checked==2" class="non-verified-packages">
+                            <form [formGroup]="nonVerifiedForm">
+                                <div class="card pt-0  card-1 mt-3 ">
+                                    <div class="card-body pb-1">
+                                        <div class="row">
+                                            <div
+                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                <label for="test2" class="mb-2 text"> Transaction Configuration* <span class="colr-text">(For Non-Verified Users)</span></label>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Send Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="sendNonVerDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('sendNonVerDaily').touched && nonVerifiedForm.get('sendNonVerDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('sendNonVerDaily').touched && nonVerifiedForm.get('sendNonVerDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('sendNonVerDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="sendNonVerSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('sendNonVerSingle').touched && nonVerifiedForm.get('sendNonVerSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('sendNonVerSingle').touched && nonVerifiedForm.get('sendNonVerSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('sendNonVerSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="sendNonVerOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('sendNonVerOverall').touched && nonVerifiedForm.get('sendNonVerOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('sendNonVerOverall').touched && nonVerifiedForm.get('sendNonVerOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('sendNonVerOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Receive Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text" formControlName="recNonVerDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('recNonVerDaily').touched && nonVerifiedForm.get('recNonVerDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('recNonVerDaily').touched && nonVerifiedForm.get('recNonVerDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('recNonVerDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text" formControlName="recNonVerSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('recNonVerSingle').touched && nonVerifiedForm.get('recNonVerSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('recNonVerSingle').touched && nonVerifiedForm.get('recNonVerSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('recNonVerSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="recNonVerOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('recNonVerOverall').touched && nonVerifiedForm.get('recNonVerOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('recNonVerOverall').touched && nonVerifiedForm.get('recNonVerOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('recNonVerOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Deposit Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text" formControlName="depVerNonDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('depVerNonDaily').touched && nonVerifiedForm.get('depVerNonDaily').invalid }" >
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('depVerNonDaily').touched && nonVerifiedForm.get('depVerNonDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('depVerNonDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text" formControlName="depVerNonSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('depVerNonSingle').touched && nonVerifiedForm.get('depVerNonSingle').invalid }">
+                                                                    <label for="email">Per Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('depVerNonSingle').touched && nonVerifiedForm.get('depVerNonSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('depVerNonSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="depVerNonOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('depVerNonOverall').touched && nonVerifiedForm.get('depVerNonOverall').invalid }">
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('depVerNonOverall').touched && nonVerifiedForm.get('depVerNonOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('depVerNonOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="card white-bg mb-3">
+                                                    <div class="card-header">Withdraw Amount</div>
+                                                    <div class="card-body ">
+                                                        <div class="login-right">
+                                                            <div class="form">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="withdVerNonDaily"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('withdVerNonDaily').touched && nonVerifiedForm.get('withdVerNonDaily').invalid }">
+                                                                    <label for="email">Daily Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('withdVerNonDaily').touched && nonVerifiedForm.get('withdVerNonDaily').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('withdVerNonDaily').errors.required">Value is Required.</div>
+                                                                        </div>
+
+                                                                </div>
+                                                                <hr class="m-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="withdVerNonSingle"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('withdVerNonSingle').touched && nonVerifiedForm.get('withdVerNonSingle').invalid }">
+                                                                    <label for="email">Per Transaction </label>
+                                                                    <div *ngIf="nonVerifiedForm.get('withdVerNonSingle').touched && nonVerifiedForm.get('withdVerNonSingle').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('withdVerNonSingle').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+                                                                <hr class="my-0 mb-2">
+                                                                <div class="form-group pos-r">
+                                                                    <input class="form-control" type="text"
+                                                                        formControlName="withdVerNonOverall"
+                                                                        (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('withdVerNonOverall').touched && nonVerifiedForm.get('withdVerNonOverall').invalid }" >
+                                                                    <label for="email">Overall Transaction</label>
+                                                                    <div *ngIf="nonVerifiedForm.get('withdVerNonOverall').touched && nonVerifiedForm.get('withdVerNonOverall').invalid" class="invalid-feedback">
+                                                                        <div *ngIf="nonVerifiedForm.get('withdVerNonOverall').errors.required">Value is Required.</div>
+                                                                        </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 align-items-center">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="currency-set p-3 pb-0">
+                                            <div
+                                                class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                <label for="test2" class="mb-2 text"> Turnover Type*</label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form">
+                                                        <div class="form-group pos-r">
+                                                            <input class="form-control" type="text" formControlName="overallNonTurnover"
+                                                                (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('overallNonTurnover').touched && nonVerifiedForm.get('overallNonTurnover').invalid }">
+                                                            <label for="email">Over All Turnover</label>
+                                                            <div *ngIf="nonVerifiedForm.get('overallNonTurnover').touched && nonVerifiedForm.get('overallNonTurnover').invalid" class="invalid-feedback">
+                                                                <div *ngIf="nonVerifiedForm.get('overallNonTurnover').errors.required">Value is Required.</div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form mb-3">
+                                                        <div class="form-group pos-r">
+                                                            <input class="form-control" type="text" formControlName="dailyNonTurnover"
+                                                                (keypress)="handleKeyPress($event)" [ngClass]="{ 'is-invalid': nonVerifiedForm.get('dailyNonTurnover').touched && nonVerifiedForm.get('dailyNonTurnover').invalid }">
+                                                            <label for="email">Daily Turnover</label>
+                                                            <div *ngIf="nonVerifiedForm.get('dailyNonTurnover').touched && nonVerifiedForm.get('dailyNonTurnover').invalid" class="invalid-feedback">
+                                                                <div *ngIf="nonVerifiedForm.get('dailyNonTurnover').errors.required">Value is Required.</div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 text-end">
+                                        <button class="btn btn-secondary ps-6 pe-6 pt-2 pb-2 mx-auto rounded-6 mt-3 mb-3" [disabled]="nonVerifiedForm.invalid"
+                                            (click)="submit()">CURRENCY PACKAGE
+                                            SET NOW</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card p-3" >
+                <div *ngIf="wholePkgData.length==0">
+                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 mx-auto text-center">
+                        <img src="assets/images/no-data.png" width="180px" class="img-fluid">
+                        <div class="text-center">
+                            <h2 class="no-data-text">No Currency Packages records found.</h2>
+                            <!-- <p>No Currency Packages records found.</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0 " *ngFor="let data of wholePkgData">
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="d-sm-flex d-block justify-content-between align-items-center">
+                                <div class="nk-block-head-content">
+
+                                    <h3 class="nk-block-title page-title mt-1 mb-0">{{data.Currency }}<span
+                                            class="fw-normal ms-1">({{ data.AccountType}})</span></h3>
+                                    <div class="d-flex align-items-center mt-1">
+                                        <div class="me-2 text-label">Send Fee : <span class="user-info">{{data.Info_Send.Fee | number:'1.2-2'}} </span></div> |
+                                        <div class="me-2 ms-2 text-label"> Receive Fee : <span
+                                                class="user-info">{{data.Info_Recv.Fee | number:'1.2-2'}} </span></div> |
+                                        <div class="me-2 ms-2 text-label"> Deposit Fee : <span
+                                                class="user-info">{{data.Info_Dept.Fee | number:'1.2-2'}} </span></div> |
+                                        <div class="me-2 ms-2 text-label"> Withdraw Fee : <span
+                                                class="user-info">{{data.Info_WDraw.Fee | number:'1.2-2'}} </span></div> |
+
+                                                
+                                                <div class="me-2 ms-2 text-label">Multiple Account: 
+                                                    <span *ngIf="data.Multiple === 1" class="user-info" style="background: #e4ede8; padding: 1px 6px;">Enable</span>
+                                                    <span *ngIf="data.Multiple === 0" class="user-info" style="background: #dfdfdf; padding: 1px 6px; color:#747474">Disable</span>
+                                                </div>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div ngbDropdown class="mt-md-0 mt-2 ">
+                                        <button type="button" class="btn btn-outline-primary px-4 py-2 w-100 "
+                                            id="dropdownBasic1" ngbDropdownToggle>
+                                            <i class='bx bxs-edit icon me-1'></i> Edit Packages
+                                        </button>
+                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <button ngbDropdownItem (click)="edit(data)"><i
+                                                    class='bx bxs-edit icon'></i> Edit</button>
+                                            <button ngbDropdownItem><i class='bx bxs-cog icon'></i> Settings</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button ngbDropdownItem (click)="delete(data.AccountTypeId)"><i
+                                                    class='bx bx-trash icon'></i>Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-3">
+                        </div>
+                    </div>
+                    <div class="d-sm-flex d-block align-items-center">
+                        <div>
+                            <p class="orang-col mb-0 py-0">Verified Packages</p>
+                    <div class="d-flex align-items-center mt-1 mb-3">
+                        <div class="me-2 text-label">Daily Turnover : <span class="user-info">{{data.Lmt_UserTurnOver_Daily | number:'1.2-2'}} </span></div> |
+                        <div class="ms-2 text-label">Over All Turnover : <span
+                                class="user-info">{{data.Lmt_UserTurnOver_Overall | number:'1.2-2'}} </span></div>
+                    </div>
+                        </div>
+                        <div class="ms-0 ms-md-5 d-md-block d-none">
+                            <div style="height: 30px; border-left:1px solid #cfd0d1 ;opacity: 0.25; margin-bottom: 10px;"></div>
+                        </div>
+
+                        <div class="ms-0 ms-md-5">
+                            <p class="orang-col mb-0 py-0">Non-Verified Packages</p>
+                        <div class="d-flex align-items-center mt-1 mb-3">
+                            <div class="me-2 text-label">Daily Turnover : <span
+                                    class="user-info">{{data.Lmt_UserNonTurnOver_Daily | number:'1.2-2'}} </span></div> |
+                            <div class="ms-2 text-label">Over All Turnover : <span
+                                    class="user-info">{{data.Lmt_UserNonTurnOver_Overall | number:'1.2-2'}} </span></div>
+                        </div>
+                        </div>
+                    </div>
+                    <hr class="mt-0 pt-0">
+                    <div class="row mt-4">
+                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="card mb-3 white-bg">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            Send Amount
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="orange-col">Verified</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end orange-col">
+                                            Non-Verified
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Daily Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserSend_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonSend_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Per Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserSend_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonSend_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Overall Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserSend_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonSend_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="card mb-3 white-bg">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            Receive Amount
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="orange-col">Verified</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end orange-col">
+                                            Non-Verified
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Daily Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserRecv_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonRecv_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Per Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserRecv_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonRecv_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Overall Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserRecv_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonRecv_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+
+
+                                   
+                                    
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="card mb-3 white-bg">
+                                <div class="card-header">
+                                <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                        Deposit Amount
+                                    </div>
+                                    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                        <div class="orange-col">Verified</div>
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end orange-col">
+                                        Non-Verified
+                                    </div>
+                                </div>
+                            
+                                  
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Daily Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserUpload_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonUpload_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Per Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserUpload_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonUpload_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Overall Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserUpload_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonUpload_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="card mb-3 white-bg">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            Withdraw Amount
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="orange-col">Verified</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end orange-col">
+                                            Non-Verified
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="card-body">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Daily Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserWDraw_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonWDraw_Daily | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Per Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserWDraw_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonWDraw_Single | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="row price">
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div class="label">Overall Transaction</div>
+                                        </div>
+                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
+                                            <div class="text-content">{{data.Lmt_UserWDraw_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-end">
+                                            <div class="text-content">{{data.Lmt_UserNonWDraw_Overall | number:'1.2-2'}}</div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    
+                                   
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+           
+            
+            
+            
+            </div>
+        </div>
+        
+    </div>
+</div>

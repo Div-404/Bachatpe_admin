@@ -1,0 +1,858 @@
+<section class="page">
+    <div class="container-fluid pb-5">
+        <div class="row ">
+
+            <div class="col-md-12">
+                <div class="card-header0 flex-center-between">
+                    <div class="d-flex align-items-center  justify-content-between w-100 mb-3">
+                        <p class=" fw600">User Package</p>
+                        <button type="button" class="btn back-btn" (click)="goBack()">
+                            <div class="icobox me-3"><i class="fa-solid fa-arrow-left"></i></div>
+                            <p class="me-2">Back</p>
+                        </button>
+                    </div>
+                    <!-- <div>
+                    <button class="btn btn-sm btn-success fs13 me-2" style="background: #30875200;  border-color: #308752;  color: #000000;"><i class="fa-solid fa-cloud-arrow-up"></i> Upload CSV File</button>
+                    <button class="btn btn-sm btn-success fs13" (click)="openLg(content)" (click)="openEnd(content)"> <i class="fa-solid fa-download"></i> Download Sample File </button>
+                   </div> -->
+                    <div class="d-flex">
+                        <!-- <div class=" me-3">
+                        <select class="form-select form-select-sm">
+                                <option disabled selected value>WTS </option>
+                                <option>Whaty API</option>
+                                <option>Spay</option>
+                                
+                            </select>
+                    </div>
+                        <div class=" me-3">
+                            <select class="form-select form-select-sm">
+                                    <option disabled selected value>Recharge </option>
+                                    <option>Money Transfer</option>
+                                    <option>Recharge</option>
+                                    <option>Booking</option>
+                                    <option>Utility Bill</option>
+                                    <option>Miscellaneous</option>
+                                </select>
+                        </div>
+                        <div class=" me-3">
+                            <select class="form-select form-select-sm">
+                                    <option disabled selected value>Airtel </option>
+                                    <option>Airtel</option>
+                                    <option>Recharge</option>
+                                    <option>Booking</option>
+                                    <option>Utility Bill</option>
+                                    <option>Miscellaneous</option>
+                                </select>
+                        </div> -->
+                        <!-- <button class="btn btn-sm btn-success pe-2 ps-2"><i style="color:#F8E000" class="fa-solid fa-circle-plus me-2"></i>Add </button> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header flex-center-between">
+                <p class="mb-0 fw600">{{packageName}}</p>
+                <div class="d-flex">
+                    <!-- <div class="for-edit" (click)="openLg(content)"><i class="fa-solid fa-pencil"></i></div>
+                    <div class="for-delete me-2"> <i class="fa-regular fa-trash-can"></i></div> -->
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12  forserviceadd">
+                        <!-- @for (data of userPackInfo; track data) { -->
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr *ngIf="userPackInfo?.length!=0">
+                                    <th class="bodnone"></th>
+                                    <th class="mygreen bodnone">
+                                        <div class="mng-tit">
+                                            <div> {{shared.getSource(userPackInfo[0]?.SourceType)}}</div>
+                                            <div class="d-flex">
+                                                <!-- <div class="for-edit1"><i class="fa-solid fa-pencil"></i></div> -->
+                                                <!-- <div class="for-delete1" (click)="deletePackageInfo(data)"> <i
+                                                        class="fa-regular fa-trash-can"></i></div> -->
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            @for (data of userPackInfo; track data) {
+                            <tbody>
+                                <tr id="tr-detail" class="tr-detail hidden">
+                                    <td class="bodnone"></td>
+                                    <td class="bodnone" colspan="4">
+                                        <div class="detail-content">
+                                            <ul>
+                                                <li class="forsubservice">
+                                                    <div class="detail"></div>
+
+                                                    <div class="detail detail-main">
+                                                        <div class="fieldset">
+                                                            <div class="legend">
+                                                                <div class="label label-primary">{{data.ServiceName}}
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="for-delete1 me-2"
+                                                                        (click)="openLg(content, data)">
+                                                                        <i class="fa-solid fa-circle-plus "
+                                                                            style="color: #F8E000;"></i>
+                                                                    </div>
+                                                                    <div class="for-delete1"
+                                                                        (click)="deletePackageInfo(data)"> <i
+                                                                            style="color:#e3e3e3"
+                                                                            class=" fa-solid fa-circle-xmark"></i>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="table-responsive p-2">
+                                                                <table
+                                                                    class="table set-td-width table-bordered table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="background: #fff !important;"
+                                                                                colspan="2"></th>
+                                                                            <th style="background: #fff !important; text-align: center; text-transform: uppercase; font-size: 12px; color:#4b4b4b"
+                                                                                colspan="2">Deduction</th>
+                                                                            <th style="background: #fff !important; text-align: center; text-transform: uppercase; font-size: 12px; color:#4b4b4b"
+                                                                                colspan="2">Distribution</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Min.</th>
+                                                                            <th>Max.</th>
+
+                                                                            <th>Commission</th>
+                                                                            <th>Type</th>
+                                                                            <!-- <th>Distribution</th> -->
+                                                                            <th>Type</th>
+                                                                            <th>M. Distributor</th>
+                                                                            <th>Distributor</th>
+                                                                            <th>Retailer</th>
+                                                                            <!-- <th>Admin</th> -->
+                                                                            <!-- <th>Commission Type</th> -->
+                                                                            <!-- <th>Action</th> -->
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="forplanvalue" *ngFor="let dd of data.lstComm">
+                                                                            <td>{{dd.Range_Min}}</td>
+                                                                            <td>{{dd.Range_Max}}</td>
+                                                                            <td>{{dd.Commission_All}}</td>
+                                                                          
+                                                                            <!-- Deduction Type -->
+                                                                            <td>{{ dd.oType === 1 ? '%' : (dd.oType === 2 ? 'INR' : 'NA') }}</td>
+                                                                          
+                                                                            <!-- Distribution Type -->
+                                                                            <td>{{ dd.oHierCommType === 1 ? '%' : (dd.oHierCommType === 2 ? 'INR' : 'NA') }}</td>
+                                                                          
+                                                                            <!-- M. Distributor -->
+                                                                            <td>
+                                                                              <span class="me-2">{{dd.Commission_MD}}</span>
+                                                                              <span *ngIf="dd.MD_Tds === 1" class="tdsbadge">
+                                                                                <i class="fa-solid fa-square-check"></i> TDS
+                                                                              </span>
+                                                                            </td>
+                                                                          
+                                                                            <!-- Distributor -->
+                                                                            <td>
+                                                                              <span class="me-2">{{dd.Commission_DI}}</span>
+                                                                              <span *ngIf="dd.DI_Tds === 1" class="tdsbadge">
+                                                                                <i class="fa-solid fa-square-check"></i> TDS
+                                                                              </span>
+                                                                            </td>
+                                                                          
+                                                                            <!-- Retailer -->
+                                                                            <td>
+                                                                              <span class="me-2">{{dd.Commission_RL}}</span>
+                                                                              <span *ngIf="dd.RL_Tds === 1" class="tdsbadge">
+                                                                                <i class="fa-solid fa-square-check"></i> TDS
+                                                                              </span>
+                                                                            </td>
+                                                                          </tr>
+                                                                          
+                                                                        <!-- <tr>
+                                                        <td>101</td>
+                                                        <td>1001</td>
+                                                        <td>3 Rs/-</td>
+                                                        <td>8000</td>
+                                                        <td>0.50 %</td>
+                                                        <td>1.00 %</td>
+                                                        <td>1.25 %</td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div class="for-edit"><i class="fa-solid fa-pencil"></i></div>
+                                                                <div class="for-delete"> <i class="fa-regular fa-trash-can"></i></div>
+                                                                
+                                                            </div>
+                                                        </td>
+                                                    </tr> -->
+                                                                    </tbody>
+
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="d-none">
+                                                    <div class="detail"></div>
+
+                                                    <div class="detail detail-main">
+                                                        <div class="fieldset">
+                                                            <div class="legend"><span class="label label-primary">Nested
+                                                                    Data</span></div>
+                                                            <div>
+                                                                <table class="table table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </li>
+                                                <li class="d-none">
+                                                    <div class="detail"></div>
+
+                                                    <div class="detail detail-main">
+                                                        <div class="fieldset">
+                                                            <div class="legend"><span class="label label-primary">Nested
+                                                                    Data</span></div>
+                                                            <div>
+                                                                <table class="table table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                            <th>Header</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                            <td>123</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            }
+                        </table>
+                        <!-- @empty { -->
+                        <div *ngIf="userPackInfo?.length==0">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 400px;">
+                                <div class="text-center">
+                                    <img style="height: 170px; opacity: 0.5;" class="bg-img  mb-3"
+                                        src="assets/images/nodata1.png" alt="">
+                                    <p class="p-img">No data found</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row d-none">
+
+            <div class="col-md-12 mt-4">
+                <div class="card">
+                    <div class="card-header flex-center-between">
+                        <p class="mb-0 fw600">Basic Plan-1</p>
+                        <div class="d-flex">
+                            <div class="for-edit"><i class="fa-solid fa-pencil"></i></div>
+                            <div class="for-delete me-2"> <i class="fa-regular fa-trash-can"></i></div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+
+                            <div class="col-md-12">
+                                <div class="tblone00 table-responsive">
+                                    <table class="table table-bordered table-hover00">
+                                        <thead>
+                                            <tr>
+                                                <th class="width-px100">Service</th>
+                                                <th class="width-px100">Operator</th>
+
+                                                <th class="width-px100">Min.</th>
+                                                <th class="width-px100">Max.</th>
+                                                <th class="width-px100">Fee</th>
+                                                <th class="width-px100">Total</th>
+                                                <th class="width-px100">M. Distributor</th>
+                                                <th class="width-px100">Distributor</th>
+                                                <th class="width-px100">Retailor </th>
+                                                <th class="width-px100">Admin </th>
+                                                <th style="width: 40px !important;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                                <td class="pt-3">Recharge</td>
+                                                <td colspan="10">
+                                                    <table
+                                                        class="table tblone table-striped table-bordered table-hover mb-0">
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td class="width-px111">one</td>
+
+                                                                <td colspan="9">
+                                                                    <table
+                                                                        class="table tblone table-striped table-bordered table-hover mb-0">
+                                                                        <tbody>
+                                                                            <tr>
+
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">0</td>
+                                                                                <td class="width-px130">
+                                                                                    <div class="setflex">
+                                                                                        <div class="typeflat">0 N/A
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </td>
+
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td style="width:40px !important">
+                                                                    <div class="for-add"> <i
+                                                                            class="fa-solid  fa-circle-plus"></i></div>
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+
+                                                    <!-- <td class="pt-3"><span class="bdg-n">Airtel</span></td> -->
+
+
+                                            </tr>
+
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <ng-template #content let-offcanvas>
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title">Commission</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+        </div>
+        <div class="offcanvas-body pt-0">
+           <div class="row">
+            <div class="col-md-12">
+                <div class="first-ele">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <label for="pwd" class="form-label">Commission Name</label>
+                                    <select class="form-select form-select-sm">
+                                        <option disabled selected value> </option>
+                                        <option>Money Transfer</option>
+                                        <option>Recharge</option>
+                                        <option>Booking</option>
+                                        <option>Utility Bill</option>
+                                        <option>Miscellaneous</option>
+                                    </select>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label for="pwd" class="form-label">Service</label>
+                                    <select class="form-select form-select-sm">
+                                        <option disabled selected value>  </option>
+                                        <option>DMT1</option>
+                                        <option>MyDMT</option>
+                                        <option>BookingTrain</option>
+                                        <option>AirtelOne</option>
+                                        <option>Airtel02</option>
+                                        <option>AEPS1</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2 apimng">
+                                <label for="pwd" class="form-label">Sub Category</label>
+                                <ng-multiselect-dropdown
+                                [placeholder]="''"
+                                [settings]="dropdownSettings"
+                                [data]="dropdownList"
+                                [(ngModel)]="selectedItems"
+                                (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)"
+                              >
+                              </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                   <div class="addpanel-scroll1">
+                    <div class="first-ele position-relative mb-4" >
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                                <div class="">
+                                    <label for="pwd" class="form-label">Min.</label>
+                                     <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="">
+                                    <label for="pwd" class="form-label">Min.</label>
+                                     <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="">
+                                    <label for="pwd" class="form-label">Value</label>
+                                     <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                        <label class="form-check-label" for="inlineRadio1">Fixed</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <label class="form-check-label" for="inlineRadio2">(%)</label>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm-del"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-sm-add">Add more</button>
+                    </div>
+                   </div>
+                   <div class="jit-datashow">
+                        <div class="simpcard">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover mb-0">
+                                    <tbody>
+                                      <tr>
+                                       <td>Mobile</td>
+                                        <td>Mitra Pvt Ltd</td>
+                                        <td>1 - 99  <span>- 0.5%</span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499  <span>- 0.5(₹)</span></td>
+                                       </tr>
+                                       <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499 <span>- 0.5(₹)</span></td>
+                                       </tr>
+                                       <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499 <span>- 0.5%</span></td>
+                                       </tr>
+                                       <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499 <span>- 0.5(₹)</span></td>
+                                       </tr>
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                   </div>
+            </div>
+           </div>
+        </div>
+        <div class="offcanvas-footer ">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-success w-100">Submit</button>
+                </div>
+            </div>
+        </div>
+    </ng-template> -->
+
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Add Commission</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+            <form [formGroup]="addPackInfoForm">
+                <div class="row align-items-end">
+                    <div class="col-md-12">
+                        <div class="mod-decor pt-4">
+                            <div class="row mb-3">
+                                <div class="col-md-1"> <label for="email" class="form-label fs12"> Min</label></div>
+                                <div class="col-md-5"> <input type="text" class="form-control form-control-sm"
+                                        id="email" placeholder="" name="email" formControlName="Range_Min"
+                                        (keypress)="oneDotAfterTwoDigit($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Range_Min'].errors }">
+                                    @if (submitted && f['Range_Min'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Range_Min'].errors['required']) {
+                                        <div>Minimum is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                                <div class="col-md-1"> <label for="email" class="form-label fs12">Max</label></div>
+                                <div class="col-md-5"> <input type="text" class="form-control form-control-sm"
+                                        id="email" placeholder="" name="email" formControlName="Range_Max"
+                                        (keypress)="oneDotAfterTwoDigit($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Range_Max'].errors }">
+
+                                    <div class="errorbox">
+                                        <div class="invalid-feedback" *ngIf="submitted && f['Range_Max'].errors">
+                                            @if (f['Range_Max'].errors['required']) {
+                                            <div>Range_Max is required</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="legendone">
+                                        <p class="legendone-text">Commission Deduction</p>
+                                        <div class="row pt-2">
+                                            <div class="col-md-5">
+                                                <div class="d-flex">
+                                                    <div class="form-check fs13 me-3">
+                                                        <input type="radio" class="form-check-input" value=2
+                                                            formControlName="oType" checked
+                                                            [ngClass]="{ 'is-invalid': submitted && f['oType'].errors }">
+                                                        @if (submitted && f['oType'].errors) {
+                                                        <div class="invalid-feedback">
+                                                            @if (f['oType'].errors['required']) {
+
+                                                            }
+                                                        </div>
+                                                        }
+
+                                                        <label class="form-check-label" for="radio1">Fixed</label>
+                                                    </div>
+                                                    <div class="form-check fs13">
+                                                        <input type="radio" class="form-check-input"
+                                                            formControlName="oType" value=1
+                                                            [ngClass]="{ 'is-invalid': submitted && f['oType'].errors }">
+                                                        <label class="form-check-label" for="radio2">Percentage</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="d-flex align-items-center">
+                                                    <label for="email" class="form-label fs13 me-2">Commission</label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        formControlName="Commission_All" placeholder="" name="email"
+                                                        (keypress)="oneDotAfterTwoDigit($event)"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Commission_All'].errors }">
+                                                    @if (submitted && f['Commission_All'].errors) {
+                                                    <div class="invalid-feedback">
+                                                        @if (f['Commission_All'].errors['required']) {
+                                                        <div>Commission is required</div>
+                                                        }
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="legendone mt-4">
+                                <p class="legendone-text">Commission Distribution</p>
+                               <div class="row pt-2">
+                                    <div class="col-md-5 mb-2 mt-3">
+                                        <div class="d-flex">
+                                            <div class="form-check fs13 me-3">
+                                                <input type="radio" class="form-check-input" value=2
+                                                    formControlName="oHierCommType" checked
+                                                    [ngClass]="{ 'is-invalid': submitted && f['oHierCommType'].errors }">
+                                                @if (submitted && f['oHierCommType'].errors) {
+                                                <div class="invalid-feedback">
+                                                    @if (f['oHierCommType'].errors['required']) {
+
+                                                    }
+                                                </div>
+                                                }
+
+                                                <label class="form-check-label" for="radio1">Fixed</label>
+                                            </div>
+                                            <div class="form-check fs13">
+                                                <input type="radio" class="form-check-input"
+                                                    formControlName="oHierCommType" value=1
+                                                    [ngClass]="{ 'is-invalid': submitted && f['oHierCommType'].errors }">
+                                                <label class="form-check-label" for="radio2">Percentage</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row mb-3  pt-2">
+                                    <div class="col-md-3"> <label for="email" class="form-label fs12">M.
+                                            Distributor</label>
+                                    </div>
+                                    <div class="col-md-4"> <input type="text" class="form-control form-control-sm"
+                                            id="email" placeholder="" name="email" formControlName="Commission_MD"
+                                            (keypress)="oneDotAfterTwoDigit($event)"
+                                            [ngClass]="{ 'is-invalid': submitted && f['Commission_MD'].errors }">
+                                        @if (submitted && f['Commission_MD'].errors) {
+                                        <div class="invalid-feedback">
+                                            @if (f['Commission_MD'].errors['required']) {
+                                            <div>M. Distributor is required</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="check1" name="option1"
+                                                value="something" [checked]="mdCehck == 1"
+                                                (change)="checkStart($event, 'md')">
+                                            <label class="form-check-label fs12">TDS</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-3"> <label for="email"
+                                            class="form-label fs12">Distributor</label>
+                                    </div>
+                                    <div class="col-md-4"> <input type="text" class="form-control form-control-sm"
+                                            id="email" placeholder="" name="email" formControlName="Commission_DI"
+                                            (keypress)="oneDotAfterTwoDigit($event)"
+                                            [ngClass]="{ 'is-invalid': submitted && f['Commission_DI'].errors }">
+                                        @if (submitted && f['Commission_DI'].errors) {
+                                        <div class="invalid-feedback">
+                                            @if (f['Commission_DI'].errors['required']) {
+                                            <div>Distributor is required</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="check1" name="option1"
+                                                value="something" [checked]="diCheck == 1"
+                                                (change)="checkStart($event, 'di')">
+                                            <label class="form-check-label fs12">TDS..</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-3"> <label for="email" class="form-label fs12">Retailer </label>
+                                    </div>
+                                    <div class="col-md-4"> <input type="text" class="form-control form-control-sm"
+                                            id="email" placeholder="" name="email" formControlName="Commission_RL"
+                                            (keypress)="oneDotAfterTwoDigit($event)"
+                                            [ngClass]="{ 'is-invalid': submitted && f['Commission_RL'].errors }">
+                                        @if (submitted && f['Commission_RL'].errors) {
+                                        <div class="invalid-feedback">
+                                            @if (f['Commission_RL'].errors['required']) {
+                                            <div>Retailer is required</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-4 d-flex">
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" type="checkbox" id="check1" name="option1"
+                                                value="something" [checked]="rlDed === 1"
+                                                (change)="checkStart($event, 'rlded')">
+                                            <label class="form-check-label fs12">Deduction</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="check1" MD_Tds
+                                                name="option1" [disabled]="rlDed === 2" value="something"
+                                                [checked]="rlCheck == 1" (change)="checkStart($event, 'rl')">
+                                            <label class="form-check-label fs12">TDS</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row mb-3">
+                                <div class="col-md-4"> <label for="email" class="form-label fs12">Admin</label></div>
+                                <div class="col-md-8"> <input type="text" class="form-control form-control-sm"
+                                        id="email" placeholder="" name="email" formControlName="Commission_AM" (keypress)="oneDotAfterTwoDigit($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Commission_AM'].errors }">
+                                    @if (submitted && f['Commission_AM'].errors) {
+                                    <div class="invalid-feedback">
+                                        @if (f['Commission_AM'].errors['required']) {
+                                        <div>Admin is required</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                        (click)="modal.close('Close click')">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <button type="button" class="btn btn-success w-100 btn-sm0"
+                        (click)="addPackageInfo()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Edit Commission</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+            <div class="row align-items-end">
+                <div class="col-md-12">
+                    <div class="mod-decor">
+                        <div class="row">
+                            <div class="first-ele00 position-relative mb-4">
+                                <div class="row align-items-end">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="pwd" class="form-label">Min.</label>
+                                            <input type="email" class="form-control form-control-sm" id="email"
+                                                name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="pwd" class="form-label">Min.</label>
+                                            <input type="email" class="form-control form-control-sm" id="email"
+                                                name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="">
+                                            <label for="pwd" class="form-label">Value</label>
+                                            <input type="email" class="form-control form-control-sm" id="email"
+                                                name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                    id="inlineRadio1" value="option1">
+                                                <label class="form-check-label" for="inlineRadio1">Fixed</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                    id="inlineRadio2" value="option2">
+                                                <label class="form-check-label" for="inlineRadio2">(%)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm-del"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn btn-sm-add">Add more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                        (click)="modal.close('Close click')">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <button type="button" class="btn btn-success w-100 btn-sm0">Submit</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+</section>

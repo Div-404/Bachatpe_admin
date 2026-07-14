@@ -1,0 +1,664 @@
+
+<section class="page">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="btn btn-outline-success btn-sm fs12 goback"  (click)="backButton()">
+                    <i  class="fa-solid fa-circle-arrow-left me-1"></i> Go to back
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header flex-center-between pt-3">
+                        <!-- <p class="mb-0 fw600"> Commission Master /{{shared.getVenderName(venderID)}} / {{apiName}}</p> -->
+
+                        <p class="mb-0 fw600"> Commission Master /{{vendorName}} / {{apiName}}</p>
+                        <!-- <div>
+                    <button class="btn btn-sm btn-success fs13 me-2" style="background: #30875200;  border-color: #308752;  color: #000000;"><i class="fa-solid fa-cloud-arrow-up"></i> Upload CSV File</button>
+                    <button class="btn btn-sm btn-success fs13" (click)="openLg(content)" (click)="openEnd(content)"> <i class="fa-solid fa-download"></i> Download Sample File </button>
+                   </div> -->
+                        <div class="d-flex">
+                            <div class=" me-3">
+                                <div class="pos-re">
+                                    <select class="form-select form-select-sm" (change)="selctFirstDro($event)">
+                                  
+                                        <option value="0">All</option>
+                                        @for (data of configDrop; track data) {
+                                        <option [value]=data.value>{{data.name}}</option>
+                                        }
+                                        <!-- <option disabled selected value>Recharge </option>
+                                        <option>Money Transfer</option>
+                                        <option>Recharge</option>
+                                        <option>Booking</option>
+                                        <option>Utility Bill</option>
+                                        <option>Miscellaneous</option> -->
+                                    </select>
+                                    <label for="">Service</label>
+                                </div>
+                            </div>
+                            @if (serviceEnable) {
+                            <div class=" me-3">
+                               <div class="pos-re">
+                                <select class="form-select form-select-sm" (change)="selectOperator($event)">
+                                    <!-- <option selected hidden> <i class="fa-solid fa-x">Select </i></option> -->
+                                    @for (data of serList; track data) {
+                                    <option [value]=data.SourceId>{{data.Source}}</option>
+                                    }
+                                    <!-- <option disabled selected value>Airtel </option>
+                                    <option>Airtel</option>
+                                    <option>Recharge</option>
+                                    <option>Booking</option>
+                                    <option>Utility Bill</option>
+                                    <option>Miscellaneous</option> -->
+                                </select>
+                                <label for="">Operator</label>
+                               </div>
+                            </div>
+                        }
+                            <button class="btn btn-sm btn-success pe-2 ps-2" (click)="openLg(content)"><i
+                                    style="color:#F8E000" class="fa-solid fa-code-branch me-2"></i>Configure </button>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+
+                            <div class="col-md-12">
+                                <div class="tblone00 table-responsive">
+                                    <table class="table table-bordered table-hover00">
+                                        @if (getCommList.length != 0) {
+                                        <thead>
+                                            <tr>
+                                                <th class="width-px100">Service</th>
+                                                <th class="width-px100">Operator</th>
+
+                                                <th class="width-px100">Min</th>
+                                                <th class="width-px100">Max.</th>
+                                                <th class="width-px100">Commission</th>
+                                                <th style="width: 40px;"></th>
+                                            </tr>
+                                        </thead>
+                                        }
+                                        <tbody>
+                                            <!-- @for (data of serviceName; track $index) { -->
+                                            <tr *ngFor="let data of serviceName">
+
+                                                <td class="pt-3 width-px130"><div class="badgeone">{{data.service}}</div>
+                                                </td>
+
+                                                <td colspan="5">
+                                                    <table class="table table-bordered" style="width: 100%;">
+
+                                                        <tbody>
+                                                            <tr *ngFor="let dd of getSourceData(data.SourceType)">
+                                                                <td class="width-px130">
+                                                                    <div class="badgetwo">{{dd.Service}}</div>
+                                                                </td>
+
+                                                                <td colspan="3">
+                                                                    <table class="table table-bordered"
+                                                                        style="width: 100%;">
+                                                                        <tbody>
+                                                                            <tr *ngFor="let dd1 of dd.lstComm">
+                                                                                <td class="width-px130">
+
+                                                                                    {{dd1?.oComm.Range_Min
+                                                                                    }}
+
+                                                                                </td>
+                                                                                <td class="width-px130">
+
+                                                                                    {{dd1?.oComm.Range_Max
+                                                                                    }}
+
+                                                                                </td>
+
+                                                                                <td class="width-px130"
+                                                                                    *ngIf="dd1.oComm.oType == 1">
+                                                                                    {{dd1.oComm.Fee}} %
+                                                                                </td>
+                                                                                <td class="width-px130"
+                                                                                    *ngIf="dd1.oComm.oType == 2">
+                                                                                    {{dd1.oComm.Fee}} ₹
+                                                                                </td>
+                                                                                <td class="width-px130">
+                                                                                    <div class="d-flex">
+                                                                                        <div class="for-edit"
+                                                                                            (click)="openLg2(content2, 'edit', dd1, dd)">
+                                                                                            <i
+                                                                                                class="fa-solid fa-pencil"></i>
+                                                                                        </div>
+                                                                                        <div class="for-delete"
+                                                                                            (click)="deleteComm(dd1)">
+                                                                                            <i
+                                                                                                class="fa-regular fa-trash-can"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td class="width-px130eee" style="width:40px">
+                                                                    <button class="btn btn-sm btn-magic"
+                                                                        (click)="openLg2(content2, 'add', dd, '')"><i
+                                                                            style="color:#F8E000"
+                                                                            class="fa-solid fa-circle-plus"></i>
+                                                                    </button>
+
+                                                                    <!-- </div> -->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <!-- } -->
+                                                    </table>
+                                                </td>
+                                                <!-- <td class="pt-3"><span class="bdg-n">{{data.Service}}</span></td>
+                                                <td colspan="3">
+                                                    @for (data1 of data.lstComm; track data1) {
+                                                    <table
+                                                        class="table tblone table-striped table-bordered table-hover mb-0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="width-px130">{{data1.oComm.Range_Max}}</td>
+                                                                <td class="width-px130">{{data1.oComm.Range_Min}}</td>
+                                                                <td class="width-px130">
+                                                                    <div class="setflex">
+                                                                        @if (data1.oComm.oType == 1){
+                                                                        <div class="typeflat">{{data1.oComm.Fee}} %
+                                                                        </div>
+                                                                        }
+                                                                        @if (data1.oComm.oType == 2){
+                                                                        <div class="typeflat">{{data1.oComm.Fee}} ₹
+                                                                        </div>
+                                                                        }
+                                                                        <div class="d-flex">
+                                                                            <div class="for-edit"
+                                                                                (click)="openLg2(content2, 'edit', data1, data)">
+                                                                                <i class="fa-solid fa-pencil"></i></div>
+                                                                            <div class="for-delete"
+                                                                                (click)="deleteComm(data1)"> <i
+                                                                                    class="fa-regular fa-trash-can"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    }
+                                                </td>
+                                                <td class="pt-3" style="width: 40px;">
+                                                    <button class="btn btn-sm btn-magic"
+                                                        (click)="openLg2(content2, 'add', data, '')"><i
+                                                            style="color:#F8E000" class="fa-solid fa-circle-plus"></i>
+                                                        Add More </button>
+                                                </td> -->
+                                            </tr>
+
+                                            <!-- } -->
+
+                                            <!-- @empty {
+                                                <tr>
+                                                    <td class="d-flex align-items-center justify-content-center" style="height: 400px;" colspan="11">
+                                                       <div class="text-center">
+                                                        <img style="height: 170px; opacity: 0.5;" class="bg-img  mb-3" src="assets/images/nodata1.png" alt="">
+                                                        <p class="p-img">No data found</p>
+                                                       </div>
+                                                    </td>
+                                                </tr>
+                                                } -->
+                                            <!-- <tr>
+                                       
+                                        <td class="pt-3">Recharge</td>
+                                       
+                                        <td colspan="3">
+                                            <table class="table tblone table-striped table-bordered table-hover mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="width-px130">0</td>
+                                                        <td class="width-px130">0</td>
+                                                        <td class="width-px130">
+                                                            <div class="setflex">
+                                                                <div class="typeflat">0 N/A</div>
+                                                                <div class="d-flex">
+                                                                    <div class="for-edit"><i class="fa-solid fa-pencil"></i></div>
+                                                                   <div class="for-delete"> <i class="fa-regular fa-trash-can"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                       <td class="pt-3" style="width: 40px;">
+                                        <button class="btn btn-sm btn-magic"><i style="color:#F8E000" class="fa-solid fa-circle-plus"></i> Add More </button>
+                                       </td>
+                                      </tr> -->
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <ng-template #content let-offcanvas>
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title">Commission</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+        </div>
+        <div class="offcanvas-body pt-0">
+           <div class="row">
+            <div class="col-md-12">
+                <div class="first-ele">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <label for="pwd" class="form-label">Commission Name</label>
+                                    <select class="form-select form-select-sm">
+                                        <option disabled selected value> </option>
+                                        <option>Money Transfer</option>
+                                        <option>Recharge</option>
+                                        <option>Booking</option>
+                                        <option>Utility Bill</option>
+                                        <option>Miscellaneous</option>
+                                    </select>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label for="pwd" class="form-label">Service</label>
+                                    <select class="form-select form-select-sm">
+                                        <option disabled selected value>  </option>
+                                        <option>DMT1</option>
+                                        <option>MyDMT</option>
+                                        <option>BookingTrain</option>
+                                        <option>AirtelOne</option>
+                                        <option>Airtel02</option>
+                                        <option>AEPS1</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2 apimng">
+                                <label for="pwd" class="form-label">Sub Category</label>
+                                <ng-multiselect-dropdown
+                                [placeholder]="''"
+                                [settings]="dropdownSettings"
+                                [data]="dropdownList"
+                                [(ngModel)]="selectedItems"
+                                (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)"
+                              >
+                              </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                   <div class="addpanel-scroll1">
+                    <div class="first-ele position-relative mb-4" >
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                                <div class="">
+                                    <label for="pwd" class="form-label">Min.</label>
+                                     <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="">
+                                    <label for="pwd" class="form-label">Min.</label>
+                                     <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="">
+                                    <label for="pwd" class="form-label">Value</label>
+                                     <input type="email" class="form-control form-control-sm" id="email"  name="email">
+                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"  value="option1">
+                                        <label class="form-check-label" for="inlineRadio1">Fixed</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <label class="form-check-label" for="inlineRadio2">(%)</label>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm-del"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-sm-add">Add more</button>
+                    </div>
+                   </div>
+                   <div class="jit-datashow">
+                        <div class="simpcard">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover mb-0">
+                                    <tbody>
+                                      <tr>
+                                       <td>Mobile</td>
+                                        <td>Mitra Pvt Ltd</td>
+                                        <td>1 - 99  <span>- 0.5%</span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499  <span>- 0.5(₹)</span></td>
+                                       </tr>
+                                       <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499 <span>- 0.5(₹)</span></td>
+                                       </tr>
+                                       <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499 <span>- 0.5%</span></td>
+                                       </tr>
+                                       <tr>
+                                        <td>Mobile</td>
+                                         <td>Mitra2</td>
+                                         <td>100 - 499 <span>- 0.5(₹)</span></td>
+                                       </tr>
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                   </div>
+            </div>
+           </div>
+        </div>
+        <div class="offcanvas-footer ">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-success w-100">Submit</button>
+                </div>
+            </div>
+        </div>
+    </ng-template> -->
+
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Commission Types</h4>
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+            <div class="row align-items-end">
+                <div class="col-md-12">
+                    <div class="mod-decor">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @for (data of configDrop; track data) {
+                                <div class="animcheck">
+                                    <label class="container-box">
+                                        <!-- <fieldset [disabled]="data.flag"> -->
+                                        <input type="checkbox" value="" [disabled]="data.flag" [checked]="data.flag"
+                                            (click)="changeCheckVal(data, $event)">
+                                            <!-- </fieldset> -->
+                                        <div class="checkmark"></div>
+                                        <span class="checklab">{{data.name}}</span>
+                                    </label>
+                                </div>
+                                }
+                            </div>
+                            <!-- <div class="col-md-12">
+                            <div class="animcheck">
+                                <label class="container-box">
+                                   
+                                    <input checked="" type="checkbox" value="2">
+                                    <div class="checkmark"></div>
+                                    <span class="checklab">Recharge</span>
+                                   
+                                  </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="animcheck">
+                                <label class="container-box">
+                                   
+                                    <input  type="checkbox" value="3">
+                                    <div class="checkmark"></div>
+                                    <span class="checklab">Booking</span>
+                                   
+                                  </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="animcheck">
+                                <label class="container-box">
+                                   
+                                    <input  type="checkbox" value="4">
+                                    <div class="checkmark"></div>
+                                    <span class="checklab">Utility</span>
+                                   
+                                  </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="animcheck">
+                                <label class="container-box">
+                                   
+                                    <input  type="checkbox" value="5">
+                                    <div class="checkmark"></div>
+                                    <span class="checklab">Miscellaneous</span>
+                                   
+                                  </label>
+                            </div>
+                        </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                        (click)="modal.close('Close click')">Close</button>
+                </div>
+                <div class="col-md-9">
+                    <fieldset  [disabled]="!buttonEnable">
+                    <button type="button" class="btn btn-success w-100 btn-sm0" (click)="addConfig()">Submit</button>
+                </fieldset>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+        <div class="modal-header">
+            @if (btnChng) {
+            <h4 class="modal-title">Add Commission</h4>
+            }
+            @if (!btnChng) {
+            <h4 class="modal-title">Edit Commission</h4>
+            }
+            <button type="button" class="btn-close2 btn" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+            <div class="row align-items-end">
+                <div class="col-md-12">
+                    <div class="mod-decor">
+                        <form [formGroup]="commForm">
+                            <div class="row">
+                                <div class="first-ele00 position-relative mb-4">
+                                    <div class="row align-items-end">
+                                        <div class="col-md-6">
+                                            <div class="">
+                                                <label for="pwd" class="form-label">Min.</label>
+                                                @if (btnChng) {
+                                                <input type="text" class="form-control form-control-sm" id="email"
+                                                   (keypress)="oneDotAfterTwoDigit($event)" name="email" formControlName="Range_Min" placeholder="Enter minimum"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['Range_Min'].errors }">
+                                                }
+                                                @if (!btnChng) {
+                                                <input type="text" class="form-control form-control-sm" id="email"
+                                                (keypress)="oneDotAfterTwoDigit($event)" name="email" formControlName="Range_Min" readonly
+                                                    [ngClass]="{ 'is-invalid': submitted && f['Range_Min'].errors }">
+                                                }
+                                                <!-- @if (submitted && f['Range_Min'].errors) {
+                                                    <div class="invalid-feedback">
+                                                        @if (f['Range_Min'].errors['required']) {
+                                                        <div>Range_Min is required</div>
+                                                        }
+                                                    </div>
+                                                    } -->
+                                                   <div class="errorbox">
+                                                    <div class="invalid-feedback" *ngIf="submitted && f['Range_Min'].errors">
+                                                        @if (f['Range_Min'].errors['required']) {
+                                                            <div>Range_Min is required</div>
+                                                        }
+                                                    </div>
+                                                   </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="">
+                                                <label for="pwd" class="form-label">Max.</label>
+                                                @if (btnChng) {
+                                                <input type="text" class="form-control form-control-sm" id="email"
+                                                (keypress)="oneDotAfterTwoDigit($event)"  name="email" formControlName="Range_Max" placeholder="Enter maximum"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['Range_Max'].errors }">
+                                                }
+                                                @if (!btnChng) {
+                                                <input type="text" class="form-control form-control-sm" id="email"
+                                                (keypress)="oneDotAfterTwoDigit($event)"   name="email" formControlName="Range_Max" readonly
+                                                    [ngClass]="{ 'is-invalid': submitted && f['Range_Max'].errors }">
+                                                }
+                                                <!-- @if (submitted && f['Range_Max'].errors) {
+                                                <div class="invalid-feedback">
+                                                    @if (f['Range_Max'].errors['required']) {
+                                                    <div>Source is required</div>
+                                                    }
+                                                </div>
+                                                } -->
+                                               <div class="errorbox">
+                                                <div class="invalid-feedback" *ngIf="submitted && f['Range_Max'].errors">
+                                                    @if (f['Range_Max'].errors['required']) {
+                                                        <div>Range_Max is required</div>
+                                                    }
+                                                </div>
+                                               </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="">
+                                                <label for="pwd" class="form-label">Commission Fee</label>
+                                                <input type="text" class="form-control form-control-sm" id="email"
+                                                (keypress)="oneDotAfterTwoDigit($event)"  name="email" formControlName="Fee" placeholder="Enter fee"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['Fee'].errors }">
+                                                <!-- @if (submitted && f['Fee'].errors) {
+                                                <div class="invalid-feedback">
+                                                    @if (f['Fee'].errors['required']) {
+                                                    <div>Fee is required</div>
+                                                    }
+                                                </div>
+                                                } -->
+
+                                               <div class="errorbox">
+                                                <div class="invalid-feedback" *ngIf="submitted && f['Fee'].errors">
+                                                    @if (f['Fee'].errors['required']) {
+                                                        <div>Fee is required</div>
+                                                    }
+                                                </div>
+                                               </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- @if (btnChng) { -->
+                                            <div class="d-flex">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" value=2
+                                                        formControlName="oType" (click)="radioChng($event)"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['oType'].errors }">
+                                                    @if (submitted && f['oType'].errors) {
+                                                    <div class="invalid-feedback0">
+                                                        @if (f['oType'].errors['required']) {
+                                                        <!-- <div>Fee is required</div> -->
+                                                        }
+                                                    </div>
+                                                    }
+                                                    <label class="form-check-label" for="inlineRadio1">Fixed</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" value=1
+                                                        formControlName="oType" (click)="radioChng($event)"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['oType'].errors }">
+                                                    @if (submitted && f['oType'].errors) {
+                                                    <div class="invalid-feedback0">
+                                                        @if (f['oType'].errors['required']) {
+                                                        <!-- <div>Fee is required</div> -->
+                                                        }
+                                                    </div>
+                                                    }
+                                                    <label class="form-check-label" for="inlineRadio2">(%)</label>
+
+                                                </div>
+                                            </div>
+                                            <div class="errorbox"></div>
+                                            <!-- } -->
+
+                                            <!-- @if (!btnChng) {
+                                    <div class="d-flex">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"   value="2"  (click)="radioChng($event)">
+                                            <label class="form-check-label" for="inlineRadio1">Fixed</label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"   value="1"  (click)="radioChng($event)">
+                                            <label class="form-check-label" for="inlineRadio2">(%)</label>
+                                            
+                                          </div>
+                                    </div>
+                                } -->
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm-del"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="btn btn-sm-add">Add more</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                        (click)="modal.close('Close click')">Close</button>
+                </div>
+                <div class="col-md-9">
+                    @if (btnChng) {
+                    <button type="button" class="btn btn-success w-100 btn-sm0" (click)="addComm()">Submit</button>
+                    }
+                    @if (!btnChng) {
+                    <button type="button" class="btn btn-success w-100 btn-sm0" (click)="editComm()">Update</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+</section>

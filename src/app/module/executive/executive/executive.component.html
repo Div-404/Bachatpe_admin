@@ -1,0 +1,283 @@
+<div class="page executives" style="margin-top: 52px; background: #fff; min-height: 94vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="nk-block-head-content">
+                        <h3 class="nk-block-title page-title">Executive </h3>
+                        <p>You can add executive tabs in this section. </p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-success"
+                            (click)="goToEexecUpdate('',0)"> <i  class="fa-solid fa-circle-plus me-2" style="color: #F8E000;"></i> Add
+                            Executive</button>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="executives-card p-3 pb-0">
+                    <div class="row">
+                        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mb-3"
+                            *ngFor="let data of executiveData">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h4 class="pb-0 mb-0"><i class='bx bx-user me-2'></i> {{data.Name}}</h4>
+                                        <div ngbDropdown class="d-inline-block">
+                                            <button type="button" class="btn btn-outline-primary drop" id="dropdownForm1"
+                                                ngbDropdownToggle><i class='bx bx-dots-vertical-rounded'></i></button>
+                                            <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                                                <!-- <button type="button" ngbDropdownItem
+                                                    (click)="openVerticallyCentered(content,data)"><i
+                                                        class='bx bxs-edit me-1'></i>
+                                                    Edit</button> -->
+                                                    <button type="button" ngbDropdownItem
+                                                    (click)="goToEexecUpdate(data,1)"><i
+                                                        class='bx bxs-edit me-1'></i>
+                                                    Edit</button>
+                                                <!-- <div class="dropdown-divider"></div>
+                                                <button type="button" ngbDropdownItem><i class='bx bx-trash me-1'></i>
+                                                    Delete</button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+    
+                                        <div class="status-text"><i class='bx bx-envelope me-2'></i> Email</div>
+                                        <div class="status-text-bold">
+                                            {{data.Email}}
+                                        </div>
+                                    </div>
+    
+                                    <hr class="mt-2 mb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+    
+                                        <div class="status-text"><i class='bx bx-phone me-2'></i> Phone</div>
+                                        <div class="status-text-bold">
+                                            {{data.Phone}}
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="status-text"><i class='bx bx-map me-2'></i> Country</div>
+                                        <div class="status-text-bold">
+                                            {{data.Country}}
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="status-text"><i class='bx bx-list-plus me-2'></i> Status</div>
+                                        <div class="status-text-bold">
+                                            <div class="badge-soft-success ng-pristine ng-valid ng-touched" *ngIf="data.Status==1">
+                                                <i class='bx bx-user-check me-1'></i> Active
+                                            </div>
+                                            <div class="badge-soft-danger ng-pristine ng-valid ng-touched" *ngIf="data.Status==0">
+                                                <i class='bx bx-user-check me-1' style="vertical-align: middle;"></i> In Active
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <hr class="mt-2 mb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="status-text"><i class='bx bx-user me-2'></i> Tab ID</div>
+                                        <div class="status-text-bold">
+                                            123456789
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="status-text"><i class='bx bx-user-plus me-2'></i> Sub Tab</div>
+                                        <div class="status-text-bold">
+                                            Add Currency Set
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title"><i class='bx bx-user-plus me-1'></i> Add Executive</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="login-right">
+            <div class="form">
+                
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title text-123">Add Executive </h3>
+                            <p class="mb-0">You may add an executive role right below.
+                            </p>
+                        </div>
+                        <hr class="mt-2 mb-3">
+                        <form [formGroup]="execForm">
+                        <div class="row">
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <input type="text" id="email" formControlName="name" [ngClass]="{ 'is-invalid': execForm.get('name').touched && execForm.get('name').invalid }"
+                                        required>
+                                    <label for="email">Executive Name</label>
+                                    <div *ngIf="execForm.get('name').touched && execForm.get('name').invalid"
+                                    class="invalid-feedback">
+                                    <div *ngIf="execForm.get('name').errors.required">Value
+                                        is Required.</div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <input type="text" id="email"  formControlName="email" [ngClass]="{ 'is-invalid': execForm.get('email').touched && execForm.get('email').invalid }" required>
+                                    <label for="email">Email Id</label>
+                                    <div *ngIf="execForm.get('email').touched && execForm.get('email').invalid"
+                                    class="invalid-feedback">
+                                    <div *ngIf="execForm.get('email').errors.required">Value
+                                        is Required.</div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <input type="text" id="email"  formControlName="phone" [ngClass]="{ 'is-invalid': execForm.get('phone').touched && execForm.get('phone').invalid }"  required>
+                                    <label for="email">Phone</label>
+                                    <div *ngIf="execForm.get('phone').touched && execForm.get('phone').invalid"
+                                    class="invalid-feedback">
+                                    <div *ngIf="execForm.get('phone').errors.required">Value
+                                        is Required.</div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <input type="text" id="email" formControlName="country" [ngClass]="{ 'is-invalid': execForm.get('country').touched && execForm.get('country').invalid }" required>
+                                    <label for="email">Country</label>
+                                    <div *ngIf="execForm.get('country').touched && execForm.get('country').invalid"
+                                    class="invalid-feedback">
+                                    <div *ngIf="execForm.get('country').errors.required">Value
+                                        is Required.</div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                <div class="custom-select">
+                                    <ng-select formControlName="status" [ngClass]="{ 'is-invalid': execForm.get('status').touched && execForm.get('status').invalid }">
+                                        <ng-option value="1">Active</ng-option>
+                                        <ng-option value="0">In Active</ng-option>
+                                    </ng-select>
+                                    <label class="custom-lable" for="currencyset">Status</label>
+                                    <div *ngIf="execForm.get('status').touched && execForm.get('status').invalid"
+                                    class="invalid-feedback">
+                                    <div *ngIf="execForm.get('status').errors.required">Value
+                                        is Required.</div>
+                                </div>
+                                </div>
+                            </div>
+                          
+                            </div>
+
+
+                        </form>
+
+                            <div class="row">
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="nk-block-head-content ">
+                                        <h3 class="nk-block-title page-title text-123">Required Module</h3>
+                                        <p class="mb-0"> You may add an module right below.
+                                        </p>
+                                    </div>
+    
+                                    <div class="height">
+                                        <hr class="mt-2 mb-3">
+                                    
+            <ng-select  [(ngModel)]="masterMdule"  (change)="onMasterIDChange($event)">
+                <ng-option *ngFor="let master of masterOptions" [value]="master.id">{{ master.name }}</ng-option>
+              </ng-select>
+    <ng-select [(ngModel)]="subModule" (change)="onSubModuleChange($event)" >
+                <ng-option *ngFor="let submaster of subMasterOptions" [value]="submaster">{{ submaster.name }}</ng-option>
+              </ng-select>
+
+              <input type="checkbox" [(ngModel)]="add" >
+              <input type="checkbox" [(ngModel)]="edit" >
+              <input type="checkbox" [(ngModel)]="delete" >
+              <input type="checkbox" [(ngModel)]="Access" >
+              
+              <button (click)="addMoreDataFunc()">Addmore</button>
+    <div *ngFor="let data of addMoreData; let i=index">
+        
+    
+        <div *ngFor="let dd of data?.SubMasters">
+        <h1 *ngFor="let master of masterOptions"> <span *ngIf="master.id==data.MasterID"> 
+    
+            {{master.name}}
+        </span>  </h1>
+         
+    
+    
+    <p *ngFor="let submaster of subMasterData">
+        
+        <span *ngIf="submaster.SubMasterID==dd.SubMasterID">{{dd.SubMaster}}</span>
+    
+    
+    <span>
+
+
+    </span>
+    
+    
+    
+    
+    
+    </p>
+    
+    <input type="checkbox" [(ngModel)]="dd.Add"  checked={{dd.Add}} (change)="getCheckboxValue($event,i,dd,0)">
+    <input type="checkbox" [(ngModel)]="dd.Edit"  checked={{dd.Edit}} (change)="getCheckboxValue($event,i,dd,1)">
+    <input type="checkbox" [(ngModel)]="dd.Access"  checked={{dd.Access}} (change)="getCheckboxValue($event,i,dd,2)">
+    <input type="checkbox" [(ngModel)]="dd.Delete"  checked={{dd.Delete}} (change)="getCheckboxValue($event,i,dd, 3)">
+
+
+
+    
+    
+        </div>
+    
+    
+    </div>
+    
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light add-button" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-light close-button" *ngIf="!getEditData" (click)="addExecutive()">Submit</button>
+        <button type="button" class="btn btn-light close-button"  *ngIf="getEditData" (click)="updateUserPermissions()">Update Permissions</button>
+    </div>
+
+
+ 
+</ng-template> -->

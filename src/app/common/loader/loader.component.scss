@@ -1,0 +1,50 @@
+
+     
+ .loader-body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000000a8;
+    z-index: 99999;
+    position: fixed;
+    }
+        .loader { 
+           border: 6px solid #4e4e4e;
+    border-top: 6px solid #f1b435;
+    border-radius: 50%;
+    width: 66px;
+    height: 66px;
+    animation: spinloader 2s linear infinite;
+        } 
+  
+        .loader img { 
+            width: 54px; 
+            animation: spinlogo 2s linear infinite; 
+            padding:2px;
+        } 
+  
+        @keyframes spinloader { 
+            0% { 
+                transform: rotate(0deg); 
+            } 
+  
+            100% { 
+                transform: rotate(360deg); 
+            } 
+        } 
+  
+        @keyframes spinlogo { 
+            0% { 
+                transform: rotate(360deg); 
+            } 
+  
+            100% { 
+                transform: rotate(0deg); 
+            } 
+        } 
+
+
+
+

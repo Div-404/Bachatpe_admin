@@ -1,0 +1,76 @@
+.form-label {
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.greencard{
+   
+    background-color: #2D684E;
+    p{
+  color: #fff;
+    }
+    i{
+        color:#56d190
+    }
+}
+
+
+.btn-outline-success{
+    background: #fff;
+}
+
+.mngcard{
+    .card{
+        transition: all 0.2s;
+        &:hover{
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+            transform: scale(1.01);
+        }
+    }
+}
+
+.ol-list{
+    padding-left: 0px;
+    margin-bottom: 0px;
+    li{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 8px;
+        border-bottom: solid 1px #e3e3e3;
+        background: #fff;
+            p{
+                margin-bottom: 0px;
+            }
+            .fa-pencil{color:#919191}
+            .fa-trash-can{
+                color:red
+            }
+            
+    }
+}
+
+.card-body{
+    min-height: 268px;
+    padding: 8px;
+    .ol-list{
+        padding:10px;
+        background: #f5faff;
+        border-radius: 6px;
+    }
+}
+
+.float-ar{
+    position: relative;
+    .float-lb{
+        position: absolute;
+    top: -9px;
+    font-size: 12px;
+    margin-left: 8px;
+    background: linear-gradient(to bottom, #fff 0%, #fff 50%, #f9f9f9 50%, #f9f9f9 100%);
+    padding:0px 6px
+    }
+}
+
+

@@ -1,0 +1,130 @@
+<section class="page">
+    <div class="container">
+        <div class="row pt-1">
+            <div class="col-md-12 mb-3">
+                <div class="btn btn-outline-success btn-sm fs12 goback" (click)="goBack()"><i  class="fa-solid fa-circle-arrow-left me-1"></i> Go to back </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card">
+                    <!-- <div class="card-header greencard">
+                       User Details
+                    </div> -->
+                   <div class="card-body555">
+                    <ul class="userdetails-ul mb-0">
+                        <li>
+                            <div class="lbl">Name</div>
+                            <div class="val">{{First}}  {{Last}}</div>
+                        </li>
+                        <li>
+                            <div class="lbl">Code</div>
+                            <div class="val">{{Code}}</div>
+                        </li>
+                        <li>
+                            <div class="lbl">Type</div>
+                            @if (UserType == 1) {
+                            <div class="val utypes">Master Distributor</div>
+                            }
+                            @if (UserType == 2) {
+                                <div class="val utypes">Distributor</div>
+                                }
+                                @if (UserType == 3) {
+                                    <div class="val utypes">Retailer</div>
+                                    }
+                        </li>
+                        <li (click)="showService()">
+                            <div class="lbl">Active Package</div>
+                            <div class="val upack">{{pkgName}} <i class="fa-solid fa-angle-down mr-1 me-1"></i></div>
+                        </li>
+                    </ul>
+                   </div>
+                   <!-- @if (serviceEn) {
+                   <div class="ps-3 activepack-div pt-3">
+                    
+                    <ul class="activepack pt-">
+                        @for (data of currentService; track data) {
+                        <li>
+                            
+                            <div class="val2">{{getServiceName(data)}}</div>
+                        </li>
+                    }
+                    </ul>
+               
+                   </div>
+                } -->
+
+                @if (serviceEn) {
+                    <div class="ps-3 activepack-div pt-3">
+                     
+                     <ul class="activepack pt-">
+                         @for (data of currentService; track data) {
+                         <li class="pe-3">
+                            <div class="val2" >{{getServiceName(data)}}</div>                   
+                            <i class="fa-regular fa-eye" (click)="viewToNavigateActivePkg(data)"></i>
+                         </li>
+                     }
+                     </ul>
+                
+                    </div>
+                 }
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card p-3">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Select Package</label>
+                        <select class="form-select" (change)=selectpkg($event) [(ngModel)]="selecPkgVal">
+                            <option value="0"  selected hidden>Select</option>
+                            @for(item of allPkgList; track item.id; let i = $index) {
+                            <option [value]="i">{{ item.oPkg.Commission | number:'1.2-2' }}</option>
+                            }
+                            <!-- <option>2</option>
+                            <option>3</option>
+                            <option>4</option> -->
+                          </select>
+                    </div>
+                    <label for="email" class="form-label mb-3">Package Details</label>
+                    
+                    <div class="package-div p-2">
+                        <ul class="package-details">
+
+                            @for (pkg of serviceList; track pkg.id) {
+                               
+                            <li>
+                                @if(pkg == 1){
+                                <p class="mb-0">Money Transfer</p>
+                                }
+                                @if(pkg == 2){
+                                    <p class="mb-0">Recharge</p>
+                                    }
+                                    @if(pkg == 3){
+                                        <p class="mb-0">Booking</p>
+                                        }
+                                        @if(pkg == 4){
+                                            <p class="mb-0">Utility</p>
+                                            }
+                                            @if(pkg == 5){
+                                                <p class="mb-0">Miscellaneous</p>
+                                                }
+                                <div class="d-flex">
+                                                    
+                                    <i class="fa-regular fa-eye" (click)="viewToNavigate(pkg)"></i>
+                                </div>
+                            </li>
+                            }
+                            <!-- <li><p class="mb-0">Recharge </p></li>
+                            <li><p class="mb-0">Booking </p></li> -->
+                        </ul>
+                    </div>
+                    <!-- <div class="mt-5">
+                        <button class="btn btn-success w-100" [disabled]="!buttonEnable" (click)="updateComm()">Update package</button>
+                    </div> -->
+                    <div class="d-flex justify-content-end">
+   <button class="btn btn-success" disabled="allPkgList.length>1" (click)="updateComm()">Update package</button>
+</div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
