@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
 // import 'jspdf-autotable';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
+import * as XLSX from 'xlsx';
 import { HttpClient } from '@angular/common/http';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationService } from '../../servies/pagination.service';
@@ -721,6 +722,63 @@ export class PaymentByManualComponent implements OnInit, AfterViewInit {
     this.toster.success('Reference copied successfully.', "Success");
   }
 
+  // =========================================================== export =====================================================
+  private fetchAllPayments(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const dtFrom = this.byManualAdminForm.value.dtFrom + " 00:00:01";
+      const dtTo = this.byManualAdminForm.value.dtTo + " 23:59:59";
+      const obj = {
+        dtFrom, dtTo,
+        Value: this.searchValue || '',
+        oType: this.selectedFilter,
+        Initial: 1,
+        MaxCount: this.Count || 999999,
+        Reserve1: this.statusFilter,
+        Reserve2: "1",
+      };
+      this.api.getManualTranRec(obj).subscribe({
+        next: (res: any) => resolve(res?.oTrans || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAllPayments();
+    const rows = items.map((item: any) => ({
+      Timestamp: item.Timestamp || '',
+      Code: item.UserCode || '',
+      User: item.UserName || '',
+      Email: item.Email || '',
+      Amount: item.Amount || '',
+      Bank: item.BankName || '',
+      Reference: item.Reference || '',
+      Status: item.Status ?? '',
+      UTR: item.UTR || ''
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'PaymentsManual', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAllPayments();
+    const rows = items.map((item: any) => ({
+      Timestamp: item.Timestamp || '',
+      Code: item.UserCode || '',
+      User: item.UserName || '',
+      Email: item.Email || '',
+      Amount: item.Amount || '',
+      Bank: item.BankName || '',
+      Reference: item.Reference || '',
+      Status: item.Status ?? '',
+      UTR: item.UTR || ''
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Payments');
+    XLSX.writeFile(wb, 'PaymentsManual.xlsx');
+  }
   // =========================================================== pagination ===============================================
 
 

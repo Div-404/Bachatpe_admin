@@ -1,15 +1,14 @@
+<div class="row">
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="d-flex justify-content-between align-items-center mb-4 ">
+            <div class="nk-block-head-content">
+                <p class="mb-0 fw600">History </p>
 
-        <div class="row">
-            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="d-flex justify-content-between align-items-center mb-4 ">
-                    <div class="nk-block-head-content">
-                        <p class="mb-0 fw600">History  </p>
-                       
-                    </div>
-                </div>
             </div>
         </div>
-        <!-- <div class="row">
+    </div>
+</div>
+<!-- <div class="row">
             <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="usercard uc-bg1">
                     <div>
@@ -50,107 +49,105 @@
                 </div>
             </div>
         </div> -->
-        <div class="row">
-            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center justify-content-start">
-                                        <div class="me-2 custom-select selected">
-                                            <ng-select class="wid-20 " (change)="onStatusChange($event)" [(ngModel)]="statusFilter">
-                                                <ng-option [value]="0">Overall</ng-option>
-                                                <ng-option [value]="1">Pending</ng-option>
-                                                <ng-option [value]="5">Approved</ng-option>
-                                                <ng-option [value]="3">Rejected</ng-option>
-                                               
-                                            </ng-select>
-                                            <label [class.selected]="statusFilter">Status</label>
-                                        </div>
-                                        <div class="me-3 custom-select selected">
-                                            <ng-select class="wid-20 " [(ngModel)]="oFilter" [clearOnBackspace]="false"
-                                            (change)="showDateRange($event)">
-                                            
-                                            <ng-option [value]="1">Last 1 Week</ng-option>
-                                            <ng-option [value]="2"> Last 1 Month</ng-option>
-                                            <ng-option [value]="3">Last 3 Months</ng-option>
-                                            <ng-option [value]="4">Last 1 Year</ng-option>
-                                            <ng-option [value]="5">Custom</ng-option>
-                                        </ng-select>
-                                        <label [class.selected]="oFilter">Date</label>
-                                        </div>
-                                        <div class="date" *ngIf="activeClass == 1">
-                                            <form [formGroup]="byManualAdminForm">
-                                                <div class="d-flex">
-                                                    <div class="wid-20 me-2">
-                                                        <div class="login-right">
-                                                            <div class="form">
-                                                                <div class="form-group pos-res mb-0">
-                                                                    <input type="date"  id="dtFrom" formControlName="dtFrom"
-                                                                        class="pad-b form-control">
-                                                                    <label for="dtStart">From</label>
-                                                                </div>
-                                                            </div>
+<div class="row">
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-start">
+                                <div class="me-2 custom-select selected">
+                                    <ng-select class="wid-20 " (change)="onStatusChange($event)"
+                                        [(ngModel)]="statusFilter">
+                                        <ng-option [value]="0">Overall</ng-option>
+                                        <ng-option [value]="1">Pending</ng-option>
+                                        <ng-option [value]="5">Approved</ng-option>
+                                        <ng-option [value]="3">Rejected</ng-option>
+
+                                    </ng-select>
+                                    <label [class.selected]="statusFilter">Status</label>
+                                </div>
+                                <div class="me-3 custom-select selected">
+                                    <ng-select class="wid-20 " [(ngModel)]="oFilter" [clearOnBackspace]="false"
+                                        (change)="showDateRange($event)">
+
+                                        <ng-option [value]="1">Last 1 Week</ng-option>
+                                        <ng-option [value]="2"> Last 1 Month</ng-option>
+                                        <ng-option [value]="3">Last 3 Months</ng-option>
+                                        <ng-option [value]="4">Last 1 Year</ng-option>
+                                        <ng-option [value]="5">Custom</ng-option>
+                                    </ng-select>
+                                    <label [class.selected]="oFilter">Date</label>
+                                </div>
+                                <div class="date" *ngIf="activeClass == 1">
+                                    <form [formGroup]="byManualAdminForm">
+                                        <div class="d-flex">
+                                            <div class="wid-20 me-2">
+                                                <div class="login-right">
+                                                    <div class="form">
+                                                        <div class="form-group pos-res mb-0">
+                                                            <input type="date" id="dtFrom" formControlName="dtFrom"
+                                                                class="pad-b form-control">
+                                                            <label for="dtStart">From</label>
                                                         </div>
                                                     </div>
-                                                    <div class="wid-20">
-                                                        <div class="login-right">
-                                                            <div class="form">
-                                                                <div class="form-group pos-res mb-0">
-                                                                    <input type="date"  id="dtTo" formControlName="dtTo"
-                                                                        class="pad-b form-control">
-                                                                    <label for="dtEnd">To</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
                                                 </div>
-                                            </form>
-                                            
-                                        </div>
-                                        <div class="ms-2" *ngIf="activeClass == 1">
-                                            <button type="submit"
-                                                class="btn btn-success align-items-right  fw-500"
-                                                [disabled]="byManualAdminForm.invalid"
-                                                (click)="search()"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="me-2 custom-select mer-t selected"
-                                                [class.selected]="selectedFilter">
-                                                <ng-select class="wid-20" [(ngModel)]="selectedFilter" (change)="onSearchTypeChange($event)">
-                                                    <ng-option [value]="0" selected disabled>Select </ng-option>
-                                                    <ng-option [value]="8">By User Code </ng-option>
-                                                    <ng-option [value]="1">By Name</ng-option>
-                                                    <!-- <ng-option [value]="2">By Email</ng-option> -->
-                                                    <ng-option [value]="7">By Phone</ng-option>
-                                                </ng-select>
-                                                <label [class.selected]="selectedFilter">Filter Type</label>
                                             </div>
-                                            <div *ngIf="selectedFilter > 0" class="pos-res filter-width me-2">
-                                                <input type="text" [(ngModel)]="searchValue" placeholder="Enter search value" 
-                                                       class="form-control fs12" (input)="onSearchInput($event)" />
-                                                <div *ngIf="filteredUsers.length > 0" class="dropdown-menu show">
-                                                  <button class="dropdown-item fs12" *ngFor="let user of filteredUsers" 
-                                                          (click)="onUserSelect(user)">
-                                                   {{user.Code}} -  {{ user.Name }} - {{ user.Phone }} 
-                                                  </button>
+                                            <div class="wid-20">
+                                                <div class="login-right">
+                                                    <div class="form">
+                                                        <div class="form-group pos-res mb-0">
+                                                            <input type="date" id="dtTo" formControlName="dtTo"
+                                                                class="pad-b form-control">
+                                                            <label for="dtEnd">To</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
-                                               
-                                                    <label *ngIf="errorMessage" class="text-danger ">{{ errorMessage }}</label>
-                                              </div>
-                                              <button *ngIf="searching == true" class="btn search-icon"
-                                              [disabled]="!(selectedFilter && searchValue)"
-                                              (click)="typeFilter(selectedFilter)"><i
-                                                  class='bx bx-search-alt'></i></button>
-                                          <button *ngIf="searching == false" type="button" class="btn search-icon"
-                                              aria-label="Close" (click)="clearSearch()"><i
-                                                  class='bx bx-x'></i></button>
-                                            <!-- <div class="d-flex align-items-center justify-content-start ms-2">
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <div class="ms-2" *ngIf="activeClass == 1">
+                                    <button type="submit" class="btn btn-success align-items-right  fw-500"
+                                        [disabled]="byManualAdminForm.invalid" (click)="search()"><i
+                                            class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="me-2 custom-select mer-t selected" [class.selected]="selectedFilter">
+                                        <ng-select class="wid-20" [(ngModel)]="selectedFilter"
+                                            (change)="onSearchTypeChange($event)">
+                                            <ng-option [value]="0" selected disabled>Select </ng-option>
+                                            <ng-option [value]="8">By User Code </ng-option>
+                                            <ng-option [value]="1">By Name</ng-option>
+                                            <!-- <ng-option [value]="2">By Email</ng-option> -->
+                                            <ng-option [value]="7">By Phone</ng-option>
+                                        </ng-select>
+                                        <label [class.selected]="selectedFilter">Filter Type</label>
+                                    </div>
+                                    <div *ngIf="selectedFilter > 0" class="pos-res filter-width me-2">
+                                        <input type="text" [(ngModel)]="searchValue" placeholder="Enter search value"
+                                            class="form-control fs12" (input)="onSearchInput($event)" />
+                                        <div *ngIf="filteredUsers.length > 0" class="dropdown-menu show">
+                                            <button class="dropdown-item fs12" *ngFor="let user of filteredUsers"
+                                                (click)="onUserSelect(user)">
+                                                {{user.Code}} - {{ user.Name }} - {{ user.Phone }}
+                                            </button>
+                                        </div>
+
+
+                                        <label *ngIf="errorMessage" class="text-danger ">{{ errorMessage }}</label>
+                                    </div>
+                                    <button *ngIf="searching == true" class="btn search-icon"
+                                        [disabled]="!(selectedFilter && searchValue)"
+                                        (click)="typeFilter(selectedFilter)"><i class='bx bx-search-alt'></i></button>
+                                    <button *ngIf="searching == false" type="button" class="btn search-icon"
+                                        aria-label="Close" (click)="clearSearch()"><i class='bx bx-x'></i></button>
+                                    <!-- <div class="d-flex align-items-center justify-content-start ms-2">
                                                 <button placement="top" ngbTooltip="Export Excel" class="btn icon-circle export me-2" (click)="exportCsv()">
                                                     <i class='bx bx-download icon text-center'></i>
                                                     </button>
@@ -159,140 +156,148 @@
                                                         <i class='bx bx-file text-center'></i>
                                                       </button>
                                             </div> -->
-    
-                                            <!-- <div   class="ms-2">
+
+                                    <!-- <div   class="ms-2">
                                                 <button type="submit"  (click)="resetFilters()"
                                                     class="btn btn-default send-money align-items-right fw-500">Reset Filters</button>
                                             </div> -->
-                                        </div>
+                                    <div class="ms-2 d-flex gap-2">
+                                        <button class="btn btn-outline-success btn-lg" (click)="exportCsv()"
+                                            title="Download CSV"><i class="fa-solid fa-file-csv"></i></button>
+                                        <button class="btn btn-outline-primary btn-lg" (click)="exportExcel()"
+                                            title="Download Excel"><i class="fa-solid fa-file-excel"></i></button>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="table-responsive">
-                                    <table
-                                        class="table table-bordered text-nowrap border-bottom no-footer table-hover table-striped mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Timestamp</th>
-                                                <th>Code </th>
-                                                <th>User</th>
-                                                <!-- <th>Currency</th> -->
-                                                <th>Amount</th>
-                                                <th>Source</th>
-                                                <!-- <th>UTR No.</th> -->
-                                                <th>Reference No.</th>
-                                                <!-- <th>Source</th> -->
-                                                <th>Status</th>
-                                                <th>Receipt</th>
-                                                <th>UTR</th>
-                                                <th>Remarks</th>
-                                                <!-- <th>Action</th> -->
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            @for (data of byManualData; track $index) {
-                                            <tr >
-                                                <td>
-                                                    <p class="text-muted00 mb-0">{{ data.Timestamp | date: 'yyyy-MM-dd HH:mm' }}</p>
-                                                </td>
-    
-    
-                                                <td>
-                                                    <div placement="top" ngbTooltip="{{data.Phone}}">
-                                                        <p class="tb-lead mb-0"> {{data.UserCode}}</p>
-                                                       
-                                                    </div>
-                                                </td>
-                                                <td> <p class="mb-0">{{data.UserName}}</p>
-                                                    <p class="mb-0">{{data.Email}}</p>
-                                                </td>
-                                              
-                                                <td class="text-orange-bold">
-                                                    {{data.Amount | number:'1.2-2'}}
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <div>
-                                                            {{data.BankName}}
-                                                        </div>
-                                                        <div>
-                                                            <span class="badge rounded-pill badge-soft-success width80 p-2"
-                                                            *ngIf="data.Source ==1" placement="top" ngbTooltip="Bank">
-                                                            <i class="bx bx-credit-card-front"></i> 
-                                                        </span>
-                                                        <span class="badge rounded-pill badge-soft-warning width80 p-2"
-                                                            *ngIf="data.Source == 2" placement="top" ngbTooltip="Crypto"><i
-                                                                class='bx bx-wallet'></i>
-                                                        </span>
-                                                        <span class="badge rounded-pill badge-soft-pink width80 p-2"
-                                                            *ngIf="data.Source == 3" placement="top" ngbTooltip="Wallet"><i
-                                                                class='bx bxs-bank'></i>
-                                                        </span>
-                                                        <span class="badge rounded-pill badge-soft-primary width80 p-2"
-                                                            *ngIf="data.Source == 4" placement="top" ngbTooltip="UPI"><i
-                                                                class='bx bx-qr-scan'></i>
-                                                        </span>
-                                                        <span class="badge rounded-pill badge-soft-dark width80 p-2"
-                                                            *ngIf="data.Source==5" placement="top" ngbTooltip="Cash"><i class="fa-solid fa-money-bill-wave"></i>
-                                                        </span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="mng-copy">
-                                                        <p class="mb-0">{{data.Reference}} </p>
-                                                    <button class="btn btn-soft-warning btn-sm ms-2" (click)="copyDetails(data.Reference)"><i class="fa-regular fa-copy"></i></button>
-                                                    </div>
-                                                </td>
-                                              
-                                               
-                                               
-                                                <td>
-                                                    <span
-                                                        [ngClass]="{
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="table-responsive">
+                            <table
+                                class="table table-bordered text-nowrap border-bottom no-footer table-hover table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Code </th>
+                                        <th>User</th>
+                                        <!-- <th>Currency</th> -->
+                                        <th>Amount</th>
+                                        <th>Source</th>
+                                        <!-- <th>UTR No.</th> -->
+                                        <th>Reference No.</th>
+                                        <!-- <th>Source</th> -->
+                                        <th>Status</th>
+                                        <th>Receipt</th>
+                                        <th>UTR</th>
+                                        <th>Remarks</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (data of byManualData; track $index) {
+                                    <tr>
+                                        <td>
+                                            <p class="text-muted00 mb-0">{{ data.Timestamp | date: 'yyyy-MM-dd HH:mm' }}
+                                            </p>
+                                        </td>
+
+
+                                        <td>
+                                            <div placement="top" ngbTooltip="{{data.Phone}}">
+                                                <p class="tb-lead mb-0"> {{data.UserCode}}</p>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{data.UserName}}</p>
+                                            <p class="mb-0">{{data.Email}}</p>
+                                        </td>
+
+                                        <td class="text-orange-bold">
+                                            {{data.Amount | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    {{data.BankName}}
+                                                </div>
+                                                <div>
+                                                    <span class="badge rounded-pill badge-soft-success width80 p-2"
+                                                        *ngIf="data.Source ==1" placement="top" ngbTooltip="Bank">
+                                                        <i class="bx bx-credit-card-front"></i>
+                                                    </span>
+                                                    <span class="badge rounded-pill badge-soft-warning width80 p-2"
+                                                        *ngIf="data.Source == 2" placement="top" ngbTooltip="Crypto"><i
+                                                            class='bx bx-wallet'></i>
+                                                    </span>
+                                                    <span class="badge rounded-pill badge-soft-pink width80 p-2"
+                                                        *ngIf="data.Source == 3" placement="top" ngbTooltip="Wallet"><i
+                                                            class='bx bxs-bank'></i>
+                                                    </span>
+                                                    <span class="badge rounded-pill badge-soft-primary width80 p-2"
+                                                        *ngIf="data.Source == 4" placement="top" ngbTooltip="UPI"><i
+                                                            class='bx bx-qr-scan'></i>
+                                                    </span>
+                                                    <span class="badge rounded-pill badge-soft-dark width80 p-2"
+                                                        *ngIf="data.Source==5" placement="top" ngbTooltip="Cash"><i
+                                                            class="fa-solid fa-money-bill-wave"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="mng-copy">
+                                                <p class="mb-0">{{data.Reference}} </p>
+                                                <button class="btn btn-soft-warning btn-sm ms-2"
+                                                    (click)="copyDetails(data.Reference)"><i
+                                                        class="fa-regular fa-copy"></i></button>
+                                            </div>
+                                        </td>
+
+
+
+                                        <td>
+                                            <span [ngClass]="{
                                                             'badge-soft-warning': data.Status === 1,
                                                             'badge-soft-success': data.Status === 5,
                                                             'badge-soft-danger': data.Status === 3
-                                                        }"
-                                                        style="cursor: default;">
-                                                        {{ getStatusText(data.Status) }}
-                                                    </span>
-                                                </td>
-                                                <td  style="cursor: pointer;">
-                                                    <div
-                                                        class="d-flex align-items-center justify-content-start base-currency"  (click)="previewImg(uploadimagepreview,data)"><!--bindings={
+                                                        }" style="cursor: default;">
+                                                {{ getStatusText(data.Status) }}
+                                            </span>
+                                        </td>
+                                        <td style="cursor: pointer;">
+                                            <div class="d-flex align-items-center justify-content-start base-currency"
+                                                (click)="previewImg(uploadimagepreview,data)"><!--bindings={
                                                         "(click)="previewImg(uploadimagepreview)" ng-reflect-ng-if": "false"
                                                       }-->
-                                                      <div class="me-2 white-icon ng-star-inserted"
-                                                      *ngIf="data.Receipt==''"><img
-                                                          src="assets/images/no-image-pic.png" width="30px"></div>
-                                                  <div class="me-2 white-icon ng-star-inserted"
-                                                      *ngIf="data.Receipt!=''"><img
-                                                          src="{{data.Receipt}}" width="30px" ></div>
-                                                        <!--bindings={
+                                                <div class="me-2 white-icon ng-star-inserted" *ngIf="data.Receipt==''">
+                                                    <img src="assets/images/no-image-pic.png" width="30px"></div>
+                                                <div class="me-2 white-icon ng-star-inserted" *ngIf="data.Receipt!=''">
+                                                    <img src="{{data.Receipt}}" width="30px"></div>
+                                                <!--bindings={
                                                         "ng-reflect-ng-if": "true"
                                                       }-->
-                                                        <p class="mb-0 fw-400"></p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-muted00 mb-0">{{ data.UTR }}</p>
-                                                </td>
-                                                <td class="view "  >
-                                                    <div class="d-flex align-items-center justify-content-start">
-                                                        <div class="position-relative me-3">
-                                                            <!-- <div class="notification-btn">
+                                                <p class="mb-0 fw-400"></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-muted00 mb-0">{{ data.UTR }}</p>
+                                        </td>
+                                        <td class="view ">
+                                            <div class="d-flex align-items-center justify-content-start">
+                                                <div class="position-relative me-3">
+                                                    <!-- <div class="notification-btn">
                                                                 <i class='bx bx-bell'></i>
                                                                 <div class="position-absolute small-icon">
                                                                     2
                                                                 </div>
                                                             </div> -->
-                                                        </div>
-                                                        <div (click)="chatAdmin(data)">View Remarks <sup class="custom-sup" *ngIf="data.UnReadCount > 0">{{data.UnReadCount}}</sup></div>
-                                                    </div>
-                                                    
-                                                </td>
-                                                <!-- <td >
+                                                </div>
+                                                <div (click)="chatAdmin(data)">View Remarks <sup class="custom-sup"
+                                                        *ngIf="data.UnReadCount > 0">{{data.UnReadCount}}</sup></div>
+                                            </div>
+
+                                        </td>
+                                        <!-- <td >
                                                     <div ngbDropdown container="body">
                                                         <button type="button" class="btn btn-soft-warning btn-sm" ngbDropdownToggle>
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -303,26 +308,27 @@
                                                         </div>
                                                     </div>
                                                 </td> -->
-                                            </tr>
-                                        } @empty {
-                                           
-                                        }
-    
-    
-                                        </tbody>
-                                        <tbody *ngIf="byManualData.length === 0">
-                                            <tr>
-                                                <td colspan="10">
-                                                    <div class="no-data-container">
-                                                        <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
-                                                        <h5 class="no-data-text">No Data Found.</h5>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                <div class="d-flex align-items-center gap-2" *ngIf="count > 0">
+                                    </tr>
+                                    } @empty {
+
+                                    }
+
+
+                                </tbody>
+                                <tbody *ngIf="byManualData.length === 0">
+                                    <tr>
+                                        <td colspan="10">
+                                            <div class="no-data-container">
+                                                <img src="assets/images/nodata1.png" class="img-fluid" width="150px">
+                                                <h5 class="no-data-text">No Data Found.</h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                @if (Count > 0) {
+                                <div class="d-flex align-items-center gap-2">
                                     <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
                                         <option [ngValue]="10">10</option>
                                         <option [ngValue]="20">20</option>
@@ -330,129 +336,121 @@
                                         <option [ngValue]="50">50</option>
                                         <option [ngValue]="100">100</option>
                                     </select>
-                                    <span class="text-muted small">Total: {{count}} records</span>
+                                    <span class="text-muted small">Total: {{Count}} records</span>
                                 </div>
-                                <ul class="pagination pagination-sm mb-0">
+                                }
 
-                                        @if (Count > 0) {
-                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                                            <a class="page-link" (click)="setPage(1)">First</a>
-    
-                                        </li>
-    
-                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
-    
-                                        </li>
-    
-                                        <li *ngFor="let page of pager.pages" class="page-item"
-                                            [ngClass]="{active:pager.currentPage === page}">
-                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
-                                        </li>
-                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
-    
-                                        </li>
-                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
-                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
-                                        </li>
-    
-                                        }
-                                    
+                                @if (Count > 0) {
+                                <ul class="pagination pagination-sm mb-0">
+                                    <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link" (click)="setPage(1)">First</a></li>
+                                    <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link" (click)="setPage(page - 1)">Previous</a></li>
+                                    <li *ngFor="let p of pager.pages" class="page-item" [ngClass]="{active: pager.currentPage === p}"><a class="page-link" (click)="setPage(p)">{{p}}</a></li>
+                                    <li class="page-item" [ngClass]="{disabled: pager.currentPage === pager.totalPages}"><a class="page-link" (click)="setPage(page + 1)">Next</a></li>
+                                    <li class="page-item" [ngClass]="{disabled: pager.totalPages === page}"><a class="page-link" (click)="setPage(pager.totalPages)">Last</a></li>
                                 </ul>
-                            </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    
-    
-        <ng-template #uploadimagepreview let-modal>
-            <div class="modal-body p-0">
-                <div class="white-box">
-                    <button type="button" aria-label="Close" class="btn btn-close2 imgmodalclose" (click)="closeImagePreview()"><i class="fa-solid fa-xmark"></i> </button>
-                    <div class="" *ngIf="imgPreview!=''"><img src={{imgPreview}} class="img-fluid"></div>
-                    <div class="" *ngIf="imgPreview==''"><img style="opacity: 0.2; padding: 100px;" src='assets/images/no-data.png' class="img-fluid"></div>
-                </div>
-            </div>
-        </ng-template>
-    
-    
-    
-   <div class="chat-box mb-0" *ngIf="showChat">
-            <div class="chat-box-header">
-              <h3>Remarks # {{referenceID}}</h3>
-              <p>
-                <i class="fa fa-times" (click)="closeChat()"></i>
-              </p>
-            </div>
-            <form [formGroup]="chatForm">
-              <div class="chat-box-body" #chatBoxBody>
-                <div class="loader-container" *ngIf="isLoadingMessages">
+    </div>
+</div>
+
+
+<ng-template #uploadimagepreview let-modal>
+    <div class="modal-body p-0">
+        <div class="white-box">
+            <button type="button" aria-label="Close" class="btn btn-close2 imgmodalclose"
+                (click)="closeImagePreview()"><i class="fa-solid fa-xmark"></i> </button>
+            <div class="" *ngIf="imgPreview!=''"><img src={{imgPreview}} class="img-fluid"></div>
+            <div class="" *ngIf="imgPreview==''"><img style="opacity: 0.2; padding: 100px;"
+                    src='assets/images/no-data.png' class="img-fluid"></div>
+        </div>
+    </div>
+</ng-template>
+
+
+
+<div class="chat-box mb-0" *ngIf="showChat">
+    <div class="chat-box-header">
+        <h3>Remarks # {{referenceID}}</h3>
+        <p>
+            <i class="fa fa-times" (click)="closeChat()"></i>
+        </p>
+    </div>
+    <form [formGroup]="chatForm">
+        <div class="chat-box-body" #chatBoxBody>
+            <div class="loader-container" *ngIf="isLoadingMessages">
                 <span class="loader"></span>
                 <p class="loader-msg">Loading messages...</p>
             </div>
-                <!-- <div *ngIf="isLoadingMessages" class="loader-container">
+            <!-- <div *ngIf="isLoadingMessages" class="loader-container">
                   <div class="ab-loader">Loading</div>
                   <p class="loader-msg">Loading messages...</p>
                 </div> -->
-                <div *ngIf="!isLoadingMessages">
-                  <div *ngIf="chatHistory != ''">
+            <div *ngIf="!isLoadingMessages">
+                <div *ngIf="chatHistory != ''">
                     <div *ngFor="let message of chatHistory">
                         <div *ngIf="message.CreatedBy === 1" class="chat-box-body-send float-start">
-                          <div class="message-content">
-                            <div class="d-flex align-items-center justify-content-between">
-                              <div class="badge" [ngClass]="{'badge-soft-primary': message.ReadFlag === 0, 'badge-soft-warning': message.ReadFlag === 1}">
-                                User
-                              </div>
-                              <span>{{message.CreatedOn}}</span>
-                            </div>
-                            <p class="mt-2">{{ message.Message }}</p>
-                            <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment" class="chequeImage-1">
-                          </div>
-                        </div>
-                      
-                        <div *ngIf="message.CreatedBy === 0" class="chat-box-body-receive float-end">
-                          <div class="message-content">
-                            <div class="d-flex align-items-center justify-content-between" *ngIf="message.ReadFlag === 0">
-                              <div class="badge" [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
-                                Admin
-                              </div>
-                              <span>{{message.CreatedOn}}</span>
-                            </div>
-    
-                            <div class="d-flex align-items-center justify-content-between" *ngIf="message.ReadFlag === 1">
-                                <div class="badge" [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
-                                  Admin <i class="fa-regular fa-bookmark"></i>
+                            <div class="message-content">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="badge"
+                                        [ngClass]="{'badge-soft-primary': message.ReadFlag === 0, 'badge-soft-warning': message.ReadFlag === 1}">
+                                        User
+                                    </div>
+                                    <span>{{message.CreatedOn}}</span>
                                 </div>
-                                <span>{{message.CreatedOn}}</span>
-                              </div>
-    
-                            <!-- <div *ngIf="message.ReadFlag === 1" class="badge" [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
+                                <p class="mt-2">{{ message.Message }}</p>
+                                <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment"
+                                    class="chequeImage-1">
+                            </div>
+                        </div>
+
+                        <div *ngIf="message.CreatedBy === 0" class="chat-box-body-receive float-end">
+                            <div class="message-content">
+                                <div class="d-flex align-items-center justify-content-between"
+                                    *ngIf="message.ReadFlag === 0">
+                                    <div class="badge"
+                                        [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
+                                        Admin
+                                    </div>
+                                    <span>{{message.CreatedOn}}</span>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between"
+                                    *ngIf="message.ReadFlag === 1">
+                                    <div class="badge"
+                                        [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
+                                        Admin <i class="fa-regular fa-bookmark"></i>
+                                    </div>
+                                    <span>{{message.CreatedOn}}</span>
+                                </div>
+
+                                <!-- <div *ngIf="message.ReadFlag === 1" class="badge" [ngClass]="{'badge-soft-danger': message.ReadFlag === 0, 'badge-soft-success': message.ReadFlag === 1}">
                                 Admin  <i class="fa-regular fa-bookmark"></i>
                                 <div>
                                     <span>{{message.CreatedOn}}</span>
                                 </div>
                               </div> -->
-                           
-                            <p class="mt-2">{{ message.Message }}</p>
-                            <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment" class="chequeImage-1">
-                          </div>
+
+                                <p class="mt-2">{{ message.Message }}</p>
+                                <img *ngIf="message.Attachment" [src]="message.Attachment" alt="Attachment"
+                                    class="chequeImage-1">
+                            </div>
                         </div>
-                      </div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-center" *ngIf="chatHistory == ''">
-                    <div class="text-center">
-                      <img src="assets/images/no-chat.png" class=" img-fluid">
-                      <p class="mt-2 badge rounded-pill badge-soft-warning"> No Remarks added yet</p>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <!-- <div class="p-2 d-flex align-items-center justify-content-center0 ">
+                <div class="d-flex align-items-center justify-content-center" *ngIf="chatHistory == ''">
+                    <div class="text-center">
+                        <img src="assets/images/no-chat.png" class=" img-fluid">
+                        <p class="mt-2 badge rounded-pill badge-soft-warning"> No Remarks added yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="p-2 d-flex align-items-center justify-content-center0 ">
                 <label class="form-check-label">
                     <input class="form-check-input" type="checkbox" name="remember" formControlName="showAdmin"   (change)="onCheckboxChange2($event)"> Show Admin Only
                   </label>
@@ -462,165 +460,173 @@
                 <input placeholder="Enter Your Message" type="text" formControlName="message">
                 <button class='send bx bx-paper-plane' [disabled]="chatForm.invalid"  (click)="ADD_USER_REMARKS()"></button>
               </div> -->
-            </form>
-          </div>
-          
-        
-        <div class="modal">
-            <div class="modal-content">
-                <span class="modal-close-button">&times;</span>
-                <h1>Add What you want here.</h1>
-            </div>
-        </div>
-    
-       
-        <ng-template #content2 let-modal>
-            <div class="modal-header">
-                <h4 class="modal-title">Transaction</h4>
-                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-            </div>
-            <div class="modal-body" style="background: #fff;">
-    
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="tblone table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Timestamp</th>
-                                       <th>Name</th>
-                                       <th>Contact</th>
-                                        
-                                        <th>Account</th>
-                                        <th>Fee</th>
-                                        <th>Ref. No</th>
-                                        <th>Source</th>
-                                        <th>Status</th>
-                                       
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td><p class="mb-0">21-10-2024-11:30</p></td>
-                                    
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="tbl-user-circle pending-color">AY</div>
-                                            <p class="tbl-user-name mb-0">Ashwani Yadaw</p>
+    </form>
+</div>
+
+
+<div class="modal">
+    <div class="modal-content">
+        <span class="modal-close-button">&times;</span>
+        <h1>Add What you want here.</h1>
+    </div>
+</div>
+
+
+<ng-template #content2 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Transaction</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" style="background: #fff;">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tblone table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+
+                                <th>Account</th>
+                                <th>Fee</th>
+                                <th>Ref. No</th>
+                                <th>Source</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p class="mb-0">21-10-2024-11:30</p>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="tbl-user-circle pending-color">AY</div>
+                                        <p class="tbl-user-name mb-0">Ashwani Yadaw</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="position-relative" style="min-width: 210px;">
+                                        <div class="d-flex">
+                                            <p class="mb-0 me-2">+91 7845125874</p>
+                                            <p class="mb-0 showmail">
+                                                <img style="height: 10px; opacity: 0.5;"
+                                                    src="assets/images/showmail.png">
+                                            </p>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="position-relative" style="min-width: 210px;">
-                                            <div class="d-flex">
-                                                <p class="mb-0 me-2">+91 7845125874</p>
-                                                <p class="mb-0 showmail" >
-                                                  <img style="height: 10px; opacity: 0.5;" src="assets/images/showmail.png">
-                                                </p>
-                                              </div>
-                                             <div style=" min-width: 202px;">
-                                                <p class="mb-0 fs12 mymailid" >ashwanimaketwicks.com</p>
-                                             </div>
+                                        <div style=" min-width: 202px;">
+                                            <p class="mb-0 fs12 mymailid">ashwanimaketwicks.com</p>
                                         </div>
-                                    </td>
-                                    
-                                   <td><p class="mb-0">40,00.00</p></td>
-                                   <td><p class="mb-0">2%</p></td>
-                                   <td>#REF124879</td>
-                                   <td>Bank</td>
-                                   <td>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <p class="mb-0">40,00.00</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">2%</p>
+                                </td>
+                                <td>#REF124879</td>
+                                <td>Bank</td>
+                                <td>
                                     <div class="d-flex">
                                         <div class="status-success">
                                             <div><i class="fa-solid fa-circle-check"></i></div>
                                             <span>Success</span>
                                         </div>
-                                        
+
                                     </div>
-                                   </td>
-                                 
-                                  
-                                  </tr>
-                                 
-                                </tbody>
-                              </table>
-                        </div>
-                    </div>
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </ng-template>
-    
-        <ng-template #content3 let-modal>
-            <div class="modal-header">
-                <h4 class="modal-title">Update Status</h4>
-                <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="modal-body" style="background: #fff;">
-                <div class="row align-items-end">
-                    <div class="col-md-12">
-                        <div class="mod-decor pt-3">
-                            <form [formGroup]="statusUpdateForm" >
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label for="Amount" class="form-label">Amount</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text"  (keypress)="onKeyPress($event)" class="form-control" formControlName="Amount" id="amount" placeholder="" name="amount" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label for="Reference" class="form-label">Reference</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" formControlName="Reference" id="Reference" placeholder="" name="Reference" readonly>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label for="email" class="form-label">Status</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <select class="form-select" formControlName="Status" placeholder="select">
-                                            <option [value]="0" disabled> Select </option>
-                                            <option [value]="5">Success </option>
-                                            <option [value]="3">Reject </option>
-                                        </select>
-                                        <!-- <ng-select class="wid-20" formControlName="Status">
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #content3 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Update Status</h4>
+        <button type="button" class="btn btn-close2" aria-label="Close" (click)="modal.dismiss('Cross click')"><i
+                class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="background: #fff;">
+        <div class="row align-items-end">
+            <div class="col-md-12">
+                <div class="mod-decor pt-3">
+                    <form [formGroup]="statusUpdateForm">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="Amount" class="form-label">Amount</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" (keypress)="onKeyPress($event)" class="form-control"
+                                    formControlName="Amount" id="amount" placeholder="" name="amount" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="Reference" class="form-label">Reference</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" formControlName="Reference" id="Reference"
+                                    placeholder="" name="Reference" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Status</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-select" formControlName="Status" placeholder="select">
+                                    <option [value]="0" disabled> Select </option>
+                                    <option [value]="5">Success </option>
+                                    <option [value]="3">Reject </option>
+                                </select>
+                                <!-- <ng-select class="wid-20" formControlName="Status">
                                             <ng-option [value]="5">Success </ng-option>
                                             <ng-option [value]="3">Reject </ng-option>
                                         </ng-select> -->
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <div class="d-flex">
-                                            <div>
-                                                <label class="form-check-label">
-                                                    <input
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        formControlName="Waive_Fee"
-                                                        (change)="onCheckboxChange($event)" 
-                                                    >
-                                                    Apply Fee
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="d-flex">
+                                    <div>
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" formControlName="Waive_Fee"
+                                                (change)="onCheckboxChange($event)">
+                                            Apply Fee
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="modal-footer" style="display: block;">
-                <div class="row">
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-secondary w-100 btn-sm0" (click)="modal.close('Close click')">Close</button>
-                    </div>
-                    <div class="col-md-9">
-                        <button type="submit" class="btn btn-success w-100 btn-sm0" [disabled]="statusUpdateForm.invalid" (click)="UPDATE_TRANS_MANUAL_TRANS_RECEIPT()">Submit</button>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="display: block;">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-secondary w-100 btn-sm0"
+                    (click)="modal.close('Close click')">Close</button>
             </div>
-            
-        </ng-template>
+            <div class="col-md-9">
+                <button type="submit" class="btn btn-success w-100 btn-sm0" [disabled]="statusUpdateForm.invalid"
+                    (click)="UPDATE_TRANS_MANUAL_TRANS_RECEIPT()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

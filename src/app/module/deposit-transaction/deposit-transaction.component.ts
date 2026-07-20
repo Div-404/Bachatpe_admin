@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
 // import 'jspdf-autotable';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
+import * as XLSX from 'xlsx';
 import { HttpClient } from '@angular/common/http';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationService } from '../../servies/pagination.service';
@@ -304,7 +305,7 @@ export class DepositTransactionComponent implements OnInit {
   // Function to call the transaction API with the selected filter type
   callTransactionApi(filterType: number): void {
     const maxCount = 10;
-    this.page= 1
+    this.page = 1
     let value: any = this.lastFilteredValue || null; // Use the stored filter value
 
     if (filterType == 1) { // Bank filter
@@ -322,7 +323,7 @@ export class DepositTransactionComponent implements OnInit {
 
   Count: any
   GET_ADM_WAL_BAL_TRANS(initial: any, value: any, maxCount: any): void {
-    this.transactionData= []
+    this.transactionData = []
     this.Count = 0
     // Make sure that date values are fetched from the form
     const dtFrom = this.transactionForm.get('dtFrom').value ? this.transactionForm.get('dtFrom').value + " 00:00:01" : '';
@@ -372,7 +373,7 @@ export class DepositTransactionComponent implements OnInit {
     this.selectedExecutive = null;
     this.lastFilteredValue = null;
     this.selectedFilterType = 0;
-    this.selectedUserProfileID= ''
+    this.selectedUserProfileID = ''
     this.activeClass = 0
     this.oFilter = 1
     this.searchValue = ''
@@ -392,7 +393,7 @@ export class DepositTransactionComponent implements OnInit {
   // Event handler for the search input to fetch matching users as the user types
   errMsg: any = ''
   onSearchInput(event: any): void {
-    this.page= 1
+    this.page = 1
     const searchValue = event.target.value;
     if (event.target.value == '') {
       this.filteredUsers = []
@@ -474,7 +475,8 @@ export class DepositTransactionComponent implements OnInit {
       if (data.lstTrans && data.lstTrans.length > 0) {
         this.transactionData = data.lstTrans;
         this.showStatement = 1;
-          this.Count = data.Count
+        this.Count = data.Count
+        console.log("data.Count", data.Count)
         this.pager = this.pagination.getPager(this.Count, this.page, this.numRecord);
       } else {
         this.transactionData = [];
@@ -483,6 +485,67 @@ export class DepositTransactionComponent implements OnInit {
     });
   }
 
+  // =========================================================== export =====================================================
+  private fetchAllTransactions(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const dtFrom = this.transactionForm.get('dtFrom').value ? this.transactionForm.get('dtFrom').value + " 00:00:01" : '';
+      const dtTo = this.transactionForm.get('dtTo').value ? this.transactionForm.get('dtTo').value + " 23:59:59" : '';
+      let value: any = this.lastFilteredValue || null;
+      if (this.selectedFilterType == 1) value = this.selectedBank;
+      else if (this.selectedFilterType == 3) value = this.selectedExecutive;
+      else if (this.selectedFilterType == 2) value = this.selectedUser;
+      const obj: any = {
+        oFilter: this.selectedFilterType,
+        Value: value ? (Number(value) ? Number(value) : "") : this.selectedUserProfileID || "",
+        Inital: 1,
+        MaxCount: this.Count || 999999,
+        dtFrom, dtTo
+      };
+      this.api.GET_ADM_WAL_BAL_TRANS(obj).subscribe({
+        next: (res: any) => resolve(res?.lstTrans || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAllTransactions();
+    const rows = items.map((item: any) => ({
+      Date: item.CreatedOn || '',
+      Amount: item.Amount || '',
+      Fee: item.Fee || '',
+      Reference: item.Reference || '',
+      Approver: item.oExecSnap?.Exec || '',
+      'Approver Email': item.oExecSnap?.Email || '',
+      User: item.oUserSnap?.Name || '',
+      Phone: item.oUserSnap?.Phone || '',
+      Bank: item.oBankSnap?.Bank || '',
+      Account: item.oBankSnap?.Account || ''
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'DepositTransactions', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAllTransactions();
+    const rows = items.map((item: any) => ({
+      Date: item.CreatedOn || '',
+      Amount: item.Amount || '',
+      Fee: item.Fee || '',
+      Reference: item.Reference || '',
+      Approver: item.oExecSnap?.Exec || '',
+      'Approver Email': item.oExecSnap?.Email || '',
+      User: item.oUserSnap?.Name || '',
+      Phone: item.oUserSnap?.Phone || '',
+      Bank: item.oBankSnap?.Bank || '',
+      Account: item.oBankSnap?.Account || ''
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Transactions');
+    XLSX.writeFile(wb, 'DepositTransactions.xlsx');
+  }
   // =========================================================== pagination ===============================================
 
 

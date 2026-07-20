@@ -32,6 +32,8 @@ import { PaginationService } from '../../servies/pagination.service';
 import { HttpClient } from '@angular/common/http';
 import { first } from 'rxjs';
 import { AdminKycModalComponent } from '../admin-kyc-modal/admin-kyc-modal.component';
+import * as XLSX from 'xlsx';
+import { ngxCsv } from 'ngx-csv';
 @Component({
   selector: 'app-user-list',
   standalone: true,
@@ -1431,6 +1433,77 @@ export class UserListComponent implements OnInit {
       default:
         return 'Unknown';
     }
+  }
+
+  private getTagBalance(item: any, tag: string): string {
+    return item.oTag_Lst?.find((dd: any) => dd.Tag === tag)?.Balance ?? '0';
+  }
+
+  private userTypeLabel(t: number): string {
+    return t === 1 ? 'MD' : t === 2 ? 'DI' : t === 3 ? 'RT' : String(t);
+  }
+
+  private kycLabel(v: number): string {
+    return v === 5 ? 'Success' : v === 1 ? 'Pending' : v === 3 ? 'Reject' : v === 2 ? 'Suspend' : String(v);
+  }
+
+  private fetchAllUsers(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const data = {
+        Key: '',
+        Field1: this.searchId,
+        Field2: this.searchVal,
+        Field3: '0',
+        Field4: 1,
+        Field5: this.Count || 999999,
+        STATUS: Number(this.statusVal),
+      };
+      this.api.getUserList(data).subscribe({
+        next: (res: any) => resolve(res.lstUsers || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const users = await this.fetchAllUsers();
+    const rows = users.map((item: any) => ({
+      'Created On': item.Updated?.Tm_Str?.substring(0, 16) || '',
+      Type: this.userTypeLabel(item.UserType),
+      Name: `${item.First || ''} ${item.Last || ''}`.trim(),
+      // Email: item.Email || '',
+      Phone: item.Phone || '',
+      Code: item.Code || '',
+      City: item.Addr?.oUserAddr?.City || '',
+      State: item.Addr?.oUserAddr?.State || '',
+      KYC: this.kycLabel(item.KYC),
+      Balance: this.getTagBalance(item, 'BALANCE'),
+      Credit: this.getTagBalance(item, 'CREDIT'),
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'UserList', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const users = await this.fetchAllUsers();
+    const rows = users.map((item: any) => ({
+      'Created On': item.Updated?.Tm_Str?.substring(0, 16) || '',
+      Type: this.userTypeLabel(item.UserType),
+      Name: `${item.First || ''} ${item.Last || ''}`.trim(),
+      // Email: item.Email || '',
+      Phone: item.Phone || '',
+      Code: item.Code || '',
+      City: item.Addr?.oUserAddr?.City || '',
+      State: item.Addr?.oUserAddr?.State || '',
+      KYC: this.kycLabel(item.KYC),
+      Balance: this.getTagBalance(item, 'BALANCE'),
+      Credit: this.getTagBalance(item, 'CREDIT'),
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Users');
+    XLSX.writeFile(wb, 'UserList.xlsx');
   }
 
   openAsUser(profileId: number) {

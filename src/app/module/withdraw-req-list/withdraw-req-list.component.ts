@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { ApiService } from '../../servies/api.service';
 import { PaginationService } from '../../servies/pagination.service';
 import { SharedService } from '../../servies/shared/shared.service';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-withdraw-req-list',
@@ -167,6 +169,63 @@ export class WithdrawReqListComponent {
       }
     })
   }
+
+  // =========================================================== export =====================================================
+  private fetchAllWithdrawals(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const dtFrom = this.dtFrom ? this.dtFrom + ' 00:00:01' : ''
+      const dtTo = this.dtTo ? this.dtTo + ' 23:59:59' : ''
+      const obj: any = {
+        Key: '',
+        dtFrom, dtTo,
+        Value: this.searchValue,
+        Reserve1: '',
+        Reserve2: '',
+        Reserve3: '',
+        oFilter: this.oFilter,
+        Initial: 1,
+        MaxCount: this.Count || 999999,
+        oTransType: 0,
+        Callback_URL: ''
+      }
+      this.api.getAdmWithdrawReq(obj).subscribe({
+        next: (res: any) => resolve(res?.lstWDraw || []),
+        error: () => resolve([]),
+      })
+    })
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAllWithdrawals()
+    const rows = items.map((item: any) => ({
+      Date: item.oReq?.oTime?.Tm_Str || '',
+      Name: item.oInfo?.Name || '',
+      Phone: item.oInfo?.Phone || '',
+      Amount: item.oReq?.Amt || '',
+      Remark: item.oReq?.Comment || '',
+      Status: item.oReq?.Status ?? ''
+    }))
+    if (!rows.length) return
+    new ngxCsv(rows, 'WithdrawRequests', { headers: Object.keys(rows[0]) })
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAllWithdrawals()
+    const rows = items.map((item: any) => ({
+      Date: item.oReq?.oTime?.Tm_Str || '',
+      Name: item.oInfo?.Name || '',
+      Phone: item.oInfo?.Phone || '',
+      Amount: item.oReq?.Amt || '',
+      Remark: item.oReq?.Comment || '',
+      Status: item.oReq?.Status ?? ''
+    }))
+    if (!rows.length) return
+    const ws = XLSX.utils.json_to_sheet(rows)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'Withdrawals')
+    XLSX.writeFile(wb, 'WithdrawRequests.xlsx')
+  }
+  // =========================================================== pagination ======================================================
 
   onPageSizeChange() {
     this.page = 1

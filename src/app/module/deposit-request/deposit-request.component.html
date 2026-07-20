@@ -7,17 +7,12 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <!-- Bank Dropdown -->
             <div class="d-flex align-items-center">
-                <div class="me-3 custom-select reqpage" >
-                    <ng-select style="min-width: 280px;"
-                        [items]="bankList"
-                        bindLabel="BankName"
-                        [(ngModel)]="selectedBank"
-                        (change)="onBankSelect($event)"
-                        [clearable]="true"
-                        [loading]="isBankListLoading"
-                        >
+                <div class="me-3 custom-select reqpage">
+                    <ng-select style="min-width: 280px;" [items]="bankList" bindLabel="BankName"
+                        [(ngModel)]="selectedBank" (change)="onBankSelect($event)" [clearable]="true"
+                        [loading]="isBankListLoading">
                         <ng-template ng-label-tmp let-item="item">
-                            {{ item.BankName }} 
+                            {{ item.BankName }}
                         </ng-template>
                         <ng-template ng-option-tmp let-item="item">
                             <div class="bank-option">
@@ -30,7 +25,7 @@
                     </ng-select>
                     <label [class.selected]="selectedBank">Select Bank</label>
                 </div>
-                
+
                 <!-- Selected Bank Badge -->
                 <div *ngIf="selectedBank" class="selected-bank-badge">
                     <i class="bx bxs-bank me-1"></i> {{ selectedBank.BankName }} - {{ selectedBank.AccountName }}
@@ -39,11 +34,9 @@
                     </button>
                 </div>
             </div>
-            
+
             <!-- Upload Button -->
-            <button class="btn btn-success" 
-                    [disabled]="!selectedBank"
-                    (click)="triggerFileUpload()">
+            <button class="btn btn-success" [disabled]="!selectedBank" (click)="triggerFileUpload()">
                 <i class="fa-solid fa-file-excel me-2"></i> Upload Statement
             </button>
         </div>
@@ -66,7 +59,7 @@
                     <i class="fa-solid fa-times"></i> Close
                 </button>
             </div>
-            
+
             <div class="card-body">
                 <!-- Step Indicator -->
                 <div class="step-indicator mb-4">
@@ -108,7 +101,8 @@
                     <div class="row mb-3" *ngIf="excelSheets.length > 1">
                         <div class="col-md-3"><label class="form-label">Sheet</label></div>
                         <div class="col-md-9">
-                            <select class="form-select" [(ngModel)]="selectedSheet" (change)="onSheetChange(selectedSheet)">
+                            <select class="form-select" [(ngModel)]="selectedSheet"
+                                (change)="onSheetChange(selectedSheet)">
                                 <option *ngFor="let sheet of excelSheets" [value]="sheet">{{ sheet }}</option>
                             </select>
                         </div>
@@ -116,60 +110,64 @@
 
                     <div class="row">
                         <div class="col">
-                           <label>Transaction Time <span class="text-danger">*</span></label>
-                           <div>
-                             <select class="form-select" [(ngModel)]="columnMapping.transactionTime">
-                                <option value="">-- Select --</option>
-                                <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
-                            </select>
-                           </div>
+                            <label>Transaction Time <span class="text-danger">*</span></label>
+                            <div>
+                                <select class="form-select" [(ngModel)]="columnMapping.transactionTime">
+                                    <option value="">-- Select --</option>
+                                    <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col">
-                             <label>UTR / Reference <span class="text-danger">*</span></label>
-                             <div>
-                                 <select class="form-select" [(ngModel)]="columnMapping.utr">
-                                <option value="">-- Select --</option>
-                                <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
-                            </select>
-                             </div>
+                            <label>UTR / Reference <span class="text-danger">*</span></label>
+                            <div>
+                                <select class="form-select" [(ngModel)]="columnMapping.utr">
+                                    <option value="">-- Select --</option>
+                                    <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col">
                             <label>Amount <span class="text-danger">*</span></label>
                             <div>
-                                 <select class="form-select" [(ngModel)]="columnMapping.amount">
-                                <option value="">-- Select --</option>
-                                <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
-                            </select>
+                                <select class="form-select" [(ngModel)]="columnMapping.amount">
+                                    <option value="">-- Select --</option>
+                                    <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col">
                             <label>Remarks</label>
                             <div>
-                                 <select class="form-select" [(ngModel)]="columnMapping.remarks">
-                                <option value="">-- Select --</option>
-                                <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
-                            </select>
+                                <select class="form-select" [(ngModel)]="columnMapping.remarks">
+                                    <option value="">-- Select --</option>
+                                    <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col">
-                             <label>Status</label>
-                             <div>
-                                  <select class="form-select" [(ngModel)]="columnMapping.status">
-                                <option value="">-- Select --</option>
-                                <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
-                            </select>
-                             </div>
+                            <label>Status</label>
+                            <div>
+                                <select class="form-select" [(ngModel)]="columnMapping.status">
+                                    <option value="">-- Select --</option>
+                                    <option *ngFor="let h of excelHeaders" [value]="h">{{ h }}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
-                  
+
 
                     <!-- Sample Preview -->
                     <div class="mt-4">
                         <h6>Sample Data (First 3 rows)</h6>
                         <div class="table-responsive sample-table">
                             <table class="table table-sm table-bordered mb-0">
-                                <thead><tr><th *ngFor="let h of excelHeaders">{{ h }}</th></tr></thead>
+                                <thead>
+                                    <tr>
+                                        <th *ngFor="let h of excelHeaders">{{ h }}</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr *ngFor="let row of excelData.slice(0, 3)">
                                         <td *ngFor="let h of excelHeaders">{{ row[h] }}</td>
@@ -182,7 +180,8 @@
                     <!-- Actions -->
                     <div class="mt-4 d-flex justify-content-end">
                         <button class="btn btn-secondary me-2" (click)="closeUploadSection()">Cancel</button>
-                        <button class="btn btn-primary" [disabled]="!isColumnMappingValid()" (click)="proceedToPreview()">
+                        <button class="btn btn-primary" [disabled]="!isColumnMappingValid()"
+                            (click)="proceedToPreview()">
                             <i class="fa-solid fa-arrow-right me-2"></i> Preview
                         </button>
                     </div>
@@ -228,8 +227,10 @@
                         <button class="btn btn-outline-secondary me-2" (click)="goBack()">
                             <i class="fa-solid fa-arrow-left me-2"></i> Back
                         </button>
-                        <button class="btn btn-success" [disabled]="mappedTransactions.length === 0" (click)="submitTransactions()">
-                            <i class="fa-solid fa-paper-plane me-2"></i> Submit {{ mappedTransactions.length }} Transactions
+                        <button class="btn btn-success" [disabled]="mappedTransactions.length === 0"
+                            (click)="submitTransactions()">
+                            <i class="fa-solid fa-paper-plane me-2"></i> Submit {{ mappedTransactions.length }}
+                            Transactions
                         </button>
                     </div>
                 </div>
@@ -264,14 +265,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let r of verifyResults" [class.table-success]="r.Status === 2" [class.table-danger]="r.Status === 1">
+                                <tr *ngFor="let r of verifyResults" [class.table-success]="r.Status === 2"
+                                    [class.table-danger]="r.Status === 1">
                                     <td><code>{{ r.UTR }}</code></td>
                                     <td>₹ {{ r.Amount | number:'1.2-2' }}</td>
                                     <td>
                                         <span *ngIf="r.Status === 2">
                                             ₹ {{ r.PendingAmount | number:'1.2-2' }}
-                                            <i *ngIf="r.AmountMatch" class="fa-solid fa-circle-check text-success ms-1" ngbTooltip="Amount matches"></i>
-                                            <i *ngIf="!r.AmountMatch" class="fa-solid fa-triangle-exclamation text-warning ms-1" ngbTooltip="Amount mismatch"></i>
+                                            <i *ngIf="r.AmountMatch" class="fa-solid fa-circle-check text-success ms-1"
+                                                ngbTooltip="Amount matches"></i>
+                                            <i *ngIf="!r.AmountMatch"
+                                                class="fa-solid fa-triangle-exclamation text-warning ms-1"
+                                                ngbTooltip="Amount mismatch"></i>
                                         </span>
                                         <span *ngIf="r.Status !== 2">-</span>
                                     </td>
@@ -306,7 +311,8 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="me-3">
-                            <p class="mb-0 fw600">Pending Requests: ₹ {{ totalAccountPending?.toFixed(2) || '0.00' }}</p>
+                            <p class="mb-0 fw600">Pending Requests: ₹ {{ totalAccountPending?.toFixed(2) || '0.00' }}
+                            </p>
                         </div>
 
                         <!-- Date Filter -->
@@ -334,7 +340,8 @@
                             </form>
                         </div>
                         <div class="ms-2" *ngIf="activeClass == 1">
-                            <button class="btn btn-success" [disabled]="byManualAdminForm.invalid" (click)="GET_PG_MG_ADM_MANUAL_RECPT(1,10)">
+                            <button class="btn btn-success" [disabled]="byManualAdminForm.invalid"
+                                (click)="GET_PG_MG_ADM_MANUAL_RECPT(1,10)">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
@@ -343,7 +350,8 @@
                     <!-- Search -->
                     <div class="d-flex align-items-center">
                         <div class="me-2 pos-re mer-t selected custom-select" [class.selected]="selectedFilter">
-                            <ng-select style="min-width: 180px;" class="wid-20" [(ngModel)]="selectedFilter" (change)="onSearchTypeChange($event)">
+                            <ng-select style="min-width: 180px;" class="wid-20" [(ngModel)]="selectedFilter"
+                                (change)="onSearchTypeChange($event)">
                                 <ng-option [value]="0" disabled>Select</ng-option>
                                 <ng-option [value]="8">By User Code</ng-option>
                                 <ng-option [value]="1">By Name</ng-option>
@@ -353,17 +361,21 @@
                         </div>
 
                         <div *ngIf="selectedFilter > 0" class="pos-re filter-width me-2">
-                            <input type="text" [(ngModel)]="searchValue" placeholder="Enter search value" class="form-control form-control-lg" (input)="onSearchInput($event)" />
+                            <input type="text" [(ngModel)]="searchValue" placeholder="Enter search value"
+                                class="form-control form-control-lg" (input)="onSearchInput($event)" />
                             <div *ngIf="filteredUsers.length > 0" class="dropdown-menu show">
-                                <button class="dropdown-item fs12" *ngFor="let user of filteredUsers" (click)="onUserSelect(user)">
+                                <button class="dropdown-item fs12" *ngFor="let user of filteredUsers"
+                                    (click)="onUserSelect(user)">
                                     {{user.Code}} - {{ user.Name }} - {{ user.Phone }}
                                 </button>
                             </div>
                             <label *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</label>
                         </div>
 
-                        <button *ngIf="!searching" class="btn search-icon" (click)="clearSearch()"><i class='bx bx-x'></i></button>
-                        <button *ngIf="searching" class="btn search-icon" style="padding: 8px; width: 48px;" [disabled]="!(selectedFilter && searchValue)" (click)="typeFilter(selectedFilter)">
+                        <button *ngIf="!searching" class="btn search-icon" (click)="clearSearch()"><i
+                                class='bx bx-x'></i></button>
+                        <button *ngIf="searching" class="btn search-icon" style="padding: 8px; width: 48px;"
+                            [disabled]="!(selectedFilter && searchValue)" (click)="typeFilter(selectedFilter)">
                             <i class='bx bx-search-alt'></i>
                         </button>
                     </div>
@@ -392,7 +404,9 @@
                         <tbody>
                             @for (data of filteredManualData; track $index) {
                             <tr [class.matched-row]="isTransactionMatched(data.UTR)">
-                                <td><p class="text-muted00 mb-0">{{data.Timestamp | date: 'yyyy-MM-dd HH:mm'}}</p></td>
+                                <td>
+                                    <p class="text-muted00 mb-0">{{data.Timestamp | date: 'yyyy-MM-dd HH:mm'}}</p>
+                                </td>
                                 <td>
                                     <div placement="top" ngbTooltip="{{data.Phone}}">
                                         <p class="tb-lead mb-0">{{data.UserCode}}</p>
@@ -402,51 +416,64 @@
                                     <p class="mb-0">{{data.UserName}}</p>
                                     <p class="mb-0 text-muted small">{{data.Email}}</p>
                                 </td>
-                                <td [class.text-success]="isTransactionMatched(data.UTR)" [class.text-orange-bold]="!isTransactionMatched(data.UTR)" class="fw-bold">
+                                <td [class.text-success]="isTransactionMatched(data.UTR)"
+                                    [class.text-orange-bold]="!isTransactionMatched(data.UTR)" class="fw-bold">
                                     {{data.Amount | number:'1.2-2'}}
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <span>{{data.BankName}}</span>
-                                        <span class="badge rounded-pill badge-soft-success p-2" *ngIf="data.Source == 1" ngbTooltip="Bank"><i class="bx bx-credit-card-front"></i></span>
-                                        <span class="badge rounded-pill badge-soft-dark p-2" *ngIf="data.Source == 5" ngbTooltip="Cash"><i class="fa-solid fa-money-bill-wave"></i></span>
+                                        <span class="badge rounded-pill badge-soft-success p-2" *ngIf="data.Source == 1"
+                                            ngbTooltip="Bank"><i class="bx bx-credit-card-front"></i></span>
+                                        <span class="badge rounded-pill badge-soft-dark p-2" *ngIf="data.Source == 5"
+                                            ngbTooltip="Cash"><i class="fa-solid fa-money-bill-wave"></i></span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="mng-copy">
                                         <p class="mb-0">{{data.Reference}}</p>
-                                        <button class="btn btn-soft-warning btn-sm ms-2" (click)="copyDetails(data.Reference)"><i class="fa-regular fa-copy"></i></button>
+                                        <button class="btn btn-soft-warning btn-sm ms-2"
+                                            (click)="copyDetails(data.Reference)"><i
+                                                class="fa-regular fa-copy"></i></button>
                                     </div>
                                 </td>
                                 <td>
                                     <ng-container *ngIf="data.Status === 1; else showStatusBadge">
-                                        <span class="badge-soft-warning" style="cursor: pointer;" (click)="openLg3(content3, data)" ngbTooltip="Click to update">
+                                        <span class="badge-soft-warning" style="cursor: pointer;"
+                                            (click)="openLg3(content3, data)" ngbTooltip="Click to update">
                                             Pending <i class='ms-2 bx bx-info-circle'></i>
                                         </span>
                                     </ng-container>
                                     <ng-template #showStatusBadge>
-                                        <span [ngClass]="{'badge-soft-success': data.Status === 5, 'badge-soft-danger': data.Status === 3}">
+                                        <span
+                                            [ngClass]="{'badge-soft-success': data.Status === 5, 'badge-soft-danger': data.Status === 3}">
                                             {{ getStatusText(data.Status) }}
                                         </span>
                                     </ng-template>
                                 </td>
                                 <td style="cursor: pointer;" (click)="previewImg(uploadimagepreview, data)">
-                                    <div class="me-2" *ngIf="data.Receipt == ''"><img src="assets/images/no-image-pic.png" width="30px"></div>
-                                    <div class="me-2" *ngIf="data.Receipt != ''"><img [src]="data.Receipt" width="30px"></div>
+                                    <div class="me-2" *ngIf="data.Receipt == ''"><img
+                                            src="assets/images/no-image-pic.png" width="30px"></div>
+                                    <div class="me-2" *ngIf="data.Receipt != ''"><img [src]="data.Receipt" width="30px">
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <!-- Tick mark when matched -->
-                                        <span *ngIf="isTransactionMatched(data.UTR)" class="matched-tick me-2" ngbTooltip="Verified from bank statement">
+                                        <span *ngIf="isTransactionMatched(data.UTR)" class="matched-tick me-2"
+                                            ngbTooltip="Verified from bank statement">
                                             <i class="fa-solid fa-circle-check text-success"></i>
                                         </span>
-                                        <p class="text-muted00 mb-0" [class.text-success]="isTransactionMatched(data.UTR)" [class.fw-bold]="isTransactionMatched(data.UTR)">{{ data.UTR }}</p>
-                                        
+                                        <p class="text-muted00 mb-0"
+                                            [class.text-success]="isTransactionMatched(data.UTR)"
+                                            [class.fw-bold]="isTransactionMatched(data.UTR)">{{ data.UTR }}</p>
+
                                     </div>
                                 </td>
                                 <td class="view">
                                     <div (click)="chatAdmin(data)">
-                                        View Remarks <sup class="custom-sup" *ngIf="data.UnReadCount > 0">{{data.UnReadCount}}</sup>
+                                        View Remarks <sup class="custom-sup"
+                                            *ngIf="data.UnReadCount > 0">{{data.UnReadCount}}</sup>
                                     </div>
                                 </td>
                             </tr>
@@ -466,28 +493,36 @@
 
                     <!-- Pagination -->
                     <div class="d-flex justify-content-between align-items-center mt-2">
-                                <div class="d-flex align-items-center gap-2" *ngIf="count > 0">
-                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
-                                        <option [ngValue]="10">10</option>
-                                        <option [ngValue]="20">20</option>
-                                        <option [ngValue]="30">30</option>
-                                        <option [ngValue]="50">50</option>
-                                        <option [ngValue]="100">100</option>
-                                    </select>
-                                    <span class="text-muted small">Total: {{count}} records</span>
-                                </div>
-                                <ul class="pagination pagination-sm mb-0">
+                        @if (Count > 0) {
+                        <div class="d-flex align-items-center gap-2">
+                            <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord"
+                                (change)="onPageSizeChange()">
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="30">30</option>
+                                <option [ngValue]="50">50</option>
+                                <option [ngValue]="100">100</option>
+                            </select>
+                            <span class="text-muted small">Total: {{Count}} records</span>
+                        </div>
+                        }
 
                         @if (Count > 0) {
-                        <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link" (click)="setPage(1)">First</a></li>
-                        <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link" (click)="setPage(page - 1)">Previous</a></li>
-                        <li *ngFor="let p of pager.pages" class="page-item" [ngClass]="{active: pager.currentPage === p}"><a class="page-link" (click)="setPage(p)">{{p}}</a></li>
-                        <li class="page-item" [ngClass]="{disabled: pager.currentPage === pager.totalPages}"><a class="page-link" (click)="setPage(page + 1)">Next</a></li>
-                        <li class="page-item" [ngClass]="{disabled: pager.totalPages === page}"><a class="page-link" (click)="setPage(pager.totalPages)">Last</a></li>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link"
+                                    (click)="setPage(1)">First</a></li>
+                            <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link"
+                                    (click)="setPage(page - 1)">Previous</a></li>
+                            <li *ngFor="let p of pager.pages" class="page-item"
+                                [ngClass]="{active: pager.currentPage === p}"><a class="page-link"
+                                    (click)="setPage(p)">{{p}}</a></li>
+                            <li class="page-item" [ngClass]="{disabled: pager.currentPage === pager.totalPages}"><a
+                                    class="page-link" (click)="setPage(page + 1)">Next</a></li>
+                            <li class="page-item" [ngClass]="{disabled: pager.totalPages === page}"><a class="page-link"
+                                    (click)="setPage(pager.totalPages)">Last</a></li>
+                        </ul>
                         }
-                    
-                                </ul>
-                            </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -499,9 +534,11 @@
 <ng-template #uploadimagepreview let-modal>
     <div class="modal-body p-0">
         <div class="white-box">
-            <button type="button" class="btn btn-close2 imgmodalclose" (click)="closeImagePreview()"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" class="btn btn-close2 imgmodalclose" (click)="closeImagePreview()"><i
+                    class="fa-solid fa-xmark"></i></button>
             <div *ngIf="imgPreview != ''"><img [src]="imgPreview" class="img-fluid"></div>
-            <div *ngIf="imgPreview == ''"><img style="opacity: 0.2; padding: 100px;" src='assets/images/no-data.png' class="img-fluid"></div>
+            <div *ngIf="imgPreview == ''"><img style="opacity: 0.2; padding: 100px;" src='assets/images/no-data.png'
+                    class="img-fluid"></div>
         </div>
     </div>
 </ng-template>
@@ -511,23 +548,30 @@
 <ng-template #content3 let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Update Status</h4>
-        <button type="button" class="btn btn-close2" (click)="modal.dismiss()"><i class="fa-solid fa-xmark"></i></button>
+        <button type="button" class="btn btn-close2" (click)="modal.dismiss()"><i
+                class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body" style="background: #fff;">
         <div class="mod-decor">
             <form [formGroup]="statusUpdateForm">
                 <div class="row mb-3" style="background: #F9F9F9; padding: 10px; border-radius: 5px;">
-                    <div class="col-6"><label class="color-light0">Name</label><p class="mb-0">{{userName}}</p></div>
-                    <div class="col-6"><label class="color-light0">User Code</label><p class="mb-0">{{UserCode}}</p></div>
+                    <div class="col-6"><label class="color-light0">Name</label>
+                        <p class="mb-0">{{userName}}</p>
+                    </div>
+                    <div class="col-6"><label class="color-light0">User Code</label>
+                        <p class="mb-0">{{UserCode}}</p>
+                    </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-4"><label class="form-label">Amount</label></div>
-                    <div class="col-md-8"><input type="text" class="form-control" formControlName="Amount" readonly></div>
+                    <div class="col-md-8"><input type="text" class="form-control" formControlName="Amount" readonly>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4"><label class="form-label">Reference</label></div>
-                    <div class="col-md-8"><input type="text" class="form-control" formControlName="Reference" readonly></div>
+                    <div class="col-md-8"><input type="text" class="form-control" formControlName="Reference" readonly>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4"><label class="form-label">Status</label></div>
@@ -543,15 +587,19 @@
                 <div class="row mb-3" *ngIf="statusUpdateForm.get('Status')?.value == 3">
                     <div class="col-md-4"><label class="form-label">Remark</label></div>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" [(ngModel)]="remark" [ngModelOptions]="{standalone: true}" placeholder="Enter remark">
-                        <div class="text-danger mt-1" *ngIf="statusUpdateForm.get('Status')?.value == 3 && (!remark || !remark.trim())">Remark is required</div>
+                        <input type="text" class="form-control" [(ngModel)]="remark"
+                            [ngModelOptions]="{standalone: true}" placeholder="Enter remark">
+                        <div class="text-danger mt-1"
+                            *ngIf="statusUpdateForm.get('Status')?.value == 3 && (!remark || !remark.trim())">Remark is
+                            required</div>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" formControlName="Waive_Fee" (change)="onCheckboxChange($event)"> Apply Fee
+                            <input class="form-check-input" type="checkbox" formControlName="Waive_Fee"
+                                (change)="onCheckboxChange($event)"> Apply Fee
                         </label>
                     </div>
                 </div>
@@ -560,7 +608,8 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-secondary" (click)="modal.close()">Close</button>
-        <button class="btn btn-success" [disabled]="statusUpdateForm.invalid || statusUpdateForm.value.Status === 0" (click)="UPDATE_TRANS_MANUAL_TRANS_RECEIPT()">Submit</button>
+        <button class="btn btn-success" [disabled]="statusUpdateForm.invalid || statusUpdateForm.value.Status === 0"
+            (click)="UPDATE_TRANS_MANUAL_TRANS_RECEIPT()">Submit</button>
     </div>
 </ng-template>
 
@@ -608,7 +657,8 @@
         </div>
         <div class="p-2">
             <label class="form-check-label small">
-                <input class="form-check-input" type="checkbox" formControlName="showAdmin" (change)="onCheckboxChange2($event)"> Admin Only
+                <input class="form-check-input" type="checkbox" formControlName="showAdmin"
+                    (change)="onCheckboxChange2($event)"> Admin Only
             </label>
         </div>
         <div class="chat-box-footer">

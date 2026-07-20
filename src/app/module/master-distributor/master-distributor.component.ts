@@ -20,6 +20,8 @@ import {
 import Swal from 'sweetalert2';
 import { PaginationService } from '../../servies/pagination.service';
 import { AdminKycModalComponent } from '../admin-kyc-modal/admin-kyc-modal.component';
+import * as XLSX from 'xlsx';
+import { ngxCsv } from 'ngx-csv';
 
 @Component({
   selector: 'app-master-distributor',
@@ -799,5 +801,71 @@ export class MasterDistributorComponent implements OnInit {
         this.pageRecord * page,
       );
     }
+  }
+
+  private getTagBalance(item: any, tag: string): string {
+    return item.oTag_Lst?.find((dd: any) => dd.Tag === tag)?.Balance ?? '0';
+  }
+
+  private kycLabel(v: number): string {
+    return v === 5 ? 'Success' : v === 1 ? 'Pending' : v === 3 ? 'Reject' : v === 2 ? 'Suspend' : String(v);
+  }
+
+  private fetchAll(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const data = {
+        Key: '',
+        oReptType: 1,
+        ProfileMD: 0,
+        ProfileDI: 0,
+        oType: this.filterVal,
+        Value: this.searchVal,
+        Initial: 1,
+        MaxCount: this.Count || 999999,
+      };
+      this.api.getAdmType(data).subscribe({
+        next: (res: any) => resolve(res.lstUsers || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAll();
+    const rows = items.map((item: any) => ({
+      'Created On': item.Created?.Tm_Str?.substring(0, 16) || '',
+      Name: `${item.First || ''} ${item.Last || ''}`.trim(),
+      // Email: item.Email || '',
+      Phone: item.Phone || '',
+      Code: item.Code || '',
+      City: item.Addr?.oUserAddr?.City || '',
+      State: item.Addr?.oUserAddr?.State || '',
+      KYC: this.kycLabel(item.KYC),
+      Balance: this.getTagBalance(item, 'BALANCE'),
+      Credit: this.getTagBalance(item, 'CREDIT'),
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'MasterDistributorList', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAll();
+    const rows = items.map((item: any) => ({
+      'Created On': item.Created?.Tm_Str?.substring(0, 16) || '',
+      Name: `${item.First || ''} ${item.Last || ''}`.trim(),
+      // Email: item.Email || '',
+      Phone: item.Phone || '',
+      Code: item.Code || '',
+      City: item.Addr?.oUserAddr?.City || '',
+      State: item.Addr?.oUserAddr?.State || '',
+      KYC: this.kycLabel(item.KYC),
+      Balance: this.getTagBalance(item, 'BALANCE'),
+      Credit: this.getTagBalance(item, 'CREDIT'),
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'MD');
+    XLSX.writeFile(wb, 'MasterDistributorList.xlsx');
   }
 }

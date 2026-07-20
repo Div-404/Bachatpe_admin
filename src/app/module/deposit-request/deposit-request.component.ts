@@ -36,8 +36,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationService } from '../../servies/pagination.service';
 
-// Remove XLSX import - we'll use server-side parsing
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 // Reconcile Server URL
 const RECONCILE_API = 'https://metiadigital.com:8200/api';
@@ -1740,6 +1739,66 @@ export class DepositRequestComponent implements OnInit {
     document.body.removeChild(dummyInput);
     this.toster.success('Reference copied successfully.', 'Success');
   }
+
+  // =========================================================== export =====================================================
+  private fetchAllRequests(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const dtFrom = this.byManualAdminForm.value.dtFrom + ' 00:00:01';
+      const dtTo = this.byManualAdminForm.value.dtTo + ' 23:59:59';
+      const obj = {
+        dtFrom, dtTo,
+        Value: this.searchValue || '',
+        oType: this.selectedFilter,
+        Initial: 1,
+        MaxCount: this.Count || 999999,
+        Reserve1: 1,
+        Reserve2: '1',
+        Reserve3: this.selectedBank ? this.selectedBank.BankID : 0
+      };
+      this.api.getManualTranRec(obj).subscribe({
+        next: (res: any) => resolve(res?.oTrans || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAllRequests();
+    const rows = items.map((item: any) => ({
+      Timestamp: item.Timestamp || '',
+      Code: item.UserCode || '',
+      User: item.UserName || '',
+      Email: item.Email || '',
+      Amount: item.Amount || '',
+      Bank: item.BankName || '',
+      Reference: item.Reference || '',
+      Status: item.Status ?? '',
+      UTR: item.UTR || ''
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'DepositRequests', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAllRequests();
+    const rows = items.map((item: any) => ({
+      Timestamp: item.Timestamp || '',
+      Code: item.UserCode || '',
+      User: item.UserName || '',
+      Email: item.Email || '',
+      Amount: item.Amount || '',
+      Bank: item.BankName || '',
+      Reference: item.Reference || '',
+      Status: item.Status ?? '',
+      UTR: item.UTR || ''
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Requests');
+    XLSX.writeFile(wb, 'DepositRequests.xlsx');
+  }
+  // =========================================================== pagination ======================================================
 
   numRecord: any = 10;
   pageRecord: any = 10;

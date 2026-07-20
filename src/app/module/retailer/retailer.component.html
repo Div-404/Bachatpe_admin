@@ -119,16 +119,32 @@
                         <div class="row ">
                             <div class="col-md-12">
                                 <div class="tblone table-responsive">
-                                    <div ngbDropdown class="dropdown tableshowtdd">
-                                        <button class="btn  dropdown-toggle tableshowt" ngbDropdownToggle>
-                                            <i class="fa-brands fa-delicious"></i>
+                                    <div class="d-flex align-items-center justify-content-end gap-2 mb-2">
+                                        <button class="btn btn-outline-success btn-lg" (click)="exportCsv()"
+                                            title="Download CSV">
+                                            <i class="fa-solid fa-file-csv"></i>
                                         </button>
-                                        <div ngbDropdownMenu>
-                                            <div *ngFor="let column of columns" class="dropdown-item">
-                                                <label>
-                                                    <input type="checkbox" [(ngModel)]="column.visible"
-                                                        (change)="onColumnChange()"> {{ column.label }}
-                                                </label>
+                                        <button class="btn btn-outline-primary btn-lg" (click)="exportExcel()"
+                                            title="Download Excel">
+                                            <i class="fa-solid fa-file-excel"></i>
+                                        </button>
+                                        <div ngbDropdown placement="bottom-right" class="dropdown">
+                                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                                ngbDropdownToggle>
+                                                <i class="fa-solid fa-table-cells me-1"></i> Column
+                                            </button>
+                                            <div ngbDropdownMenu class="dropdown-menu-end"
+                                                style="min-width:150px; padding:8px">
+                                                <div *ngFor="let column of columns" class="form-check"
+                                                    style="padding:4px 25px; margin:0">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        [(ngModel)]="column.visible" (change)="onColumnChange()"
+                                                        id="col-{{column.key}}">
+                                                    <label class="form-check-label" style="font-size:13px"
+                                                        for="col-{{column.key}}">
+                                                        {{ column.label }}
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -452,46 +468,29 @@
                                     </table>
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
-                                <div class="d-flex align-items-center gap-2" *ngIf="Count > 0">
-                                    <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
-                                        <option [ngValue]="10">10</option>
-                                        <option [ngValue]="20">20</option>
-                                        <option [ngValue]="30">30</option>
-                                        <option [ngValue]="50">50</option>
-                                        <option [ngValue]="100">100</option>
-                                    </select>
-                                    <span class="text-muted small">Total: {{Count}} records</span>
-                                </div>
-                                <ul class="pagination pagination-sm mb-0">
+                                        @if (Count > 0) {
+                                        <div class="d-flex align-items-center gap-2">
+                                            <select class="form-select form-select-sm" style="width:80px" [(ngModel)]="numRecord" (change)="onPageSizeChange()">
+                                                <option [ngValue]="10">10</option>
+                                                <option [ngValue]="20">20</option>
+                                                <option [ngValue]="30">30</option>
+                                                <option [ngValue]="50">50</option>
+                                                <option [ngValue]="100">100</option>
+                                            </select>
+                                            <span class="text-muted small">Total: {{Count}} records</span>
+                                        </div>
+                                        }
 
                                         @if (Count > 0) {
-                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                                            <a class="page-link" (click)="setPage(1)">First</a>
-
-                                        </li>
-
-                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                                            <a class="page-link" (click)="setPage(this.page-1)">Previous</a>
-
-                                        </li>
-
-                                        <li *ngFor="let page of pager.pages" class="page-item"
-                                            [ngClass]="{active:pager.currentPage === page}">
-                                            <a class="page-link " (click)="setPage(page)">{{page}}</a>
-                                        </li>
-                                        <li class="page-item"
-                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                            <a class="page-link " (click)="setPage(this.page+1)">Next</a>
-
-                                        </li>
-                                        <li class="page-item" [ngClass]="{disabled:pager.totalPages === page}">
-                                            <a class="page-link " (click)="setPage(pager.totalPages)">Last</a>
-                                        </li>
-
+                                        <ul class="pagination pagination-sm mb-0">
+                                            <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link" (click)="setPage(1)">First</a></li>
+                                            <li class="page-item" [ngClass]="{disabled: pager.currentPage === 1}"><a class="page-link" (click)="setPage(page - 1)">Previous</a></li>
+                                            <li *ngFor="let p of pager.pages" class="page-item" [ngClass]="{active: pager.currentPage === p}"><a class="page-link" (click)="setPage(p)">{{p}}</a></li>
+                                            <li class="page-item" [ngClass]="{disabled: pager.currentPage === pager.totalPages}"><a class="page-link" (click)="setPage(page + 1)">Next</a></li>
+                                            <li class="page-item" [ngClass]="{disabled: pager.totalPages === page}"><a class="page-link" (click)="setPage(pager.totalPages)">Last</a></li>
+                                        </ul>
                                         }
-                                    
-                                </ul>
-                            </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

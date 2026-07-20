@@ -20,6 +20,8 @@ import Swal from 'sweetalert2';
 import { PaginationService } from '../../servies/pagination.service';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminKycModalComponent } from '../admin-kyc-modal/admin-kyc-modal.component';
+import * as XLSX from 'xlsx';
+import { ngxCsv } from 'ngx-csv';
 
 @Component({
   selector: 'app-distributor',
@@ -992,12 +994,71 @@ export class DistributorComponent {
     }
   }
 
-  // ngOnDestroy() {
-  //   sessionStorage.removeItem('First')
-  //   sessionStorage.removeItem('Last')
-  //   sessionStorage.removeItem('Phone')
-  //   sessionStorage.removeItem('Code')
-  //   console.log('data remove');
+  private getTagBalance(item: any, tag: string): string {
+    return item.oTag_Lst?.find((dd: any) => dd.Tag === tag)?.Balance ?? '0';
+  }
 
-  // }
+  private kycLabel(v: number): string {
+    return v === 5 ? 'Success' : v === 1 ? 'Pending' : v === 3 ? 'Reject' : v === 2 ? 'Suspend' : String(v);
+  }
+
+  private fetchAll(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const data = {
+        Key: '',
+        oReptType: this.distType,
+        ProfileMD: this.mdProfile,
+        ProfileDI: 0,
+        oType: this.filterVal,
+        Value: this.searchVal,
+        Initial: 1,
+        MaxCount: this.Count || 999999,
+      };
+      this.api.getAdmType(data).subscribe({
+        next: (res: any) => resolve(res.lstUsers || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAll();
+    const rows = items.map((item: any) => ({
+      'Created On': item.Created?.Tm_Str?.substring(0, 16) || '',
+      'M. Distributor': item.MD_INFO ? `${item.MD_INFO.Name || ''} (${item.MD_INFO.ClientCode || ''})` : '',
+      Name: `${item.First || ''} ${item.Last || ''}`.trim(),
+      // Email: item.Email || '',
+      Phone: item.Phone || '',
+      Code: item.Code || '',
+      City: item.Addr?.oUserAddr?.City || '',
+      State: item.Addr?.oUserAddr?.State || '',
+      KYC: this.kycLabel(item.KYC),
+      Balance: this.getTagBalance(item, 'BALANCE'),
+      Credit: this.getTagBalance(item, 'CREDIT'),
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'DistributorList', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAll();
+    const rows = items.map((item: any) => ({
+      'Created On': item.Created?.Tm_Str?.substring(0, 16) || '',
+      'M. Distributor': item.MD_INFO ? `${item.MD_INFO.Name || ''} (${item.MD_INFO.ClientCode || ''})` : '',
+      Name: `${item.First || ''} ${item.Last || ''}`.trim(),
+      // Email: item.Email || '',
+      Phone: item.Phone || '',
+      Code: item.Code || '',
+      City: item.Addr?.oUserAddr?.City || '',
+      State: item.Addr?.oUserAddr?.State || '',
+      KYC: this.kycLabel(item.KYC),
+      Balance: this.getTagBalance(item, 'BALANCE'),
+      Credit: this.getTagBalance(item, 'CREDIT'),
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Distributors');
+    XLSX.writeFile(wb, 'DistributorList.xlsx');
+  }
 }

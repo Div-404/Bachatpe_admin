@@ -34,6 +34,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgModule } from '@angular/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { finalize, map, Subscription } from 'rxjs';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
+import * as XLSX from 'xlsx';
 import { PaginationService } from '../../servies/pagination.service';
 @Component({
   selector: 'app-wallet-and-ledger',
@@ -417,6 +419,60 @@ export class WalletAndLedgerComponent implements OnInit {
     this.toster.success('Reference copied successfully.', 'Success');
   }
 
+  // =========================================================== export =====================================================
+  private fetchAllLedger(): Promise<any[]> {
+    return new Promise((resolve) => {
+      const obj = {
+        Key: '',
+        Reserve1: this.selectedReserve1,
+        Reserve2: '',
+        Reserve3: '',
+        Initial: 1,
+        MaxCount: this.Count || 999999,
+        dtFrom: this.ledgerForm.value.dtFrom ? this.ledgerForm.value.dtFrom + ' 00:00:01' : '',
+        dtTo: this.ledgerForm.value.dtTo ? this.ledgerForm.value.dtTo + ' 23:59:59' : '',
+      };
+      this.api.GET_ADM_LEDGER_BY_TAG(obj).subscribe({
+        next: (res: any) => resolve(res?.lstLedgerADM || []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  async exportCsv() {
+    const items = await this.fetchAllLedger();
+    const rows = items.map((item: any) => ({
+      Date: item?.oTrans?.CreatedOn || '',
+      Name: item.Name || '',
+      Phone: item.Phone || '',
+      Reference: item?.oTrans?.Reference || '',
+      Debit: item?.oTrans?.Trans_Source === 1 ? item?.oTrans?.Amount : '',
+      Credit: item?.oTrans?.Trans_Source === 2 ? item?.oTrans?.Amount : '',
+      Balance: item?.Balance || '',
+      Remarks: item?.oTrans?.Remarks_Admin || item?.oTrans?.Remarks_Client || item?.oTrans?.Remarks_Trans || ''
+    }));
+    if (!rows.length) return;
+    new ngxCsv(rows, 'WalletLedger', { headers: Object.keys(rows[0]) });
+  }
+
+  async exportExcel() {
+    const items = await this.fetchAllLedger();
+    const rows = items.map((item: any) => ({
+      Date: item?.oTrans?.CreatedOn || '',
+      Name: item.Name || '',
+      Phone: item.Phone || '',
+      Reference: item?.oTrans?.Reference || '',
+      Debit: item?.oTrans?.Trans_Source === 1 ? item?.oTrans?.Amount : '',
+      Credit: item?.oTrans?.Trans_Source === 2 ? item?.oTrans?.Amount : '',
+      Balance: item?.Balance || '',
+      Remarks: item?.oTrans?.Remarks_Admin || item?.oTrans?.Remarks_Client || item?.oTrans?.Remarks_Trans || ''
+    }));
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Ledger');
+    XLSX.writeFile(wb, 'WalletLedger.xlsx');
+  }
   // =========================================================== pagination ===============================================
 
   numRecord: any = 10;
